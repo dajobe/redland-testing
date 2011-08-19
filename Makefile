@@ -73,6 +73,7 @@ GET_EARL_PASSES_QUERY=get-earl-passes.rq
 # librdf programs
 RAPPER=rapper
 ROQET=roqet
+RDFPROC=rdfproc
 
 # librdf library (utility) versions
 RASQAL_VERSION=$(shell $(ROQET) -v 2>/dev/null)
@@ -191,23 +192,29 @@ update-sparql11:
 
 $(RESULTS_DIR)/manifests.ttl:
 	@manifests=`find $(SPARQL11_TESTS_DIR) -name manifest.ttl -print`; \
-	tmp_nt=$(TMP_DIR)/tmp.nt; \
+	tmp_db=$(TMP_DIR)/tmpdb.rdf; \
+	$(ECHO) "Reading manifest files into single DB"; \
+	rm -f $$tmp_db; \
 	for manifest in $$manifests; do \
-	  $(RAPPER) -q -i turtle -o ntriples $$manifest $(TESTS_BASE_URI)/$$manifest >> $$tmp_nt; \
+          $(RDFPROC) -q -s file $$tmp_db parse $$manifest turtle $(TESTS_BASE_URI)/$$manifest; \
 	done; \
-	$(ECHO) "Normalizing aggregated manifests to turtle and rdfxml"; \
-	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt  > $(RESULTS_DIR)/manifests.ttl; \
-	rm -f $$tmp_nt; \
+	$(ECHO) "Generating aggregated manifest in turtle and rdfxml"; \
+        $(RDFPROC) -q -s file $$tmp_db serialize turtle > $(RESULTS_DIR)/manifests.ttl; \
+	rm -f $$tmp_db; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/manifests.ttl > $(RESULTS_DIR)/manifests.rdf
 
 $(RESULTS_DIR)/results.ttl:
 	@earlttls=`find $(LOGS_DIR) -name \*-earl.ttl -print`; \
-	tmp_nt=$(TMP_DIR)/tmp.nt; \
+	tmp_db=$(TMP_DIR)/tmpdb.rdf; \
+	tmp_nt=$(TMP_DIR)/tmpdb.nt; \
+	rm -f $$tmp_db; \
 	for earlttl in $$earlttls; do \
-	  $(RAPPER) -q -i turtle -o ntriples $$earlttl >> $$tmp_nt; \
+          $(RDFPROC) -q -s file $$tmp_db parse $$earlttl turtle; \
 	done; \
 	$(ECHO) "Normalizing aggregated EARL result to turtle and rdfxml"; \
-	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt  > $(RESULTS_DIR)/results.ttl; \
+        $(RDFPROC) -q -s file $$tmp_db serialize ntriples > $$tmp_nt; \
+	rm -f $$tmp_db; \
+	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt > $(RESULTS_DIR)/results.ttl; \
 	rm -f $$tmp_nt; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/results.ttl > $(RESULTS_DIR)/results.rdf
 
