@@ -22,6 +22,7 @@ SPARQL11_TESTS_SUBDIR=data-sparql11
 LOGS_DIR=logs
 RESULTS_DIR=results
 SCRIPTS_DIR=scripts
+QUERIES_DIR=queries
 
 CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR)
 
@@ -44,6 +45,10 @@ CHECK_SPARQL=$(PERL) $(CHECK_SPARQL_SCRIPT)
 
 # FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
 FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
+
+# queries
+GET_EARL_FAILURES_QUERY=get-earl-failures.rq
+GET_EARL_PASSES_QUERY=get-earl-passes.rq
 
 # librdf programs
 RAPPER=rapper
@@ -103,14 +108,23 @@ check-sparql11: make-dirs
 	  $(ECHO) "Checking in $$subdir"; \
 	  cd $$here; \
 	  cd $$subdir; \
-	  log_file=`echo $$subdir | $(SED) -e 's,/,-,g' -e 's,$$,.log,'`; \
-	  abs_log_file="$$log_dir/$$log_file"; \
+	  base_file=`echo $$subdir | $(SED) -e 's,/,-,g'`; \
+	  abs_log_file="$$log_dir/$$base_file.log"; \
+	  abs_earl_file="$$log_dir/$$base_file-earl.ttl"; \
+	  rm -f $$abs_log_file $$abs_earl_file; \
           $(ECHO) "cd $$subdir; RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language"; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
-	    $(CHECK_SPARQL) -i $$language 2>&1 | \
+	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
           status=$$?; \
           $(ECHO) "Test exited with status $$status"; \
+	  if test -r $$abs_earl_file; then \
+	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
+	    failures=`$(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | wc -l`; \
+	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_PASSES_QUERY)"; \
+	    passes=`$(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | wc -l`; \
+            $(ECHO) "Test $$passes passes and $$ failures"; \
+	  fi; \
           break; \
 	done; \
 	exit $$failed
