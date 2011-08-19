@@ -20,6 +20,8 @@ MF_NS_URI=http://www.w3.org/2001/sw/DataAccess/tests/test-manifest\#
 EARL_NS_URI=http://www.w3.org/ns/earl\#
 RDFS_NS_URI=http://www.w3.org/2000/01/rdf-schema\#
 DAWGT_NS_URI=http://www.w3.org/2001/sw/DataAccess/tests/test-dawg\#
+QT_NS_URI=http://www.w3.org/2001/sw/DataAccess/tests/test-query\#
+
 
 NS_URI_ARGS=\
   -f 'xmlns:rdf="$(RDF_NS_URI)"' \
@@ -27,7 +29,8 @@ NS_URI_ARGS=\
   -f 'xmlns:mf="$(MF_NS_URI)"' \
   -f 'xmlns:earl="$(EARL_NS_URI)"' \
   -f 'xmlns:rdfs="$(RDFS_NS_URI)"' \
-  -f 'xmlns:dawgt="$(DAWGT_NS_URI)"'
+  -f 'xmlns:dawgt="$(DAWGT_NS_URI)"' \
+  -f 'xmlns:qt="$(QT_NS_URI)"'
 
 # GIT areas
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
@@ -193,13 +196,16 @@ update-sparql11:
 $(RESULTS_DIR)/manifests.ttl:
 	@manifests=`find $(SPARQL11_TESTS_DIR) -name manifest.ttl -print`; \
 	tmp_db=$(TMP_DIR)/tmpdb.rdf; \
+	tmp_nt=$(TMP_DIR)/tmpdb.nt; \
 	$(ECHO) "Reading manifest files into single DB"; \
 	rm -f $$tmp_db; \
 	for manifest in $$manifests; do \
-          $(RDFPROC) -q -s file $$tmp_db parse $$manifest turtle $(TESTS_BASE_URI)/$$manifest; \
+          $(RDFPROC) -q -s file $$tmp_db parse $$manifest turtle $(TESTS_BASE_URI)$$manifest; \
 	done; \
 	$(ECHO) "Generating aggregated manifest in turtle and rdfxml"; \
-        $(RDFPROC) -q -s file $$tmp_db serialize turtle > $(RESULTS_DIR)/manifests.ttl; \
+        $(RDFPROC) -q -s file $$tmp_db serialize ntriples > $$tmp_nt; \
+	rm -f $$tmp_db; \
+	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt > $(RESULTS_DIR)/manifests.ttl; \
 	rm -f $$tmp_db; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/manifests.ttl > $(RESULTS_DIR)/manifests.rdf
 
