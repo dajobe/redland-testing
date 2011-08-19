@@ -1,0 +1,12 @@
+# SPARQL 1.0
+
+PREFIX earl: <http://www.w3.org/ns/earl#>
+
+SELECT ?testUri
+WHERE
+{
+  ?assert earl:result [ 
+            earl:outcome earl:fail
+          ];
+          earl:test ?testUri
+}
