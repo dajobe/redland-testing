@@ -909,8 +909,8 @@ EOT
 
 my $failed_count=scalar(@failed);
 
-warn "$program: $failed_count FAILED tests:\n  " .
-     join("\n  ", map { $_->{name}. ($debug ? " (".$_->{test_uri}.")" : "") } @failed) .
+warn "$program: $failed_count FAILED tests:\n$program:   " .
+     join("\n$program:   ", map { $_->{name}. ($debug ? " (".$_->{test_uri}.")" : "") } @failed) .
      "\n"
   if $failed_count;
 warn "$program: Summary: ".scalar(@passed)." tests passed  ".scalar(@failed)." tests failed\n";
