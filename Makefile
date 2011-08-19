@@ -127,7 +127,7 @@ check-sparql11: make-dirs clean-logs
 	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
           status=$$?; \
-          $(ECHO) "Test exited with status $$status"; \
+          $(ECHO) "Test returned status $$status"; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
 	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$failure_urls_file; \
