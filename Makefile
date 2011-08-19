@@ -23,8 +23,9 @@ LOGS_DIR=logs
 RESULTS_DIR=results
 SCRIPTS_DIR=scripts
 QUERIES_DIR=queries
+TMP_DIR=tmp
 
-CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR)
+CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR) $(TMP_DIR)
 
 TESTS_DIRS=$(SPARQL11_TESTS_DIR)
 
@@ -45,7 +46,7 @@ CHECK_SPARQL=$(PERL) $(CHECK_SPARQL_SCRIPT)
 
 # FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
 FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
-
+FILTER_RESULT_URI=$(SED) -e 's/^.*uri<\([^>]*\)>.*/\1/'
 # queries
 GET_EARL_FAILURES_QUERY=get-earl-failures.rq
 GET_EARL_PASSES_QUERY=get-earl-passes.rq
@@ -109,6 +110,9 @@ check-sparql11: make-dirs clean-logs
 	subdirs_count=`echo $$subdirs | $(WC) -w`; \
 	$(ECHO) "Found $$subdirs_count subdirs with manifests"; \
 	log_dir="$(abs_top_srcdir)/$(LOGS_DIR)"; \
+	tmp_dir="$(abs_top_builddir)/$(TMP_DIR)"; \
+	pass_urls_file="$$log_dir/pass-urls.lst"; \
+	failure_urls_file="$$log_dir/failure-urls.lst"; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
 	  $(ECHO) "Checking in $$subdir"; \
@@ -126,17 +130,19 @@ check-sparql11: make-dirs clean-logs
           $(ECHO) "Test exited with status $$status"; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
-	    failures=`$(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | wc -l`; \
+	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$failure_urls_file; \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_PASSES_QUERY)"; \
-	    passes=`$(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | wc -l`; \
-            $(ECHO) "Test $$passes passes and $$ failures"; \
+	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$pass_urls_file; \
 	  fi; \
           break; \
 	done; \
+	tmp_file="$$tmp_dir/sort.tmp"; \
+	sort -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
+	sort -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
 	exit $$failed
 
 make-dirs:
-	$(MKDIR_P) $(RESULTS_DIR) $(LOGS_DIR)
+	$(MKDIR_P) $(CLEAN_DIRS)
 
 clean:
 	rm -rf $(CLEAN_DIRS)
