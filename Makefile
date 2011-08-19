@@ -31,6 +31,7 @@ GIT=git
 MKDIR=mkdir
 MKDIR_P=$(MKDIR) -p
 PERL=perl
+SED=sed
 
 # scripts here
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
@@ -74,7 +75,7 @@ check-sparql11: raptor-rasqal-installed
 	fi; \
 	here=`pwd`; \
 	cd $$dir; \
-	subdirs=`ls -1 */manifest.ttl | sed -e 's,/manifest.ttl$$,,'`; \
+	subdirs=`ls -1 */manifest.ttl | $(SED) -e 's,/manifest.ttl$$,,'`; \
 	$(ECHO) "Found subdirs with manifests: $$subdirs"; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
