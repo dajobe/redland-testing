@@ -39,6 +39,7 @@ PERL=perl
 SED=sed
 TEE=tee
 WC=wc
+SORT=sort
 
 # scripts here
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
@@ -136,8 +137,12 @@ check-sparql11: make-dirs clean-logs
 	  fi; \
 	done; \
 	tmp_file="$$tmp_dir/sort.tmp"; \
-	sort -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
-	sort -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
+	$(SORT) -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
+	$(SORT) -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
+	count=`$(WC) -l < $$pass_urls_file`; \
+	$(ECHO) "Total Passes:   $$count"; \
+	count=`$(WC) -l < $$failure_urls_file`; \
+	$(ECHO) "total Failures: $$count"; \
 	exit $$failed
 
 make-dirs:
