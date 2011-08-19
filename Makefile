@@ -180,20 +180,30 @@ $(RESULTS_DIR)/manifests.ttl:
 	@manifests=`find $(SPARQL11_TESTS_DIR) -name manifest.ttl -print`; \
 	tmp_nt=$(TMP_DIR)/tmp.nt; \
 	for manifest in $$manifests; do \
-	  $(ECHO) "Converting manifest in $$manifest"; \
 	  $(RAPPER) -q -i turtle -o ntriples $$manifest $(TESTS_BASE_URI)/$$manifest >> $$tmp_nt; \
 	done; \
-	$(ECHO) "Converting manifests to turtle"; \
+	$(ECHO) "Normalizing aggregated manifests to turtle and rdfxml"; \
 	$(RAPPER) -q -i ntriples -o turtle -f 'xmlns:rdf="$(RDF_NS_URI)"' $$tmp_nt  > $(RESULTS_DIR)/manifests.ttl; \
 	rm -f $$tmp_nt; \
-	$(ECHO) "Converting manifests to rdf/xml"; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/manifests.ttl > $(RESULTS_DIR)/manifests.rdf
 
-$(RESULTS_DIR)/earl.rdf: $(RESULTS_DIR)/manifests.ttl
-	@cat $(LOGS_DIR)/*-earl.ttl $(RESULTS_DIR)/manifests.ttl > $(RESULTS_DIR)/earl.ttl; \
-	cd $(RESULTS_DIR); \
-	$(RAPPER) -i turtle -o rdfxml-abbrev earl.ttl > earl.rdf; \
-	$(RAPPER) -i rdfxml -o turtle earl.rdf > earl.ttl
+$(RESULTS_DIR)/results.ttl:
+	@earlttls=`find $(LOGS_DIR) -name \*-earl.ttl -print`; \
+	tmp_nt=$(TMP_DIR)/tmp.nt; \
+	for earlttl in $$earlttls; do \
+	  $(RAPPER) -q -i turtle -o ntriples $$earlttl >> $$tmp_nt; \
+	done; \
+	$(ECHO) "Normalizing aggregated EARL result to turtle and rdfxml"; \
+	$(RAPPER) -q -i ntriples -o turtle -f 'xmlns:rdf="$(RDF_NS_URI)"' $$tmp_nt  > $(RESULTS_DIR)/results.ttl; \
+	rm -f $$tmp_nt; \
+	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/results.ttl > $(RESULTS_DIR)/results.rdf
+
+$(RESULTS_DIR)/earl.rdf: $(RESULTS_DIR)/manifests.ttl $(RESULTS_DIR)/results.ttl
+	@cd $(RESULTS_DIR); \
+	cat manifests.ttl results.ttl > earl.ttl; \
+	$(ECHO) "Converting EARL KB to turtle and rdfxml"; \
+	$(RAPPER) -q -i turtle -o rdfxml-abbrev earl.ttl > earl.rdf; \
+	$(RAPPER) -q -i rdfxml -o turtle earl.rdf > earl.ttl
 
 earl: $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf
 	$(PYTHON) $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf > $(RESULTS_DIR)/earl.html
