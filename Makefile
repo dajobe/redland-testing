@@ -14,7 +14,20 @@ abs_top_builddir=$(shell cd $(top_builddir); pwd)
 
 # URIs
 TESTS_BASE_URI=http://www.w3.org/2009/sparql/docs/tests/data-sparql11/
-RDF_NS_URI=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+RDF_NS_URI=http://www.w3.org/1999/02/22-rdf-syntax-ns\#
+DOAP_NS_URI=http://usefulinc.com/ns/doap\#
+MF_NS_URI=http://www.w3.org/2001/sw/DataAccess/tests/test-manifest\#
+EARL_NS_URI=http://www.w3.org/ns/earl\#
+RDFS_NS_URI=http://www.w3.org/2000/01/rdf-schema\#
+DAWGT_NS_URI=http://www.w3.org/2001/sw/DataAccess/tests/test-dawg\#
+
+NS_URI_ARGS=\
+  -f 'xmlns:rdf="$(RDF_NS_URI)"' \
+  -f 'xmlns:doap="$(DOAP_NS_URI)"' \
+  -f 'xmlns:mf="$(MF_NS_URI)"' \
+  -f 'xmlns:earl="$(EARL_NS_URI)"' \
+  -f 'xmlns:rdfs="$(RDFS_NS_URI)"' \
+  -f 'xmlns:dawgt="$(DAWGT_NS_URI)"'
 
 # GIT areas
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
@@ -183,7 +196,7 @@ $(RESULTS_DIR)/manifests.ttl:
 	  $(RAPPER) -q -i turtle -o ntriples $$manifest $(TESTS_BASE_URI)/$$manifest >> $$tmp_nt; \
 	done; \
 	$(ECHO) "Normalizing aggregated manifests to turtle and rdfxml"; \
-	$(RAPPER) -q -i ntriples -o turtle -f 'xmlns:rdf="$(RDF_NS_URI)"' $$tmp_nt  > $(RESULTS_DIR)/manifests.ttl; \
+	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt  > $(RESULTS_DIR)/manifests.ttl; \
 	rm -f $$tmp_nt; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/manifests.ttl > $(RESULTS_DIR)/manifests.rdf
 
@@ -194,7 +207,7 @@ $(RESULTS_DIR)/results.ttl:
 	  $(RAPPER) -q -i turtle -o ntriples $$earlttl >> $$tmp_nt; \
 	done; \
 	$(ECHO) "Normalizing aggregated EARL result to turtle and rdfxml"; \
-	$(RAPPER) -q -i ntriples -o turtle -f 'xmlns:rdf="$(RDF_NS_URI)"' $$tmp_nt  > $(RESULTS_DIR)/results.ttl; \
+	$(RAPPER) -q -i ntriples -o turtle $(NS_URI_ARGS) $$tmp_nt  > $(RESULTS_DIR)/results.ttl; \
 	rm -f $$tmp_nt; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev $(RESULTS_DIR)/results.ttl > $(RESULTS_DIR)/results.rdf
 
@@ -203,7 +216,7 @@ $(RESULTS_DIR)/earl.rdf: $(RESULTS_DIR)/manifests.ttl $(RESULTS_DIR)/results.ttl
 	cat manifests.ttl results.ttl > earl.ttl; \
 	$(ECHO) "Converting EARL KB to turtle and rdfxml"; \
 	$(RAPPER) -q -i turtle -o rdfxml-abbrev earl.ttl > earl.rdf; \
-	$(RAPPER) -q -i rdfxml -o turtle earl.rdf > earl.ttl
+	$(RAPPER) -q -i rdfxml -o turtle $(NS_URI_ARGS) earl.rdf > earl.ttl
 
 earl: $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf
 	$(PYTHON) $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf > $(RESULTS_DIR)/earl.html
