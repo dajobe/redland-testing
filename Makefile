@@ -7,8 +7,10 @@
 #
 
 top_srcdir=.
+top_builddir=.
 
 abs_top_srcdir=$(shell cd $(top_srcdir); pwd)
+abs_top_builddir=$(shell cd $(top_builddir); pwd)
 
 # GIT areas
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
@@ -32,6 +34,8 @@ MKDIR=mkdir
 MKDIR_P=$(MKDIR) -p
 PERL=perl
 SED=sed
+TEE=tee
+WC=wc
 
 # scripts here
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
@@ -44,6 +48,9 @@ ROQET=roqet
 # librdf library (utility) versions
 RASQAL_VERSION=$(shell $(ROQET) -v 2>/dev/null)
 RAPTOR_VERSION=$(shell $(RAPPER) -v 2>/dev/null)
+
+# .PHONY: all check check-sparql11 clean make-dirs raptor-rasqal-installed reallyclean update update-sparql11
+
 
 all: raptor-rasqal-installed
 	@$(ECHO) "Try running: $(MAKE) check"
@@ -62,11 +69,11 @@ raptor-rasqal-installed:
 	fi; \
 	exit $$failed
 
-check: raptor-rasqal-installed dirs
+check: make-dirs raptor-rasqal-installed
 	@$(ECHO) "Testing with Rasqal $(RASQAL_VERSION) and Raptor $(RAPTOR_VERSION)"
 	$(MAKE) check-sparql11
 
-check-sparql11: raptor-rasqal-installed
+check-sparql11: make-dirs raptor-rasqal-installed
 	@dir="$(SPARQL11_TESTS_DIR)/$(SPARQL11_TESTS_SUBDIR)"; \
 	label="SPARQL 1.1"; \
 	language="sparql11"; \
@@ -78,18 +85,27 @@ check-sparql11: raptor-rasqal-installed
 	here=`pwd`; \
 	cd $$dir; \
 	subdirs=`ls -1 */manifest.ttl | $(SED) -e 's,/manifest.ttl$$,,'`; \
-	$(ECHO) "Found subdirs with manifests: $$subdirs"; \
+	subdirs_count=`echo $$subdirs | $(WC) -w`; \
+	$(ECHO) "Found $$subdirs_count subdirs with manifests"; \
+	log_dir="$(abs_top_srcdir)/$(LOGS_DIR)"; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
-	  $(ECHO) "  $$subdir"; \
+	  $(ECHO) "Checking in $$subdir"; \
 	  cd $$here; \
 	  cd $$subdir; \
+	  log_file=`echo $$subdir | $(SED) -e 's,/,-,g' -e 's,$$,.log,'`; \
+	  abs_log_file="$$log_dir/$$log_file"; \
           $(ECHO) $(CHECK_SPARQL) -i $$language; \
-	  RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language; \
+	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
+	    $(CHECK_SPARQL) -i $$language 2>&1 | \
+              $(TEE) $$abs_log_file ; \
+          status=$?; \
+          $(ECHO) "Test exited with status $$status"; \
+          break; \
 	done; \
 	exit $$failed
 
-dirs:
+make-dirs:
 	$(MKDIR_P) $(RESULTS_DIR) $(LOGS_DIR)
 
 clean:
