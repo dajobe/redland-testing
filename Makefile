@@ -134,7 +134,6 @@ check-sparql11: make-dirs clean-logs
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_PASSES_QUERY)"; \
 	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$pass_urls_file; \
 	  fi; \
-          break; \
 	done; \
 	tmp_file="$$tmp_dir/sort.tmp"; \
 	sort -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
