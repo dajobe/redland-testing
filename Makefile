@@ -85,7 +85,7 @@ check-sparql11: raptor-rasqal-installed
 	  cd $$here; \
 	  cd $$subdir; \
           $(ECHO) $(CHECK_SPARQL) -i $$language; \
-	  $(CHECK_SPARQL) -i $$language; \
+	  RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language; \
 	done; \
 	exit $$failed
 
