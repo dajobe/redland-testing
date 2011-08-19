@@ -50,12 +50,12 @@ all: raptor-rasqal-installed
 
 raptor-rasqal-installed:
 	@failed=0; \
-	if test "$(RASQAL_VERSION)X" = "X"; then \
-	  $(ECHO) "No roqet version found - get, configure and install Rasqal first"; \
-	  failed=1; \
-	fi; \
 	if test "$(RAPTOR_VERSION)X" = "X"; then \
 	  $(ECHO) "No rapper version found - get, configure and install Raptor first"; \
+	  failed=1; \
+	fi; \
+	if test "$(RASQAL_VERSION)X" = "X"; then \
+	  $(ECHO) "No roqet version found - get, configure and install Rasqal first"; \
 	  failed=1; \
 	fi; \
 	exit $$failed
