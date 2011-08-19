@@ -92,7 +92,10 @@ update update-sparql11
 
 
 all: raptor-rasqal-installed
-	@$(ECHO) "Try running: $(MAKE) check"
+	@$(ECHO) "Possibilities"
+	@$(ECHO) "  $(MAKE) update - to checkout / update the GIT tests"
+	@$(ECHO) "  $(MAKE) check  - to run the tests"
+	@$(ECHO) "  $(MAKE) earl   - to generate an EARL report (requires rdfproc, rdflib)"
 
 raptor-rasqal-installed:
 	@failed=0; \
@@ -124,7 +127,7 @@ check-sparql11: make-dirs clean-logs
 	language="sparql11"; \
 	failed=0; \
 	if test ! -d $$dir; then \
-	  $(ECHO) "$$label tests dir $$dir not found"; \
+	  $(ECHO) "$$label tests dir $$dir not found: try $(MAKE) update"; \
 	  exit 1; \
 	fi; \
 	here=`pwd`; \
@@ -184,8 +187,8 @@ update-sparql11:
 	label="SPARQL 1.1"; \
 	if test ! -d $$dir; then \
 	  $(ECHO) "Checking out $$label tests $$url into $$dir"; \
-	  $(ECHO) $(GIT) clone $$url; \
-	  $(GIT) clone $$url; \
+	  $(ECHO) $(GIT) clone $$url $$dir; \
+	  $(GIT) clone $$url $$dir; \
 	else \
 	  $(ECHO) "Updating $$label tests $$url in $$dir"; \
 	  cd $$dir; \
