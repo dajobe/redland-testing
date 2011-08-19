@@ -105,7 +105,7 @@ check-sparql11: make-dirs
 	  cd $$subdir; \
 	  log_file=`echo $$subdir | $(SED) -e 's,/,-,g' -e 's,$$,.log,'`; \
 	  abs_log_file="$$log_dir/$$log_file"; \
-          $(ECHO) $(CHECK_SPARQL) -i $$language; \
+          $(ECHO) "cd $$subdir; RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language"; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
 	    $(CHECK_SPARQL) -i $$language 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
