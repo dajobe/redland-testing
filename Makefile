@@ -88,7 +88,13 @@ check: make-dirs raptor-rasqal-installed
 	@$(ECHO) "Testing with Rasqal $(RASQAL_VERSION) and Raptor $(RAPTOR_VERSION)"
 	$(MAKE) check-sparql11
 
-check-sparql11: make-dirs
+clean-logs: make-dirs
+	@find $(LOGS_DIR)/ -type f -print | xargs rm -f
+
+clean-results: make-dirs
+	@find $(RESULTS_DIR)/ -type f -print | xargs rm -f
+
+check-sparql11: make-dirs clean-logs
 	@dir="$(SPARQL11_TESTS_DIR)/$(SPARQL11_TESTS_SUBDIR)"; \
 	label="SPARQL 1.1"; \
 	language="sparql11"; \
