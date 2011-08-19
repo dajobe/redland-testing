@@ -1,3 +1,11 @@
+#
+# Makefile for Rasqal query tests
+#
+# See README.md for details
+#
+# Requires: 'roqet' and 'rapper' in PATH variable in environment
+#
+
 # GIT areas
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
 
@@ -7,17 +15,38 @@ RESULTS_DIR=results
 
 TESTS_DIRS=$(SPARQL11_TESTS_DIR)
 
-# commands
+# programs
 ECHO=echo
 GIT=git
 MKDIR=mkdir
 MKDIR_P=$(MKDIR) -p
 
+# librdf programs
+RAPPER=rapper
+ROQET=roqet
+
+# librdf library (utility) versions
+RASQAL_VERSION=$(shell $(ROQET) -v 2>/dev/null)
+RAPTOR_VERSION=$(shell $(RAPPER) -v 2>/dev/null)
+
 all:
 	@$(ECHO) "Try running: $(MAKE) check"
 
-check: dirs
-	@$(ECHO) "Nothing to do yet"
+raptor-rasqal-installed:
+	@failed=0; \
+	if test "$(RASQAL_VERSION)X" = "X"; then \
+	  $(ECHO) "No roqet version found - get, configure and install Rasqal first"; \
+          failed=1; \
+	fi; \
+	if test "$(RAPTOR_VERSION)X" = "X"; then \
+	  $(ECHO) "No rapper version found - get, configure and install Raptor first"; \
+	  failed=1; \
+	fi; \
+	exit $$failed
+
+check: raptor-rasqal-installed dirs
+	@$(ECHO) "Testing with Rasqal $(RASQAL_VERSION) and Raptor $(RAPTOR_VERSION)"
+
 
 dirs:
 	$(MKDIR_P) $(RESULTS_DIR)
