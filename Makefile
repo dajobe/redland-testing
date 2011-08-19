@@ -44,7 +44,7 @@ ROQET=roqet
 RASQAL_VERSION=$(shell $(ROQET) -v 2>/dev/null)
 RAPTOR_VERSION=$(shell $(RAPPER) -v 2>/dev/null)
 
-all:
+all: raptor-rasqal-installed
 	@$(ECHO) "Try running: $(MAKE) check"
 
 raptor-rasqal-installed:
