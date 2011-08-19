@@ -30,6 +30,7 @@ TESTS_DIRS=$(SPARQL11_TESTS_DIR)
 # programs
 ECHO=echo
 GIT=git
+GREP=grep
 MKDIR=mkdir
 MKDIR_P=$(MKDIR) -p
 PERL=perl
@@ -41,6 +42,9 @@ WC=wc
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
 CHECK_SPARQL=$(PERL) $(CHECK_SPARQL_SCRIPT)
 
+# FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
+FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
+
 # librdf programs
 RAPPER=rapper
 ROQET=roqet
@@ -49,7 +53,13 @@ ROQET=roqet
 RASQAL_VERSION=$(shell $(ROQET) -v 2>/dev/null)
 RAPTOR_VERSION=$(shell $(RAPPER) -v 2>/dev/null)
 
-# .PHONY: all check check-sparql11 clean make-dirs raptor-rasqal-installed reallyclean update update-sparql11
+
+.PHONY: all \
+check check-sparql11 \
+clean \
+make-dirs \
+raptor-rasqal-installed reallyclean \
+update update-sparql11
 
 
 all: raptor-rasqal-installed
@@ -73,7 +83,7 @@ check: make-dirs raptor-rasqal-installed
 	@$(ECHO) "Testing with Rasqal $(RASQAL_VERSION) and Raptor $(RAPTOR_VERSION)"
 	$(MAKE) check-sparql11
 
-check-sparql11: make-dirs raptor-rasqal-installed
+check-sparql11: make-dirs
 	@dir="$(SPARQL11_TESTS_DIR)/$(SPARQL11_TESTS_SUBDIR)"; \
 	label="SPARQL 1.1"; \
 	language="sparql11"; \
@@ -98,8 +108,8 @@ check-sparql11: make-dirs raptor-rasqal-installed
           $(ECHO) $(CHECK_SPARQL) -i $$language; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
 	    $(CHECK_SPARQL) -i $$language 2>&1 | \
-              $(TEE) $$abs_log_file ; \
-          status=$?; \
+              $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
+          status=$$?; \
           $(ECHO) "Test exited with status $$status"; \
           break; \
 	done; \
