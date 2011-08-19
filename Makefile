@@ -13,12 +13,15 @@ abs_top_srcdir=$(shell cd $(top_srcdir); pwd)
 # GIT areas
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
 
-# directories
+# relative directories
 SPARQL11_TESTS_DIR=sparql11
 SPARQL11_TESTS_SUBDIR=data-sparql11
 
+LOGS_DIR=logs
 RESULTS_DIR=results
 SCRIPTS_DIR=scripts
+
+CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR)
 
 TESTS_DIRS=$(SPARQL11_TESTS_DIR)
 
@@ -84,13 +87,13 @@ check-sparql11: raptor-rasqal-installed
 	exit $$failed
 
 dirs:
-	$(MKDIR_P) $(RESULTS_DIR)
+	$(MKDIR_P) $(RESULTS_DIR) $(LOGS_DIR)
 
 clean:
-	rm -rf $(RESULTS_DIR)
+	rm -rf $(CLEAN_DIRS)
 
 reallyclean: clean
-	rm -rf $(RESULTS_DIR)
+	rm -rf $(TESTS_DIRS)
 
 update: update-sparql11
 
