@@ -46,6 +46,7 @@ QUERIES_DIR=queries
 TMP_DIR=tmp
 
 CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR) $(TMP_DIR)
+CLEAN_FILES=README.html
 
 TESTS_DIRS=$(SPARQL11_TESTS_DIR)
 
@@ -174,7 +175,7 @@ make-dirs:
 	$(MKDIR_P) $(CLEAN_DIRS)
 
 clean:
-	rm -rf $(CLEAN_DIRS)
+	rm -rf $(CLEAN_DIRS) $(CLEAN_FILES)
 
 reallyclean: clean
 	rm -rf $(TESTS_DIRS)
