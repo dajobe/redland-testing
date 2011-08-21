@@ -157,14 +157,14 @@ check-dir: make-dirs clean-logs
 	cd $$dir; \
 	subdirs=`ls -1 */manifest.ttl | $(SED) -e 's,/manifest.ttl$$,,'`; \
 	subdirs_count=`echo $$subdirs | $(WC) -w`; \
-	$(ECHO) "Found $$subdirs_count subdirs with manifests"; \
+	$(ECHO) "$$label testing in $$subdirs_count subdirs with manifests"; \
 	log_dir="$(abs_top_srcdir)/$(LOGS_DIR)"; \
 	tmp_dir="$(abs_top_builddir)/$(TMP_DIR)"; \
 	pass_urls_file="$$log_dir/pass-urls.lst"; \
 	failure_urls_file="$$log_dir/failure-urls.lst"; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
-	  $(ECHO) "Checking in $$subdir"; \
+	  $(ECHO) "$$label checking in $$subdir"; \
 	  cd $$here; \
 	  cd $$subdir; \
 	  base_file=`echo $$subdir | $(SED) -e 's,/,-,g'`; \
@@ -176,7 +176,9 @@ check-dir: make-dirs clean-logs
 	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
           status=$$?; \
-          $(ECHO) "Test returned status $$status"; \
+	  if test $$status != 0; then \
+            $(ECHO) "check-sparql for $$name returned status $$status"; \
+	  fi; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
 	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$failure_urls_file; \
@@ -188,9 +190,9 @@ check-dir: make-dirs clean-logs
 	$(SORT) -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
 	$(SORT) -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
 	count=`$(WC) -l < $$pass_urls_file`; \
-	$(ECHO) "Total Passes:   $$count"; \
+	$(ECHO) "$$label total passes:   $$count"; \
 	count=`$(WC) -l < $$failure_urls_file`; \
-	$(ECHO) "total Failures: $$count"; \
+	$(ECHO) "$$label total failures: $$count"; \
 	exit $$failed
 
 make-dirs:
