@@ -1,5 +1,5 @@
 #
-# Makefile for Rasqal query tests
+# Makefile for Rasqal query SPARQL tests
 #
 # See README.md for details
 #
@@ -32,12 +32,16 @@ NS_URI_ARGS=\
   -f 'xmlns:dawgt="$(DAWGT_NS_URI)"' \
   -f 'xmlns:qt="$(QT_NS_URI)"'
 
-# GIT areas
+# URLs
+SPARQL10_TESTS_ARCHIVE_URL=http://www.w3.org/2001/sw/DataAccess/tests/data-r2.tar.gz
 SPARQL11_GIT_URL=git://github.com/dajobe/sparql11-tests.git
 
 # relative directories
 SPARQL11_TESTS_DIR=sparql11
 SPARQL11_TESTS_SUBDIR=data-sparql11
+
+SPARQL10_TESTS_DIR=sparql10
+SPARQL10_TESTS_SUBDIR=data-r2
 
 LOGS_DIR=logs
 RESULTS_DIR=results
@@ -48,7 +52,9 @@ TMP_DIR=tmp
 CLEAN_DIRS=$(LOGS_DIR) $(RESULTS_DIR) $(TMP_DIR)
 CLEAN_FILES=README.html
 
-TESTS_DIRS=$(SPARQL11_TESTS_DIR)
+TESTS_DIRS=$(TESTS_DIRS_GIT) $(SPARQL10_TESTS_DIR)
+# These are 'reallyclean'ed
+TESTS_DIRS_GIT=$(SPARQL11_TESTS_DIR)
 
 # programs
 ECHO=echo
@@ -62,6 +68,8 @@ SED=sed
 TEE=tee
 WC=wc
 SORT=sort
+CURL=curl
+TAR=tar
 
 # scripts here
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
@@ -97,6 +105,8 @@ all: raptor-rasqal-installed
 	@$(ECHO) "  $(MAKE) update - to checkout / update the GIT tests"
 	@$(ECHO) "  $(MAKE) check  - to run the tests"
 	@$(ECHO) "  $(MAKE) earl   - to generate an EARL report (requires rdfproc, rdflib)"
+	@$(ECHO) "There are SPARQL 1.0 / 1.1 versions of the update and check rules"
+	@$(ECHO) "  for example: $(MAKE) check-sparql10"
 
 raptor-rasqal-installed:
 	@failed=0; \
@@ -112,7 +122,7 @@ raptor-rasqal-installed:
 	fi; \
 	exit $$failed
 
-check: make-dirs raptor-rasqal-installed
+check:
 	@$(ECHO) "Testing with Rasqal $(RASQAL_VERSION) and Raptor $(RAPTOR_VERSION)"
 	$(MAKE) check-sparql11
 
@@ -122,10 +132,22 @@ clean-logs: make-dirs
 clean-results: make-dirs
 	@find $(RESULTS_DIR)/ -type f -print | xargs rm -f
 
-check-sparql11: make-dirs clean-logs
-	@dir="$(SPARQL11_TESTS_DIR)/$(SPARQL11_TESTS_SUBDIR)"; \
-	label="SPARQL 1.1"; \
-	language="sparql11"; \
+check-sparql10: make-dirs clean-logs raptor-rasqal-installed
+	@$(MAKE) check-dir \
+          DIR="$(SPARQL10_TESTS_DIR)/$(SPARQL10_TESTS_SUBDIR)" \
+	  LABEL="SPARQL 1.0" \
+          LANGUAGE="sparql"
+
+check-sparql11: make-dirs clean-logs raptor-rasqal-installed
+	@$(MAKE) check-dir \
+          DIR="$(SPARQL11_TESTS_DIR)/$(SPARQL11_TESTS_SUBDIR)" \
+	  LABEL="SPARQL 1.1" \
+          LANGUAGE="sparql11"
+
+check-dir: make-dirs clean-logs
+	@dir="$(DIR)"; \
+	label="$(LABEL)"; \
+	language="$(LANGUAGE)"; \
 	failed=0; \
 	if test ! -d $$dir; then \
 	  $(ECHO) "$$label tests dir $$dir not found: try $(MAKE) update"; \
@@ -178,9 +200,23 @@ clean:
 	rm -rf $(CLEAN_DIRS) $(CLEAN_FILES)
 
 reallyclean: clean
-	rm -rf $(TESTS_DIRS)
+	rm -rf $(TESTS_DIRS_GIT)
 
-update: update-sparql11
+update: update-sparql10 update-sparql11
+
+update-sparql10:
+	@dir=$(SPARQL10_TESTS_DIR); \
+	url=$(SPARQL10_TESTS_ARCHIVE_URL); \
+	label="SPARQL 1.0"; \
+	tmp_dir="$(abs_top_builddir)/$(TMP_DIR)"; \
+	if test ! -d $$dir; then \
+	  $(ECHO) "Fetching $$label tests from $$url into $$dir"; \
+          tmp_file="$$tmp_dir/tarball"; \
+	  $(CURL) -q -o $$tmp_file $$url; \
+	  $(TAR) -x -z -p -f $$tmp_file; \
+	  rm -f $$tmp_file; \
+	  mv test-suite-archive $(SPARQL10_TESTS_DIR); \
+	fi
 
 update-sparql11:
 	@dir=$(SPARQL11_TESTS_DIR); \
