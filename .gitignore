@@ -1,7 +1,7 @@
 README.html
 *~
 logs/
-results/
+results*/
 sparql10/
 sparql11/
 tmp/
