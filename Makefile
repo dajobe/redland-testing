@@ -204,7 +204,7 @@ reallyclean: clean
 
 update: update-sparql10 update-sparql11
 
-update-sparql10:
+update-sparql10: make-dirs
 	@dir=$(SPARQL10_TESTS_DIR); \
 	url=$(SPARQL10_TESTS_ARCHIVE_URL); \
 	label="SPARQL 1.0"; \
@@ -218,7 +218,7 @@ update-sparql10:
 	  mv test-suite-archive $(SPARQL10_TESTS_DIR); \
 	fi
 
-update-sparql11:
+update-sparql11: make-dirs
 	@dir=$(SPARQL11_TESTS_DIR); \
 	url=$(SPARQL11_GIT_URL); \
 	label="SPARQL 1.1"; \
