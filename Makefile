@@ -236,5 +236,10 @@ $(RESULTS_DIR)/earl.rdf: $(RESULTS_DIR)/manifests.ttl $(RESULTS_DIR)/results.ttl
 	$(RAPPER) -q -i rdfxml -o turtle $(NS_URI_ARGS) earl.rdf > earl.ttl
 
 earl: $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf
+	@log_dir="$(abs_top_srcdir)/$(LOGS_DIR)"; \
+	pass_urls_file="$$log_dir/pass-urls.lst"; \
+	failure_urls_file="$$log_dir/failure-urls.lst"; \
+	$(ECHO) cp $$pass_urls_file $$failure_urls_file $(RESULTS_DIR); \
+	cp $$pass_urls_file $$failure_urls_file $(RESULTS_DIR)
 	$(PYTHON) $(SCRIPTS_DIR)/earlsum.py $(RESULTS_DIR)/earl.rdf > $(RESULTS_DIR)/earl.html
 
