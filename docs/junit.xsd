@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <!--
+    XML schema file for JUnit XML output in RelaxNG Compact form
+    
+    As defined by Ant XMLJUnitResultFormatter class implementation
+    
+    This document is in the Public Domain - Dave Beckett, 2011-08-22
+    
+  -->
+  <!-- Java properties -->
+  <xs:element name="property">
+    <xs:complexType>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="value" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="properties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="property"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <!--
+    test failure such as assertion failed or threw an exception
+    Java: junit.framework.TestListener addFailure()
+  -->
+  <xs:element name="failure">
+    <xs:complexType mixed="true">
+      <xs:attribute name="message" use="required"/>
+      <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <!--
+    an error while running the test
+    Java: junit.framework.TestListener addError()
+  -->
+  <xs:element name="error">
+    <xs:complexType mixed="true">
+      <xs:attribute name="message" use="required"/>
+      <xs:attribute name="type" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testcase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="failure"/>
+        <xs:element minOccurs="0" ref="error"/>
+      </xs:sequence>
+      <xs:attribute name="classname" use="required"/>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="time" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="testsuite">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="properties"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="testcase"/>
+        <xs:element ref="system-out"/>
+        <xs:element ref="system-err"/>
+      </xs:sequence>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="tests" use="required" type="xs:integer"/>
+      <xs:attribute name="errors" use="required" type="xs:integer"/>
+      <xs:attribute name="failures" use="required" type="xs:integer"/>
+      <xs:attribute name="hostname" use="required"/>
+      <xs:attribute name="time" use="required" type="xs:double"/>
+      <xs:attribute name="timestamp" use="required" type="xs:dateTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="system-out" type="xs:string"/>
+  <xs:element name="system-err" type="xs:string"/>
+</xs:schema>
