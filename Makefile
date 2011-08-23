@@ -170,10 +170,11 @@ check-dir: make-dirs clean-logs
 	  base_file=`echo $$subdir | $(SED) -e 's,/,-,g'`; \
 	  abs_log_file="$$log_dir/$$base_file.log"; \
 	  abs_earl_file="$$log_dir/$$base_file-earl.ttl"; \
+	  abs_junit_file="$$log_dir/$$base_file-junit.xml"; \
 	  rm -f $$abs_log_file $$abs_earl_file; \
           $(ECHO) "cd $$subdir; RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language"; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
-	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file 2>&1 | \
+	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
           status=$$?; \
 	  if test $$status != 0; then \
