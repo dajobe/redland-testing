@@ -1,25 +1,25 @@
 # XML schema file for JUnit XML output in RelaxNG Compact form
-# 
+#
 # As defined by Ant XMLJUnitResultFormatter class implementation
 #
 # This document is in the Public Domain - Dave Beckett, 2011-08-22
 #
 
-start = testsuite 
+start = testsuite
 
 # Java properties
-property = element property { 
-   attribute name {text}, 
-   attribute value {text} 
-} 
+property = element property {
+   attribute name {text},
+   attribute value {text}
+}
 
-properties = element properties { 
-   property* 
-} 
+properties = element properties {
+   property*
+}
 
 # test failure such as assertion failed or threw an exception
 # Java: junit.framework.TestListener addFailure()
-failure = element failure { 
+failure = element failure {
    # error message
    attribute message {text},
 
@@ -28,11 +28,11 @@ failure = element failure {
 
    # Java stack trace
    text
-} 
+}
 
 # an error while running the test
 # Java: junit.framework.TestListener addError()
-error = element error { 
+error = element error {
    # error message
    attribute message {text},
 
@@ -41,13 +41,13 @@ error = element error {
 
    # Java: stack trace
    text
-} 
+}
 
-testcase = element testcase { 
+testcase = element testcase {
    # Java test class name
    attribute classname {text},
 
-   # test name or "unknown" 
+   # test name or "unknown"
    attribute name {text},
 
    # delta start time in seconds (to 1ms accuracy) since testsuite started
@@ -56,16 +56,16 @@ testcase = element testcase {
    failure?,
 
    error?
-} 
+}
 
-testsuite = element testsuite { 
-   # testsuite name or "unknown" 
+testsuite = element testsuite {
+   # testsuite name or "unknown"
    attribute name {text},
 
    # counts of (successful) tests, errors and failrues
-   attribute tests {xsd:integer}, 
-   attribute errors {xsd:integer}, 
-   attribute failures {xsd:integer}, 
+   attribute tests {xsd:integer},
+   attribute errors {xsd:integer},
+   attribute failures {xsd:integer},
 
    # hostname or 'localhost'
    attribute hostname {text},
@@ -76,10 +76,10 @@ testsuite = element testsuite {
    # start time in ISO dateTime
    attribute timestamp {xsd:dateTime},
 
-   properties, 
+   properties,
 
-   testcase*, 
+   testcase*,
 
    element system-out {text},  # stdout
    element system-err {text}   # stderr
-} 
+}
