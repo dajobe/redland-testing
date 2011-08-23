@@ -971,8 +971,8 @@ if($junit_report_file) {
   my $hostname="localhost";
 
   my $name = $suite_name;
-  my $tests_count = length(@passed) + length(@failed);
-  my $failures_count = length(@failed);
+  my $tests_count = scalar(@passed) + scalar(@failed);
+  my $failures_count = scalar(@failed);
   my $errors_count = 0;
   my $runtime = $elapsed_time;
   my $id = 0; # this <testsuites> has only 1 testsuite
@@ -1009,7 +1009,7 @@ EOT
     my $test_uri   = $test_result->{uri};
     my $test_name  = $test_result->{name} || "unknown";
     my $class_name = $test_uri;
-    my $is_success = ($test_result->{'is-success'} == 1);
+    my $is_success = $test_result->{'is-success'};
     my $elapsed    = $test_result->{'elapsed-time'};
     my $test_stdout = $test_result->{'stdout'} || '';
     my $test_stderr = $test_result->{'stderr'} || '';
