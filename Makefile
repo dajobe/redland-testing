@@ -77,7 +77,7 @@ CHECK_SPARQL=$(PERL) $(CHECK_SPARQL_SCRIPT)
 
 # FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
 FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
-FILTER_RESULT_URI=$(SED) -e 's/^.*uri<\([^>]*\)>.*/\1/'
+FILTER_RESULT_URI=$(GREP) -v '^testUri'
 # queries
 GET_EARL_FAILURES_QUERY=get-earl-failures.rq
 GET_EARL_PASSES_QUERY=get-earl-passes.rq
@@ -181,9 +181,9 @@ check-dir: make-dirs clean-logs
 	  fi; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
-	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$failure_urls_file; \
+	    $(ROQET) -i sparql -r csv -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI)  >> $$failure_urls_file; \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_PASSES_QUERY)"; \
-	    $(ROQET) -i sparql -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$pass_urls_file; \
+	    $(ROQET) -i sparql -r csv -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$pass_urls_file; \
 	  fi; \
 	done; \
 	tmp_file="$$tmp_dir/sort.tmp"; \
