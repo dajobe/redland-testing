@@ -566,7 +566,9 @@ sub run_test {
 	$results = read_srx_results_file($result_file);
       } elsif($result_file =~ /\.srj$/) {
 	warn "$program: Cannot read SPARQL results in JSON yet ($result_file)\n";
-	return 1;
+	$test_result->{'result'}='failure';
+    
+	return $test_result;
       } elsif($result_file =~ /\.(csv|tsv)$/) {
 	my $sv_type = $1;
 	warn "$program: Reading CSV/TSV bindings result file $result_file\n"
