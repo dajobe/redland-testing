@@ -857,8 +857,9 @@ if($earl_report_file) {
   my $rasqal_version=`$roqet -v`;
   my(@t)=gmtime;
   my $rasqal_date=sprintf("%04d-%02d-%02d", 1900+$t[5], 1+$t[4], $t[3]);
-  my $git_head = `git show-ref -h -s HEAD | head -1`;
-  chomp $git_head;
+
+  my $rasqal_name="Rasqal $rasqal_version";
+
   open(OUT, ">>$earl_report_file") 
     or die "Cannot write to $earl_report_file - $!\n";
   print OUT <<"EOT"
@@ -873,10 +874,11 @@ if($earl_report_file) {
 
  <${rasqal_url}> a doap:Project;
      doap:name "Rasqal";
+     doap:homepage <${rasqal_url}>;
      doap:release
        [ a doap:Version;
          doap:created "$rasqal_date"^^xsd:date ;
-         doap:name "rasqal GIT ${git_head}"].
+         doap:name "${rasqal_name}"].
 EOT
     if $is_new;
 
