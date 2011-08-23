@@ -426,16 +426,15 @@ sub run_test {
   warn "$program: roqet returned code $rc\n"
       if $debug;
   if($rc) {
+    $test_result->{'result'}='failure';
     if($expect_fail && !defined $core_dumped) {
       warn "$program: '$name' OK (got expected failure)\n";
-      $test_result->{'result'}='success';
     } else {
       warn "$program: test '$test_file' FAILED - query command failed with result $rc\n";
       print STDERR "Failing program was:\n";
       my $tidy_query = $test_result->{'tidy-query'};
       print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
       print STDERR $test_result->{'stderr'};
-      $test_result->{'result'}='failure';
     }
 
     return $test_result;
