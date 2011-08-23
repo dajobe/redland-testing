@@ -68,8 +68,17 @@
       <xs:attribute name="hostname" use="required"/>
       <xs:attribute name="time" use="required" type="xs:double"/>
       <xs:attribute name="timestamp" use="required" type="xs:dateTime"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="package"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="system-out" type="xs:string"/>
   <xs:element name="system-err" type="xs:string"/>
+  <xs:element name="testsuites">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="testsuite"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

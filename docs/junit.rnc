@@ -5,7 +5,7 @@
 # This document is in the Public Domain - Dave Beckett, 2011-08-22
 #
 
-start = testsuite
+start = testsuites
 
 # Java properties
 property = element property {
@@ -76,10 +76,21 @@ testsuite = element testsuite {
    # start time in ISO dateTime
    attribute timestamp {xsd:dateTime},
 
+   # testcase integer id when there are multiples ones inside a <testsuites>
+   attribute id {text}?,
+
+   # packge.  Java package
+   attribute package {text}?,
+
+
    properties,
 
    testcase*,
 
    element system-out {text},  # stdout
    element system-err {text}   # stderr
+}
+
+testsuites = element testsuites {
+   testsuite*
 }

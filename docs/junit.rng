@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!--
+    XML schema file for JUnit XML output in RelaxNG Compact form
+    
+    As defined by Ant XMLJUnitResultFormatter class implementation
+    
+    This document is in the Public Domain - Dave Beckett, 2011-08-22
+    
+  -->
+  <start>
+    <ref name="testsuites"/>
+  </start>
+  <!-- Java properties -->
+  <define name="property">
+    <element name="property">
+      <attribute name="name"/>
+      <attribute name="value"/>
+    </element>
+  </define>
+  <define name="properties">
+    <element name="properties">
+      <zeroOrMore>
+        <ref name="property"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!--
+    test failure such as assertion failed or threw an exception
+    Java: junit.framework.TestListener addFailure()
+  -->
+  <define name="failure">
+    <element name="failure">
+      <!-- error message -->
+      <attribute name="message"/>
+      <!-- Java class name -->
+      <attribute name="type"/>
+      <!-- Java stack trace -->
+      <text/>
+    </element>
+  </define>
+  <!--
+    an error while running the test
+    Java: junit.framework.TestListener addError()
+  -->
+  <define name="error">
+    <element name="error">
+      <!-- error message -->
+      <attribute name="message"/>
+      <!-- Java: class name -->
+      <attribute name="type"/>
+      <!-- Java: stack trace -->
+      <text/>
+    </element>
+  </define>
+  <define name="testcase">
+    <element name="testcase">
+      <!-- Java test class name -->
+      <attribute name="classname"/>
+      <!-- test name or "unknown" -->
+      <attribute name="name"/>
+      <!-- delta start time in seconds (to 1ms accuracy) since testsuite started -->
+      <attribute name="time"/>
+      <optional>
+        <ref name="failure"/>
+      </optional>
+      <optional>
+        <ref name="error"/>
+      </optional>
+    </element>
+  </define>
+  <define name="testsuite">
+    <element name="testsuite">
+      <group>
+        <!-- testsuite name or "unknown" -->
+        <attribute name="name"/>
+        <!-- counts of (successful) tests, errors and failrues -->
+        <attribute name="tests">
+          <data type="integer"/>
+        </attribute>
+        <attribute name="errors">
+          <data type="integer"/>
+        </attribute>
+        <attribute name="failures">
+          <data type="integer"/>
+        </attribute>
+        <!-- hostname or 'localhost' -->
+        <attribute name="hostname"/>
+        <!-- runtime in decimal seconds -->
+        <attribute name="time">
+          <data type="double"/>
+        </attribute>
+        <!-- start time in ISO dateTime -->
+        <attribute name="timestamp">
+          <data type="dateTime"/>
+        </attribute>
+        <optional>
+          <!-- testcase integer id when there are multiples ones inside a <testsuites> -->
+          <attribute name="id"/>
+        </optional>
+        <optional>
+          <!-- packge.  Java package -->
+          <attribute name="package"/>
+        </optional>
+        <ref name="properties"/>
+        <zeroOrMore>
+          <ref name="testcase"/>
+        </zeroOrMore>
+        <element name="system-out">
+          <text/>
+        </element>
+        <!-- stdout -->
+        <element name="system-err">
+          <text/>
+        </element>
+      </group>
+      <!-- stderr -->
+    </element>
+  </define>
+  <define name="testsuites">
+    <element name="testsuites">
+      <zeroOrMore>
+        <ref name="testsuite"/>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
