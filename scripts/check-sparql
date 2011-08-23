@@ -660,6 +660,7 @@ my $usage=0;
 my $manifest_file=undef;
 my $earl_report_file=undef;
 my $junit_report_file=undef;
+my $suite_name=undef;
 my $approved=0;
 my $language='sparql';
 my $warning_level=0;
@@ -671,6 +672,7 @@ GetOptions(
   'manifest|m=s' => \$manifest_file,
   'earl|e=s' => \$earl_report_file,
   'junit|j=s' => \$junit_report_file,
+  'suite|S=s' => \$suite_name,
   'help|h|?' => \$usage,
   'approved|a' => \$approved,
   'warnings|W=i' => \$warning_level, # integer 0..100
@@ -680,6 +682,7 @@ pod2usage(-verbose => 2) if $usage;
 pod2usage("$0: Too many tests given.\n") if (@ARGV > 1);
 
 my $unique_test=$ARGV[0];
+$suite_name ||= 'testsuite';
 
 $srcdir.="/" unless $srcdir =~ m%/$%;
 
@@ -967,7 +970,7 @@ if($junit_report_file) {
   my $rasqal_name="Rasqal $rasqal_version";
   my $hostname="localhost";
 
-  my $name='testsuite';
+  my $name = $suite_name;
   my $tests_count = length(@passed) + length(@failed);
   my $failures_count = length(@failed);
   my $errors_count = 0;
@@ -1092,6 +1095,10 @@ Set the output test EARL summary file.
 =item B<--junit> JUNIT
 
 Set the output Ant Junit XML results file.
+
+=item B<--suite> SUITE
+
+Set the test suite name
 
 =back
 
