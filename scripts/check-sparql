@@ -672,7 +672,7 @@ GetOptions(
   'manifest|m=s' => \$manifest_file,
   'earl|e=s' => \$earl_report_file,
   'junit|j=s' => \$junit_report_file,
-  'suite|S=s' => \$suite_name,
+  'suite|u=s' => \$suite_name,
   'help|h|?' => \$usage,
   'approved|a' => \$approved,
   'warnings|W=i' => \$warning_level, # integer 0..100
