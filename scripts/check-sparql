@@ -427,8 +427,9 @@ sub run_test {
       if $debug;
   if($rc) {
     $test_result->{'result'}='failure';
+
     if($expect_fail && !defined $core_dumped) {
-      warn "$program: '$name' OK (got expected failure)\n";
+      warn "$program: '$name' ok (got expected failure)\n";
     } else {
       warn "$program: '$name' FAILED (query returned status $rc)\n";
       print STDERR "Failing program was:\n";
@@ -565,7 +566,7 @@ sub run_test {
 	  if $debug;
 	$results = read_srx_results_file($result_file);
       } elsif($result_file =~ /\.srj$/) {
-	warn "$program: Cannot read SPARQL results in JSON yet ($result_file)\n";
+	warn "$program: '$name'FAILED (Cannot read SPARQL results in JSON)\n";
 	$test_result->{'result'}='failure';
     
 	return $test_result;
@@ -589,7 +590,7 @@ sub run_test {
   }
 
   if(exists $results->{expect_empty}) {
-    warn "$program: '$name' OK (no result)\n";
+    warn "$program: '$name' ok (no result)\n";
     $test_result->{'result'} = $expect_fail ? 'failure' : 'success';
 
     return $test_result;
@@ -637,7 +638,7 @@ sub run_test {
     return $test_result;
   }
 
-  warn "$program: '$name' OK\n";
+  warn "$program: '$name' ok\n";
   $test_result->{'result'}='success';
   return $test_result;
 }
