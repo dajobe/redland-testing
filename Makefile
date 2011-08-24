@@ -172,7 +172,6 @@ check-dir: make-dirs clean-logs
 	  abs_earl_file="$$log_dir/$$base_file-earl.ttl"; \
 	  abs_junit_file="$$log_dir/$$base_file-junit.xml"; \
 	  rm -f $$abs_log_file $$abs_earl_file; \
-          $(ECHO) "cd $$subdir; RAPPER=$(RAPPER) ROQET=$(ROQET) $(CHECK_SPARQL) -i $$language"; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
 	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
