@@ -621,11 +621,14 @@ sub run_test {
   }   
 
   if($result_type eq 'bindings') {
-      if($count != $roqet_results_count) {
-	  warn "$program: '$name' FAILED (Expected ".plural("result","s",$count).", got $roqet_results_count)\n";
-	  $test_result->{'result'}='failure';
-	  return $test_result;
-      }
+    if($count != $roqet_results_count) {
+      warn "$program: '$name' FAILED (Expected ".plural("result","s",$count).", got $roqet_results_count)\n";
+      print STDERR "Failing program was:\n";
+      my $tidy_query = $test_result->{'tidy-query'};
+      print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+      $test_result->{'result'}='failure';
+      return $test_result;
+    }
   }
 
   $cmd="diff -u result.out roqet.out > diff.out";
