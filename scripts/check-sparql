@@ -430,7 +430,7 @@ sub run_test {
     if($expect_fail && !defined $core_dumped) {
       warn "$program: '$name' OK (got expected failure)\n";
     } else {
-      warn "$program: test '$test_file' FAILED - query command failed with result $rc\n";
+      warn "$program: '$name' FAILED (query returned status $rc)\n";
       print STDERR "Failing program was:\n";
       my $tidy_query = $test_result->{'tidy-query'};
       print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
@@ -531,7 +531,7 @@ sub run_test {
   }
   close(ERR);
   if(@errs) {
-    warn "$program: test '$test_file' FAILED - query returned errors:\n$program:   ".join("\n$program:   ",@errs)."\n";
+    warn "$program: '$name' FAILED (query returned errors)\n$program:   ".join("\n$program:   ",@errs)."\n";
 
     $test_result->{'errors'} = join("\n", @errs);
     print STDERR "Failing program was:\n";
