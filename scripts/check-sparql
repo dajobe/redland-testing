@@ -429,7 +429,7 @@ sub run_test {
     $test_result->{'result'}='failure';
 
     if($expect_fail && !defined $core_dumped) {
-      warn "$program: '$name' ok (got expected failure)\n";
+      warn "$program: '$name' ok - got expected failure\n";
     } else {
       warn "$program: '$name' FAILED (query returned status $rc)\n";
       print STDERR "Failing program was:\n";
@@ -620,6 +620,13 @@ sub run_test {
     close(OUT);
   }   
 
+  if($result_type eq 'bindings') {
+      if($count != $roqet_results_count) {
+	  warn "$program: '$name' FAILED (Expected ".plural("result","s",$count).", got $roqet_results_count)\n";
+	  $test_result->{'result'}='failure';
+	  return $test_result;
+      }
+  }
 
   $cmd="diff -u result.out roqet.out > diff.out";
   $rc=system($cmd);
@@ -630,10 +637,6 @@ sub run_test {
     print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
     warn "Difference is:\n";
     system("cat diff.out");
-    if($result_type eq 'bindings') {
-      warn "$program: Expected ".plural("result","s",$count).", got $roqet_results_count\n"
-	  unless $count == $roqet_results_count;
-    }
     $test_result->{'result'}='failure';
     return $test_result;
   }
