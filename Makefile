@@ -185,14 +185,17 @@ check-dir: make-dirs clean-logs
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_PASSES_QUERY)"; \
 	    $(ROQET) -i sparql -r csv -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI) >> $$pass_urls_file; \
 	  fi; \
+	  $(ECHO) " "; \
 	done; \
+	$(ECHO) " "; \
+	$(ECHO) "$$label Summary:"; \
 	tmp_file="$$tmp_dir/sort.tmp"; \
 	$(SORT) -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
 	$(SORT) -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
 	count=`$(WC) -l < $$pass_urls_file`; \
-	$(ECHO) "$$label total passes:   $$count"; \
+	$(ECHO) "$$label   total passes:   $$count"; \
 	count=`$(WC) -l < $$failure_urls_file`; \
-	$(ECHO) "$$label total failures: $$count"; \
+	$(ECHO) "$$label   total failures: $$count"; \
 	exit $$failed
 
 make-dirs:
