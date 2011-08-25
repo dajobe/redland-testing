@@ -566,7 +566,7 @@ sub run_test {
 	  if $debug;
 	$results = read_srx_results_file($result_file);
       } elsif($result_file =~ /\.srj$/) {
-	warn "$program: '$name'FAILED (Cannot read SPARQL results in JSON)\n";
+	warn "$program: '$name' FAILED (Cannot read SPARQL results in JSON)\n";
 	$test_result->{'result'}='failure';
     
 	return $test_result;
