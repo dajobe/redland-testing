@@ -6,14 +6,13 @@
   rt:commandLine "roqet -d debug -i sparql -D data-1.ttl filter-nested-2.rq" ;
   rt:description """ A nested FILTER fails.  Scope of variable in FILTER?
     => FILTER should always return FALSE
-    "A FILTER in a group { ... } cannot see variables bound outside that group" """ .
+    Manifest: "A FILTER in a group { ... } cannot see variables bound outside that group" """ .
 
 # Filter-scope - 1
 <algebra/manifest#filter-scope-1>
   rt:commandLine "roqet -d debug -i sparql -D data-2.ttl filter-scope-1.rq" ;
   rt:description """ Scope of variable in FILTER - it cannot see variables bound outside a group. => FILTER should always return FALSE
-    "FILTERs in an OPTIONAL do not extend to variables bound outside
-  of the LeftJoin(...) operation"  """ .
+    Manifest: "FILTERs in an OPTIONAL do not extend to variables bound outside of the LeftJoin(...) operation"  """ .
 
 <construct/manifest#construct-1>
   rt:commandLine "roqet -d debug -W 0 -i sparql -D data-ident.ttl query-ident.rq" ;
