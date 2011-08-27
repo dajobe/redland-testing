@@ -1,0 +1,83 @@
+@base <http://www.w3.org/2001/sw/DataAccess/tests/data-r2/> .
+@prefix rt: <http://schemas.librdf.org/2011/08/testing#> .
+
+# Filter-nested - 2
+<algebra/manifest#filter-nested-2>
+  rt:commandLine "roqet -d debug -i sparql -D data-1.ttl filter-nested-2.rq" ;
+  rt:description """ A nested FILTER fails.  Scope of variable in FILTER?
+    => FILTER should always return FALSE
+    "A FILTER in a group { ... } cannot see variables bound outside that group" """ .
+
+# Filter-scope - 1
+<algebra/manifest#filter-scope-1>
+  rt:commandLine "roqet -d debug -i sparql -D data-2.ttl filter-scope-1.rq" ;
+  rt:description """ Scope of variable in FILTER - it cannot see variables bound outside a group. => FILTER should always return FALSE
+    "FILTERs in an OPTIONAL do not extend to variables bound outside
+  of the LeftJoin(...) operation"  """ .
+
+<construct/manifest#construct-1>
+  rt:commandLine "roqet -d debug -W 0 -i sparql -D data-ident.ttl query-ident.rq" ;
+  rt:description """ Test suite issue - cannot compare Bnodes in graph properly """ .
+
+<construct/manifest#construct-2>
+  rt:commandLine "roqet -d debug -W 0 -i sparql -D data-ident.ttl query-subgraph.rq" ;
+  rt:description """ Test suite issue - cannot compare Bnodes in graph properly """ .
+
+<construct/manifest#construct-3>
+  rt:commandLine "roqet -d debug -W 0 -i sparql -D data-reif.ttl query-reif-1.rq" ;
+  rt:description """ Test suite issue - cannot compare Bnodes in graph properly """ .
+
+<construct/manifest#construct-4>
+  rt:commandLine "roqet -d debug -W 0 -i sparql -D data-reif.ttl query-reif-2.rq" ;
+  rt:description """ Test suite issue - cannot compare Bnodes in graph properly """ .
+
+# Strings: Distinct
+<distinct/manifest#distinct-2>
+  rt:commandLine "roqet -d debug -i sparql -D data-str.ttl distinct-1.rq" ;
+  rt:description """ Literal comparison issue: "" is not rdf:equal to ""^^xsd:string """ .
+
+# Opt: No distinct
+<distinct/manifest#distinct-4>
+  rt:commandLine "roqet -d debug -i sparql -D data-opt.ttl no-distinct-2.rq" ;
+  rt:description """ returns [v=NULL] (1 binding) instead of [] (0 bindings) """ .
+
+# Opt: Distinct
+<distinct/manifest#distinct-9>
+  rt:commandLine "roqet -d debug -i sparql -D data-opt.ttl distinct-2.rq" ;
+  rt:description """ returns [v=NULL] (1 binding) instead of [] (0 bindings) """ .
+
+# All: Distinct
+<distinct/manifest#no-distinct-4>
+  rt:commandLine "roqet -d debug -i sparql -D data-all.ttl distinct-1.rq" ;
+  rt:description """  Literal comparison issue: "" is not rdf:equal to ""^^xsd:string """ .
+
+# date-2
+<open-world/manifest#date-2>
+  rt:commandLine "roqet -d debug -i sparql -D data-3.ttl date-2.rq" ;
+  rt:description """ mf:requires mf:XsdDateOperations ;
+     xsd:date comparing is not implemented; uses string compares """ .
+
+# date-3
+<open-world/manifest#date-3>
+  rt:commandLine "roqet -d debug -i sparql -D data-3.ttl date-3.rq" ;
+  rt:description """ mf:requires mf:XsdDateOperations ;
+     xsd:date comparing is not implemented; uses string compares """ .
+
+<optional-filter/manifest#dawg-optional-filter-005-not-simplified>
+  rt:commandLine "roqet -d debug -W 0 -i sparql -D data-1.ttl expr-5.rq" ;
+  rt:description """ FILTER variable scoping issue ???? """ .
+
+# These are mf:resultCardinality mf:LaxCardinality tests which means
+# the cardinality should be [1,n] when n is what's in the results file
+# -- test cases docs
+
+<reduced/manifest#reduced-1>
+  rt:commandLine "roqet -d debug -i sparql -D reduced-star.ttl reduced-1.rq" ;
+  rt:description """ mf:resultCardinality mf:LaxCardinality.
+     returns 1 duplicate """ .
+
+<reduced/manifest#reduced-2>
+  rt:commandLine "roqet -d debug -i sparql -D reduced-str.ttl reduced-2.rq" ;
+  rt:description """ mf:resultCardinality mf:LaxCardinality.
+     returns extras that are not seen as equal due to "" != ""^^xsd:string """ .
+g
