@@ -80,4 +80,3 @@
   rt:commandLine "roqet -d debug -i sparql -D reduced-str.ttl reduced-2.rq" ;
   rt:description """ mf:resultCardinality mf:LaxCardinality.
      returns extras that are not seen as equal due to "" != ""^^xsd:string """ .
-g
