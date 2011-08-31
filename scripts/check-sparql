@@ -411,17 +411,17 @@ sub run_test {
   my $r=$roqet_cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$curdir/,,g;
   $test_result->{'tidy-query'} = $r;
 
-  my $core_dumped = undef;
-  for my $line (split(/\n/, $test_result->{'stderr'})) {
-    if($line =~ m/core.dumped/i) {
-      $core_dumped = $line;
-      warn "$program: roqet core dumped: $core_dumped\n"
-          if $debug;
-      $rc = "core dumped ($core_dumped): $rc";
-
-      $test_result->{'roqet-core-dumped'}='true';
-      last;
-    }
+  my $core_dumped = 0;
+  if($rc & 127) {
+    # exec()ed but died on a signal
+    my $signal;
+    ($signal, $core_dumped) = (($rc & 127),  ($rc & 128));
+    $rc = "died with signal $signal";
+    $rc .=" with coredump" if $core_dumped;
+  } elsif($rc) {
+    # exec()ed and exited with non-0
+    $rc >>= 8;
+    $rc = "exited with code $rc";
   }
 
   warn "$program: roqet returned code $rc\n"
@@ -429,10 +429,10 @@ sub run_test {
   if($rc) {
     $test_result->{'result'}='failure';
 
-    if($expect_fail && !defined $core_dumped) {
+    if($expect_fail && !$core_dumped) {
       warn "$program: '$name' ok - got expected failure\n";
     } else {
-      warn "$program: '$name' FAILED (query returned status $rc)\n";
+      warn "$program: '$name' FAILED ($rc)\n";
       print STDERR "Failing program was:\n";
       my $tidy_query = $test_result->{'tidy-query'};
       print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
