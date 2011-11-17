@@ -37,6 +37,12 @@ use Getopt::Long;
 use Pod::Usage;
 use Cwd;
 
+use POSIX qw(WIFSIGNALED WIFEXITED WTERMSIG WEXITSTATUS);
+# We really want WCOREDUMP too
+sub WCOREDUMP($status) {
+  return $status & 0200;
+}
+
 my $roqet=$ENV{ROQET} || "roqet";
 my $rasqal_url="http://librdf.org/rasqal/";
 my $rapper=$ENV{RAPPER} || "rapper";
@@ -397,10 +403,10 @@ sub run_test {
   my $start_time = time;
   system($roqet_cmd);
   my $end_time = time;
-  my $rc=$? >>8;
+  my $rc = $?;
   
   $test_result->{'elapsed-time'}= $end_time - $start_time;
-  $test_result->{'roqet-status-code'}= $rc;
+  $test_result->{'roqet-status-code'}= WIFEXITED($rc) ? WEXITSTATUS($rc) : undef;
   $test_result->{'stdout'}=`cat $roqet_tmp`; 
   $test_result->{'stderr'}=`cat $roqet_err`;
 
@@ -411,17 +417,23 @@ sub run_test {
   my $r=$roqet_cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$curdir/,,g;
   $test_result->{'tidy-query'} = $r;
 
+
   my $core_dumped = 0;
-  if($rc & 127) {
+  if(WIFSIGNALED($rc)) {
     # exec()ed but died on a signal
-    my $signal;
-    ($signal, $core_dumped) = (($rc & 127),  ($rc & 128));
+    my $signal = WTERMSIG($rc);
     $rc = "died with signal $signal";
+
+    $core_dumped = WCOREDUMP($rc);
     $rc .=" with coredump" if $core_dumped;
-  } elsif($rc) {
-    # exec()ed and exited with non-0
-    $rc >>= 8;
-    $rc = "exited with code $rc";
+  } elsif(WIFEXITED($rc)) {
+    $rc = WEXITSTATUS($rc);
+    if($rc) {
+      # exec()ed and exited with non-0
+      $rc = "exited with status $rc";
+    }
+  } else {
+    $rc = "system() returned unknown status code $rc";
   }
 
   warn "$program: roqet returned code $rc\n"
