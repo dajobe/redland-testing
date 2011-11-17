@@ -418,14 +418,10 @@ sub run_test {
   $test_result->{'tidy-query'} = $r;
 
 
-  my $core_dumped = 0;
   if(WIFSIGNALED($rc)) {
     # exec()ed but died on a signal
     my $signal = WTERMSIG($rc);
     $rc = "died with signal $signal";
-
-    $core_dumped = WCOREDUMP($rc);
-    $rc .=" with coredump" if $core_dumped;
   } elsif(WIFEXITED($rc)) {
     $rc = WEXITSTATUS($rc);
     if($rc) {
@@ -435,6 +431,8 @@ sub run_test {
   } else {
     $rc = "system() returned unknown status code $rc";
   }
+  my $core_dumped = WCOREDUMP($rc);
+  $rc .=" with coredump" if $core_dumped;
 
   warn "$program: roqet returned code $rc\n"
       if $debug;
