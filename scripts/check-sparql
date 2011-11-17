@@ -40,7 +40,7 @@ use Cwd;
 use POSIX qw(WIFSIGNALED WIFEXITED WTERMSIG WEXITSTATUS);
 # We really want WCOREDUMP too
 sub WCOREDUMP($) {
-  return $status & 0200;
+  return $_[0] & 0200;
 }
 
 my $roqet=$ENV{ROQET} || "roqet";
