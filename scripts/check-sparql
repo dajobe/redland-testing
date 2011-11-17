@@ -39,7 +39,7 @@ use Cwd;
 
 use POSIX qw(WIFSIGNALED WIFEXITED WTERMSIG WEXITSTATUS);
 # We really want WCOREDUMP too
-sub WCOREDUMP($status) {
+sub WCOREDUMP($) {
   return $status & 0200;
 }
 
