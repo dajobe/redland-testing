@@ -48,7 +48,6 @@ my $rasqal_url="http://librdf.org/rasqal/";
 my $rapper=$ENV{RAPPER} || "rapper";
 my $diff_cmd=$ENV{DIFF} || "diff";
 
-
 my $rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 my $rs='http://www.w3.org/2001/sw/DataAccess/tests/result-set#';
 my $variable_predicate="<${rs}variable>";
@@ -361,6 +360,34 @@ sub read_rdf_graph_file($$) {
 }
 
 
+sub compare_rdf_graphs($$$) {
+  my($file1, $file2, $out)=@_;
+  my $cmd;
+  my $rc;
+  my $errors;
+  if(defined $ENV{NTC}) {
+    my $ntc = $ENV{NTC};
+    $cmd="$ntc $file1 $file2 > $out 2>&1";
+    $rc = system($cmd);
+  } elsif(defined $ENV{JENAROOT}) {
+    my $j = $ENV{JENAROOT};
+    my $classpath = `$j/bin/jena_path`;
+    chomp $classpath;
+    $cmd = qq{java -cp "$classpath" jena.rdfcompare $file1 $file2 N-TRIPLE N-TRIPLE > $out};
+    $rc = system($cmd);
+    if($rc) {
+      $cmd = "$diff_cmd -u $file1 $file2 > $out";
+      system($cmd);
+    }
+  } else {
+    $cmd = "$diff_cmd -u $file1 $file2 > $out";
+    $rc = system($cmd);
+  }
+
+  return $rc;
+}
+
+
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
@@ -631,8 +658,12 @@ sub run_test {
     close(OUT);
   }   
 
-  $cmd = "$diff_cmd -u result.out roqet.out > diff.out";
-  $rc = system($cmd);
+  if($result_type eq 'graph') {
+    $rc = compare_rdf_graphs('result.out', 'roqet.out', 'diff.out');
+  } else {
+    $cmd = "$diff_cmd -u result.out roqet.out > diff.out";
+    $rc = system($cmd);
+  }
   if($rc) {
     if($result_type eq 'bindings' && $count != $roqet_results_count) {
       warn "$program: '$name' FAILED (Expected ".plural("result","s",$count).", got $roqet_results_count)\n";
