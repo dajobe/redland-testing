@@ -372,9 +372,8 @@ sub compare_rdf_graphs($$$) {
     $rc = system($cmd);
   } elsif(defined $ENV{JENAROOT}) {
     my $j = $ENV{JENAROOT};
-    my $classpath = `$j/bin/jena_path`;
-    chomp $classpath;
-    $cmd = qq{java -cp "$classpath" jena.rdfcompare $file1 $file2 N-TRIPLE N-TRIPLE > $out};
+    my $classpath=join(':',glob("$j/lib/*jar"));
+    $cmd = qq{java -cp $classpath jena.rdfcompare $file1 $file2 N-TRIPLE N-TRIPLE > $out};
     $rc = system($cmd);
     if($rc) {
       $cmd = "$diff_cmd -u $file1 $file2 > $out";
