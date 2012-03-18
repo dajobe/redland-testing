@@ -432,6 +432,7 @@ sub run_test {
   my $end_time = time;
   my $rc = $?;
   
+  my $core_dumped = WCOREDUMP($rc);
   $test_result->{'elapsed-time'}= $end_time - $start_time;
   $test_result->{'roqet-status-code'}= WIFEXITED($rc) ? WEXITSTATUS($rc) : undef;
   $test_result->{'stdout'}=`cat $roqet_tmp`; 
@@ -443,7 +444,6 @@ sub run_test {
   my $curdir = getcwd;
   my $r=$roqet_cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$curdir/,,g;
   $test_result->{'tidy-query'} = $r;
-
 
   if(WIFSIGNALED($rc)) {
     # exec()ed but died on a signal
@@ -458,7 +458,6 @@ sub run_test {
   } else {
     $rc = "system() returned unknown status code $rc";
   }
-  my $core_dumped = WCOREDUMP($rc);
   $rc .=" with coredump" if $core_dumped;
 
   warn "$program: roqet returned code $rc\n"
