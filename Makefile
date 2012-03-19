@@ -173,7 +173,7 @@ check-dir: make-dirs clean-logs
 	  abs_junit_file="$$log_dir/$$base_file-junit.xml"; \
 	  rm -f $$abs_log_file $$abs_earl_file; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
-	    $(CHECK_SPARQL) -i $$language --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
+	    $(CHECK_SPARQL) -i $$language --approved --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
               $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
           status=$$?; \
 	  if test $$status != 0; then \
