@@ -106,16 +106,22 @@ bindings: 7
 
 bindings/manifest#b1
     ????
+
 bindings/manifest#b2
     ????
+
 bindings/manifest#b3
     ????
+
 bindings/manifest#b4
     ????
+
 bindings/manifest#b5
     ????
+
 bindings/manifest#b6
     ????
+
 bindings/manifest#b7
     ????
 
@@ -124,8 +130,10 @@ csv-tsv-res: 3
 
 csv-tsv-res/manifest#csv01
     plain literal / xsd:string equality issue
+
 csv-tsv-res/manifest#csv02
     plain literal / xsd:string equality issue
+
 csv-tsv-res/manifest#csv03
     more like a syntax comparison but blank nodes are need eliding
 
@@ -134,12 +142,16 @@ exists: 5
 
 exists/manifest#exists01
     exists syntax not supported
+
 exists/manifest#exists02
     exists syntax not supported
+
 exists/manifest#exists03
     exists syntax not supported
+
 exists/manifest#exists04
     exists syntax not supported
+
 exists/manifest#exists05
     exists syntax not supported
 
@@ -148,56 +160,82 @@ functions: 28
 
 functions/manifest#ceil01
     decimal format differences
+
 functions/manifest#concat02
     decimal format and unicode differences
+
 functions/manifest#encode01
     unicode compare
+
 functions/manifest#floor01
     decimal format differences
+
 functions/manifest#if01
     unicode????
+
 functions/manifest#if02
     error propogation in IF????
+
 functions/manifest#iri01
     base URIs?
+
 functions/manifest#lcase01
     unicode compare
+
 functions/manifest#length01
     unicode compare
+
 functions/manifest#notin01
     CRASH
+
 functions/manifest#plus-1
     decimal format differences
+
 functions/manifest#plus-2
     decimal format differences
+
 functions/manifest#replace01
     unicode????
+
 functions/manifest#replace03
     capture failure????
+
 functions/manifest#round01
     decimal format differences
+
 functions/manifest#seconds
     decimal format differences
+
 functions/manifest#sha1-02
     unicode distinct
+
 functions/manifest#sha256-02
     unicode distinct
+
 functions/manifest#sha512-02
     unicode distinct
+
 functions/manifest#strafter01
     unicode????
+
 functions/manifest#strbefore01
     unicode????
+
 functions/manifest#strdt03
     unicode compare
+
 functions/manifest#strlang03
     lang and unicode compare
+
 functions/manifest#substring01
     unicode compare
+
 functions/manifest#substring02
     unicode compare
+
 functions/manifest#timezone
     ???? duration negation
+
 functions/manifest#ucase01
     unicode compare
 
@@ -206,14 +244,18 @@ json-res: 4
 
 json-res/manifest#jsonres01
     cannot read JSON results
+
 json-res/manifest#jsonres02
     cannot read JSON results
+
 json-res/manifest#jsonres03
     cannot read JSON results
+
 json-res/manifest#jsonres04
     cannot read JSON results
 
-property-path: 32
+
+property-path: 33
 -----------------
 
 property-path/manifest#pp01
@@ -255,6 +297,7 @@ subquery: 2
 
 subquery/manifest#subquery02
     ????
+
 subquery/manifest#subquery10
     EXISTS not implemented
 
