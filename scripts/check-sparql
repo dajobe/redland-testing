@@ -294,15 +294,17 @@ sub read_sv_results_file($$) {
 	    $value="uri<".$value.">";
 	  } elsif($value =~ /^_:/) {
 	    $value = "blank _";
-	  } elsif($value =~ /^[0-9]+$/) {
-	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
-	  } elsif($value =~ /^\d+$/) {
+	  } elsif($value =~ /^\d+\.\d+$/) {
 	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#decimal>)";
+	  } elsif($value =~ /^\d+$/) {
+	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
 	  } else {
 	    $value="string(\"".$value."\"^^<http://www.w3.org/2001/XMLSchema#string>)";
 	  }
 	} else {
-	  if($value =~ /^[0-9]+$/) {
+	  if($value =~ /^\d+\.\d+$/) {
+	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#decimal>)";
+	  } elsif($value =~ /^\d+$/) {
 	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
 	  } else {
 	    $value = toDebug($value);
