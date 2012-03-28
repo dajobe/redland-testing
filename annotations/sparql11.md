@@ -141,118 +141,146 @@ exists: 5
 ---------
 
 exists/manifest#exists01
-    exists syntax not supported
+
+* exists syntax not supported
 
 exists/manifest#exists02
-    exists syntax not supported
+
+* exists syntax not supported
 
 exists/manifest#exists03
-    exists syntax not supported
+
+* exists syntax not supported
 
 exists/manifest#exists04
-    exists syntax not supported
+
+* exists syntax not supported
 
 exists/manifest#exists05
-    exists syntax not supported
+
+* exists syntax not supported
 
 functions: 28
 -------------
 
 functions/manifest#ceil01
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#concat02
-    decimal format and unicode differences
+
+* decimal format differences
+* test runner: unicode compare
 
 functions/manifest#encode01
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#floor01
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#if01
-    unicode????
+
+* unicode????
 
 functions/manifest#if02
-    error propogation in IF????
+
+* error propogation in IF????
 
 functions/manifest#iri01
-    base URIs?
+
+* base URIs?
 
 functions/manifest#lcase01
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#length01
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#notin01
-    CRASH
+
+* CRASH
 
 functions/manifest#plus-1
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#plus-2
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#replace01
-    unicode????
+
+* unicode????
 
 functions/manifest#replace03
-    capture failure????
+
+* capture failure????
 
 functions/manifest#round01
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#seconds
-    decimal format differences
+
+* decimal format differences
 
 functions/manifest#sha1-02
-    unicode distinct
+
+* unicode distinct
 
 functions/manifest#sha256-02
-    unicode distinct
+
+* unicode distinct
 
 functions/manifest#sha512-02
-    unicode distinct
+
+* unicode distinct
 
 functions/manifest#strafter01
-    unicode????
+
+* unicode????
 
 functions/manifest#strbefore01
-    unicode????
+
+* unicode????
 
 functions/manifest#strdt03
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#strlang03
-    lang and unicode compare
+
+* lang and unicode compare
 
 functions/manifest#substring01
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#substring02
-    unicode compare
+
+* test runner: unicode compare
 
 functions/manifest#timezone
-    ???? duration negation
+
+* ???? duration negation
 
 functions/manifest#ucase01
-    unicode compare
+
+* test runner: unicode compare
 
 json-res: 4
 -----------
 
 json-res/manifest#jsonres01
-    cannot read JSON results
-
 json-res/manifest#jsonres02
-    cannot read JSON results
-
 json-res/manifest#jsonres03
-    cannot read JSON results
-
 json-res/manifest#jsonres04
-    cannot read JSON results
+
+* cannot read JSON results
 
 
 property-path: 33
@@ -290,16 +318,19 @@ property-path/manifest#pp32
 property-path/manifest#pp33
 property-path/manifest#pp34
 property-path/manifest#pp35
-    not implementing
+
+* not implementing
 
 subquery: 2
 -----------
 
 subquery/manifest#subquery02
-    ????
+
+* ????
 
 subquery/manifest#subquery10
-    EXISTS not implemented
+
+* EXISTS not implemented
 
 subquery: 10
 ------------
@@ -314,7 +345,8 @@ syntax-query/manifest#test_32
 syntax-query/manifest#test_35
 syntax-query/manifest#test_36
 syntax-query/manifest#test_37
-    ???? Several EXISTS and BINDINGS failures
+
+* ???? Several EXISTS and BINDINGS failures
 
 syntax-update-1: 8
 ------------------
@@ -327,6 +359,7 @@ syntax-update-1/manifest#test_32
 syntax-update-1/manifest#test_38
 syntax-update-1/manifest#test_39
 syntax-update-1/manifest#test_40
-    ???? GRAPH in insert/delete data syntax.
-    ???? empty INSERT DATA {} syntax
-    ???? empty query syntax
+
+* ???? GRAPH in insert/delete data syntax.
+* ???? empty INSERT DATA {} syntax
+* ???? empty query syntax
