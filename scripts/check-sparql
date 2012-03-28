@@ -4,7 +4,7 @@
 #
 # USAGE: check-sparql [options] [TEST]
 # 
-# Copyright (C) 2004-2011, David Beckett http://www.dajobe.org/
+# Copyright (C) 2004-2012, David Beckett http://www.dajobe.org/
 # Copyright (C) 2004-2005, University of Bristol, UK http://www.bristol.ac.uk/
 # 
 # This package is Free Software and part of Redland http://librdf.org/
@@ -83,18 +83,20 @@ sub toDebug($) {
 
   return "NULL" if $str eq "<${rs}undefined>";
 
-  return $str if $str =~ s/^(".*")(@.*)(\^\^<.*>)$/string($1$2$3)/;
+  return $str if $str =~ s/^("[^"]*")(@.*)(\^\^<.*>)$/string($1$2$3)/;
 
-  return $str if $str =~ s/^(".*"\^\^<.*>)$/string($1)/;
+  return $str if $str =~ s/^("[^"]*"\^\^<.*>)$/string($1)/;
 
-  return $str if $str =~ s/^(".*"@.*)$/string($1)/;
+  return $str if $str =~ s/^("[^"]*"@.*)$/string($1)/;
 
-  return $str if $str =~ s/^(".*")$/string($1)/;
+  return $str if $str =~ s/^("[^"]*")$/string($1)/;
 
   return $str if $str =~ s/^(<.*>)$/uri$1/;
 
   #return $str if $str =~ s/^_:(.*)$/blank $1/;
   return $str if $str =~ s/^_:(.*)$/blank _/;
+
+  return qq{string("$str")};
 }
 
 sub read_rdf_results_file($$) {
@@ -276,7 +278,13 @@ sub read_sv_results_file($$) {
   my(@vars);
   for my $line (split(/(?:\r\n|\r|\n)/, $data)) {
     # warn ">>$line<<\n";
+
+    # Replace $sep in quotes with \001
+    $line =~ s/("[^"]*")/$a = $1; $a =~ s%$sep%\001%g; $a/eg;
     my(@values)=split(/$sep/, $line);
+    # Restore $sep
+    @values = map { s/\001/$sep/g; $_ } @values;
+
     if(!@vars) {
       @vars = map { s/^\?//; $_ } @values;
       warn "$program: SV vars are @vars\n"
@@ -289,26 +297,18 @@ sub read_sv_results_file($$) {
       my($variable) = $vars[$i];
       my $value = $values[$i];
       if(defined $value) {
-	if($sv_type eq 'csv') {
-	  if($value =~ /^http/) {
-	    $value="uri<".$value.">";
-	  } elsif($value =~ /^_:/) {
-	    $value = "blank _";
-	  } elsif($value =~ /^\d+\.\d+$/) {
-	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#decimal>)";
-	  } elsif($value =~ /^\d+$/) {
-	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
-	  } else {
-	    $value="string(\"".$value."\"^^<http://www.w3.org/2001/XMLSchema#string>)";
-	  }
+	if($value =~ /^http/) {
+	  $value="uri<".$value.">";
+	} elsif($value =~ /^_:/) {
+	  $value = "blank _";
+	} elsif($value =~ /^\d+\.\d+$/) {
+	  $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#decimal>)";
+	} elsif($value =~ /^\d+$/) {
+	  $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
+	} elsif($value =~ /^\d+\.\d+[eE]\d+$/) {
+	  $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#double>)";
 	} else {
-	  if($value =~ /^\d+\.\d+$/) {
-	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#decimal>)";
-	  } elsif($value =~ /^\d+$/) {
-	    $value="string(\"$value\"^^<http://www.w3.org/2001/XMLSchema#integer>)";
-	  } else {
-	    $value = toDebug($value);
-	  }
+	  $value = toDebug($value);
 	}
       }
       $row->{$variable} = $value;
@@ -318,7 +318,6 @@ sub read_sv_results_file($$) {
     push(@{$results{rows}}, $row);
   }
   close(IN);
-
   return \%results;
 }
 
