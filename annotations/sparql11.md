@@ -1,3 +1,20 @@
+Rasqal SPARQL 1.1 testing
+=========================
+
+Approved tests only.
+
+Passes: 155
+
+Failures: 86
+
+Tested:
+
+* [GIT e932f0ea8bbbc9819d572f7fa2e8c71877c32037](https://github.com/dajobe/rasqal/commit/e932f0ea8bbbc9819d572f7fa2e8c71877c32037)
+* Tue Mar 27 21:19:19 PDT 2012
+
+aggregates: 4
+-------------
+
 aggregates/manifest#agg-err-02
     Wrong expected result canonical format
 
@@ -48,6 +65,9 @@ aggregates/manifest#agg08b
     +result: [O12=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("9"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 
+bind: 2
+-------
+
 bind/manifest#bind07
     ????
 
@@ -81,6 +101,9 @@ bind/manifest#bind10
     +result: [s=uri<http://example.org/s4>, v=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 
+bindings: 7
+-----------
+
 bindings/manifest#b1
     ????
 bindings/manifest#b2
@@ -96,12 +119,18 @@ bindings/manifest#b6
 bindings/manifest#b7
     ????
 
+csv-tsv-res: 3
+--------------
+
 csv-tsv-res/manifest#csv01
     plain literal / xsd:string equality issue
 csv-tsv-res/manifest#csv02
     plain literal / xsd:string equality issue
 csv-tsv-res/manifest#csv03
     more like a syntax comparison but blank nodes are need eliding
+
+exists: 5
+---------
 
 exists/manifest#exists01
     exists syntax not supported
@@ -113,6 +142,9 @@ exists/manifest#exists04
     exists syntax not supported
 exists/manifest#exists05
     exists syntax not supported
+
+functions: 28
+-------------
 
 functions/manifest#ceil01
     decimal format differences
@@ -169,6 +201,9 @@ functions/manifest#timezone
 functions/manifest#ucase01
     unicode compare
 
+json-res: 4
+-----------
+
 json-res/manifest#jsonres01
     cannot read JSON results
 json-res/manifest#jsonres02
@@ -177,6 +212,9 @@ json-res/manifest#jsonres03
     cannot read JSON results
 json-res/manifest#jsonres04
     cannot read JSON results
+
+property-path: 32
+-----------------
 
 property-path/manifest#pp01
 property-path/manifest#pp02
@@ -212,10 +250,16 @@ property-path/manifest#pp34
 property-path/manifest#pp35
     not implementing
 
+subquery: 2
+-----------
+
 subquery/manifest#subquery02
     ????
 subquery/manifest#subquery10
     EXISTS not implemented
+
+subquery: 10
+------------
 
 syntax-query/manifest#test_24
 syntax-query/manifest#test_25
@@ -228,6 +272,9 @@ syntax-query/manifest#test_35
 syntax-query/manifest#test_36
 syntax-query/manifest#test_37
     ???? Several EXISTS and BINDINGS failures
+
+syntax-update-1: 8
+------------------
 
 syntax-update-1/manifest#test_25
 syntax-update-1/manifest#test_27
