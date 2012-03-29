@@ -50,6 +50,7 @@ my $diff_cmd=$ENV{DIFF} || "diff";
 
 my $rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 my $rs='http://www.w3.org/2001/sw/DataAccess/tests/result-set#';
+my $resultVariable_predicate="<${rs}resultVariable>";
 my $variable_predicate="<${rs}variable>";
 my $value_predicate="<${rs}value>";
 my $binding_predicate="<${rs}binding>";
@@ -164,12 +165,17 @@ sub read_rdf_results_file($$) {
     return {expect_empty => 1};
   }
 
+  my(@variables);
+  for my $vname (@{$nodes{$resultset_node}->{$resultVariable_predicate}}) {
+    push(@variables, $vname);
+  }
+
   for my $node (@{$nodes{$resultset_node}->{$solution_predicate}}) {
     warn "$program: Row node $node\n"
       if $debug > 1;
 
     # Get binding nodes
-    my $row={};
+    my $row = { map { $_ => undef} @variables };
     for my $binding_node (@{$nodes{$node}->{$binding_predicate}}) {
       warn "Binding node $binding_node\n"
 	if $debug > 1;
@@ -205,9 +211,15 @@ sub read_srx_results_file($) {
   my $parser = new XML::DOM::Parser;
   my $doc = $parser->parsefile($result_file);
 
+  my(@variables)=();
+  for my $variable_el ($doc->getElementsByTagName("variable")) {
+    next unless ref($variable_el) eq 'XML::DOM::Element';
+    push(@variables, $variable_el->getAttribute('name'));
+  }
+
   for my $result ($doc->getElementsByTagName("result")) {
     next unless ref($result) eq 'XML::DOM::Element';
-    my($row)={};
+    my($row)= { map { $_ => undef } @variables };
 
     warn "Result Element ".$result->getNodeName()."\n"
       if $debug > 1;
@@ -318,6 +330,7 @@ sub read_sv_results_file($$) {
     push(@{$results{rows}}, $row);
   }
   close(IN);
+
   return \%results;
 }
 
@@ -388,6 +401,11 @@ sub compare_rdf_graphs($$$) {
 }
 
 
+sub defined_or_NULL($) {
+  return defined($_[0]) ? $_[0] : 'NULL';
+}
+
+
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
@@ -445,6 +463,7 @@ sub run_test {
   my $r=$roqet_cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$curdir/,,g;
   $test_result->{'tidy-query'} = $r;
 
+
   if(WIFSIGNALED($rc)) {
     # exec()ed but died on a signal
     my $signal = WTERMSIG($rc);
@@ -486,10 +505,8 @@ sub run_test {
   my(%vars_seen);
 
   for (split(/\n/, $test_result->{'stdout'})) {
-    if(/^(?:selects|bound variables): \[(.*)\]$/) {
-      my $vars=$1;
-      while($vars =~ s/variable\((\w+)//) {
-	my $vname = $1;
+    if(/^projected variable names: (.*)$/) {
+      for my $vname (split(/,\s*/, $1)) {
 	unless($vars_seen{$vname}) {
 	  push(@vars_order, $vname);
 	  $vars_seen{$vname}=1;
@@ -517,19 +534,6 @@ sub run_test {
       s/=udt/=string/g;
       s%=xsdstring\((.*?)\)%=string("$1"^^<http://www.w3.org/2001/XMLSchema#string>)%g;
       my $line=$_;
-      if(!@vars_order) {
-	my $vars=$1;
-	$vars =~ s/=uri<[^>]+>//g;
-	$vars =~ s/=string\("[^"]+"[^)]*\)//g; # "
-	$vars =~ s/=blank _//g;
-	$vars =~ s/=NULL//g;
-	$vars =~ s/,//g;
-	@vars_order=split(/ /, $vars);
-	warn "$program: Set vars order later to @vars_order\n"
-	  if $debug;
-      }
-      $line =~ s/,?\s+\w+=NULL//g;
-      $line =~ s/\w+=NULL,\s+//g;
 
       if($first_result) {
         open(OUT, "|$sort >roqet.out") or die "$program: Cannot create pipe to roqet.out - $!\n";
@@ -640,8 +644,8 @@ sub run_test {
 
     $count=0;
     for my $row (@{$results->{rows}}) {
-      my(@defined_vars)=grep(defined $row->{$_}, @vars_order);
-      print OUT "result: [",join(", ",map {"$_=$row->{$_}"} @defined_vars),"]\n";
+      my(@vals) = map { $_ . '=' . defined_or_NULL($row->{$_}) } @vars_order;
+      print OUT "result: [", join(", ", @vals), "]\n";
       $count++;
     }
     close(OUT);
