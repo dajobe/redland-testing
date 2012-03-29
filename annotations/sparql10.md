@@ -3,7 +3,7 @@ Rasqal SPARQL 1.0 testing
 
 Approved tests only.
 
-Passes: 433
+Passes: 435
 
 Failures: 6
 
