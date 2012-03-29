@@ -5,12 +5,12 @@ Approved tests only.
 
 Passes: 433
 
-Failures: 8
+Failures: 6
 
 Tested:
 
-* [GIT e932f0ea8bbbc9819d572f7fa2e8c71877c32037](https://github.com/dajobe/rasqal/commit/e932f0ea8bbbc9819d572f7fa2e8c71877c32037)
-* Tue Mar 27 21:04:31 PDT 2012
+* [GIT cb5c726d3b826b3ff254636ea0fb31b6ec0bc254](https://github.com/dajobe/rasqal/commit/cb5c726d3b826b3ff254636ea0fb31b6ec0bc254)
+* Wed Mar 28 20:46:06 2012 -0700
 
 algebra: 2
 ----------
@@ -26,19 +26,11 @@ algebra: 2
 	  outside a group. => FILTER should always return FALSE
 	  "FILTERs in an OPTIONAL do not extend to variables bound outside of the LeftJoin(...) operation" 
     
-distinct: 4
+distinct: 2
 -----------
 	Strings: Distinct
 	roqet -d debug -i sparql -D data-str.ttl distinct-1.rq
 	  Literal comparison issue: "" is not rdf:equal to ""^^xsd:string
-
-	Opt: No distinct
-	roqet -d debug -i sparql -D data-opt.ttl no-distinct-2.rq
-	  returns [v=NULL] (1 binding) instead of [] (0 bindings)
-
-	Opt: Distinct
-	roqet -d debug -i sparql -D data-opt.ttl distinct-2.rq
-	  returns [v=NULL] (1 binding) instead of [] (0 bindings)
 
 	All: Distinct
 	roqet -d debug -i sparql -D data-all.ttl distinct-1.rq

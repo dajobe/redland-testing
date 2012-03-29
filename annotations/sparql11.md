@@ -9,8 +9,8 @@ Failures: 86
 
 Tested:
 
-* [GIT e932f0ea8bbbc9819d572f7fa2e8c71877c32037](https://github.com/dajobe/rasqal/commit/e932f0ea8bbbc9819d572f7fa2e8c71877c32037)
-* Tue Mar 27 21:19:19 PDT 2012
+* [GIT cb5c726d3b826b3ff254636ea0fb31b6ec0bc254](https://github.com/dajobe/rasqal/commit/cb5c726d3b826b3ff254636ea0fb31b6ec0bc254)
+* Wed Mar 28 20:46:06 2012 -0700
 
 aggregates: 4
 -------------
@@ -160,8 +160,11 @@ exists/manifest#exists05
 
 * exists syntax not supported
 
-functions: 28
--------------
+functions: 0 (was 28)
+---------------------
+
+*No tests approved anymore?*
+
 
 functions/manifest#ceil01
 
@@ -272,6 +275,14 @@ functions/manifest#ucase01
 
 * test runner: unicode compare
 
+grouping: 1
+-----------
+
+Group-4
+
+* check-sparql: 'Group-4' FAILED (Expected 2 results, got 1)
+
+
 json-res: 4
 -----------
 
@@ -283,7 +294,29 @@ json-res/manifest#jsonres04
 * cannot read JSON results
 
 
-property-path: 33
+negation 9
+----------
+
+Subsets by exclusion (NOT EXISTS)
+
+Subsets by exclusion (MINUS)
+
+Medical, temporal proximity by exclusion (NOT EXISTS)
+
+Calculate which sets are subsets of others (include A subsetOf A)
+
+Calculate which sets are subsets of others (exclude A subsetOf A)
+
+Calculate which sets have the same elements
+
+Calculate proper subset
+
+Positive EXISTS 1
+
+Positive EXISTS 2
+
+
+property-path: 32
 -----------------
 
 property-path/manifest#pp01
@@ -332,8 +365,8 @@ subquery/manifest#subquery10
 
 * EXISTS not implemented
 
-subquery: 10
-------------
+syntax-query: 9
+---------------
 
 syntax-query/manifest#test_24
 syntax-query/manifest#test_25
