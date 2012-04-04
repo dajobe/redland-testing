@@ -3,14 +3,14 @@ Rasqal SPARQL 1.0 testing
 
 Approved tests only.
 
-Passes: 435
+Passes: 437
 
-Failures: 6
+Failures: 4
 
 Tested:
 
-* [GIT cb5c726d3b826b3ff254636ea0fb31b6ec0bc254](https://github.com/dajobe/rasqal/commit/cb5c726d3b826b3ff254636ea0fb31b6ec0bc254)
-* Wed Mar 28 20:46:06 2012 -0700
+* [GIT 23e44c7facfab39914fba28e11ac4a6f8f8b34d8](https://github.com/dajobe/rasqal/commit/23e44c7facfab39914fba28e11ac4a6f8f8b34d8)
+* Tue Apr 3 19:50:26 2012 -0700
 
 algebra: 2
 ----------
@@ -29,19 +29,6 @@ Filter-scope - 1
 	 outside a group. => FILTER should always return FALSE
 	 "FILTERs in an OPTIONAL do not extend to variables bound outside of the LeftJoin(...) operation" 
     
-distinct: 2
------------
-
-Strings: Distinct
-
-     roqet -d debug -i sparql -D data-str.ttl distinct-1.rq
-	 Literal comparison issue: "" is not rdf:equal to ""^^xsd:string
-
-All: Distinct
-
-     roqet -d debug -i sparql -D data-all.ttl distinct-1.rq
-	 Literal comparison issue: "" is not rdf:equal to ""^^xsd:string
-
 reduced: 2
 ----------
 These are `mf:resultCardinality` `mf:LaxCardinality` tests which means
