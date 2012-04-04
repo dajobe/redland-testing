@@ -409,11 +409,11 @@ sub defined_or_NULL($) {
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
-     $warning_level)
+     $warning_level,$cardinality_mode)
       =
     ($config->{name}, $config->{dir}, $config->{test_file}, 
      $config->{result_file}, $config->{expect_fail}, $config->{language},
-     $config->{warning_level});
+     $config->{warning_level}, $config->{cardinality_mode});
   my($test_uri)=$config->{test_uri};
   my(@data_files)=@{$config->{data_files}};
   my(@named_data_files)=@{$config->{named_data_files}};
@@ -427,7 +427,7 @@ sub run_test {
 
   $name ||= $test_uri;
 
-  warn "run_test(\n  name       : $name\n  dir        : $dir\n  language   : $language\n  query      : $test_file\n  data       : ",join("; ",@data_files),"\n  named data : ",join("; ",@named_data_files),"\n  result     : ",($result_file||"none"),"\n  expect     : ",($expect_fail ? "failure":"success"),"\n)\n"
+  warn "run_test(\n  name       : $name\n  dir        : $dir\n  language   : $language\n  query      : $test_file\n  data       : ",join("; ",@data_files),"\n  named data : ",join("; ",@named_data_files),"\n  result     : ",($result_file||"none"),"\n  expect     : ",($expect_fail ? "failure":"success"),"\n  card mode  : $cardinality_mode\n)\n"
     if $debug;
 
   my(@args)=();
@@ -667,6 +667,14 @@ sub run_test {
     $cmd = "$diff_cmd -u result.out roqet.out > diff.out";
     $rc = system($cmd);
   }
+
+  if($rc && $result_type eq 'bindings' && $roqet_results_count <= $count &&
+     $cardinality_mode eq 'lax') {
+    warn "$program: Cardinality lax - letting $roqet_results_count result match [1, $count] expected results\n"
+	  if $debug;
+    $rc = 0;
+  }
+
   if($rc) {
     if($result_type eq 'bindings' && $count != $roqet_results_count) {
       warn "$program: '$name' FAILED (Expected ".plural("result","s",$count).", got $roqet_results_count)\n";
@@ -854,6 +862,11 @@ while($list_node) {
     $query_node=$triples{$action_node}->{"<${qt}query>"}->[0];
   }
 
+  my $resultCardinality = $triples{$entry_node}->{"<${mf}resultCardinality>"}->[0];
+  my $cardinality_mode = (defined $resultCardinality && $resultCardinality eq "<${mf}LaxCardinality>") ? 'lax' : 'strict';
+  warn "Cardinality mode is $cardinality_mode\n"
+    if $debug > 1;
+
   my $test_uri=$entry_node; $test_uri =~ s/^<(.+)>$/$1/;
   my $test_type=$query_type; $test_type =~ s/^<(.+)>$/$1/ if defined $test_type;
 
@@ -898,7 +911,8 @@ while($list_node) {
 		  test_type => $test_type,
 		  test_uri => $test_uri,
 		  execute => $execute,
-		  language => $lang
+		  language => $lang,
+		  cardinality_mode => $cardinality_mode
 	 } );
 
     last if $unique_test;
