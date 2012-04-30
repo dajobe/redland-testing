@@ -3,31 +3,22 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 155
+Passes: 154
 
-Failures: 86
+Failures: 87
 
 Tested:
 
-* [GIT cb5c726d3b826b3ff254636ea0fb31b6ec0bc254](https://github.com/dajobe/rasqal/commit/cb5c726d3b826b3ff254636ea0fb31b6ec0bc254)
-* Wed Mar 28 20:46:06 2012 -0700
+* [GIT 526548633e0a1cb7fe399cf3e359198353d85c55](https://github.com/dajobe/rasqal/commit/526548633e0a1cb7fe399cf3e359198353d85c55)
+* Run on Mon Apr 30 10:51:14 2012 -0700
 
-aggregates: 4
+Against SPARQL 1.1 tests:
+
+* [GIT c0bbae46a01e322fe23e9ff48bded4bc5ef7a544](https://github.com/dajobe/sparql11-tests/commit/c0bbae46a01e322fe23e9ff48bded4bc5ef7a544)
+* Updated Sun Apr 29 19:21:20 2012 -0700
+
+aggregates: 3
 -------------
-
-aggregates/manifest#agg-err-02
-    Wrong expected result canonical format
-
-    check-sparql: 'Protect from error in AVG' FAILED
-    roqet -d debug -W 0 -i sparql11 -D agg-err-02.ttl agg-err-02.rq
-    --- result.out	2012-03-24 21:06:15.000000000 -0700
-    +++ roqet.out	2012-03-24 21:06:15.000000000 -0700
-    @@ -1,3 +1,3 @@
-    -result: [g=uri<http://example.com/data/#x>, avg=string("2.5e0"^^<http://www.w3.org/2001/XMLSchema#double>)]
-    +result: [g=uri<http://example.com/data/#x>, avg=string("2.5E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
-     result: [g=uri<http://example.com/data/#y>, avg=string("2.0"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
-    -result: [g=uri<http://example.com/data/#z>, avg=string("2.5e0"^^<http://www.w3.org/2001/XMLSchema#double>)]
-    +result: [g=uri<http://example.com/data/#z>, avg=string("2.5E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
 
 aggregates/manifest#agg-groupconcat-02
     ???? variable scope???
@@ -125,7 +116,7 @@ bindings/manifest#b6
 bindings/manifest#b7
     ????
 
-csv-tsv-res: 3
+csv-tsv-res: 4
 --------------
 
 csv-tsv-res/manifest#csv01
@@ -136,6 +127,9 @@ csv-tsv-res/manifest#csv02
 
 csv-tsv-res/manifest#csv03
     more like a syntax comparison but blank nodes are need eliding
+
+csv-tsv-res/manifest#tsv03
+    ???? rasqal outputs a double with 'e'
 
 exists: 5
 ---------
@@ -354,16 +348,17 @@ property-path/manifest#pp35
 
 * not implementing
 
-subquery: 2
+subquery: 3
 -----------
 
 subquery/manifest#subquery02
-
-* ????
+    ????
 
 subquery/manifest#subquery10
+    EXISTS not implemented
 
-* EXISTS not implemented
+subquery/manifest#subquery12
+    CRASH
 
 syntax-query: 9
 ---------------
