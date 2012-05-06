@@ -5,7 +5,7 @@ Approved tests only.
 
 Passes: 156
 
-Failures: 85
+Failures: 70
 
 Tested:
 
@@ -14,8 +14,8 @@ Tested:
 
 Against SPARQL 1.1 tests:
 
-* [GIT c0bbae46a01e322fe23e9ff48bded4bc5ef7a544](https://github.com/dajobe/sparql11-tests/commit/c0bbae46a01e322fe23e9ff48bded4bc5ef7a544)
-* Updated Sun Apr 29 19:21:20 2012 -0700
+* [GIT 64a8df99835781766698c63bf78b2a92942f0139](https://github.com/dajobe/sparql11-tests/commit/64a8df99835781766698c63bf78b2a92942f0139)
+* Updated Sat May 5 20:30:19 2012 -0700
 
 aggregates: 3
 -------------
@@ -299,35 +299,20 @@ Positive EXISTS 1
 Positive EXISTS 2
 
 
-property-path: 32
+property-path: 17
 -----------------
 
 property-path/manifest#pp01
 property-path/manifest#pp02
 property-path/manifest#pp03
-property-path/manifest#pp04
-property-path/manifest#pp05
 property-path/manifest#pp06
 property-path/manifest#pp07
 property-path/manifest#pp08
 property-path/manifest#pp09
 property-path/manifest#pp10
 property-path/manifest#pp11
-property-path/manifest#pp12
-property-path/manifest#pp13
 property-path/manifest#pp14
-property-path/manifest#pp15
-property-path/manifest#pp16
-property-path/manifest#pp20
-property-path/manifest#pp21
-property-path/manifest#pp22
-property-path/manifest#pp23
-property-path/manifest#pp24
-property-path/manifest#pp25
-property-path/manifest#pp26
-property-path/manifest#pp27
 property-path/manifest#pp28
-property-path/manifest#pp29
 property-path/manifest#pp30
 property-path/manifest#pp31
 property-path/manifest#pp32
