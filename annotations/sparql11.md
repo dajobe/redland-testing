@@ -3,14 +3,14 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 154
+Passes: 156
 
-Failures: 87
+Failures: 85
 
 Tested:
 
-* [GIT 526548633e0a1cb7fe399cf3e359198353d85c55](https://github.com/dajobe/rasqal/commit/526548633e0a1cb7fe399cf3e359198353d85c55)
-* Run on Mon Apr 30 10:51:14 2012 -0700
+* [GIT 0182404ebf8196a0de3c32bba8c20284f97841af](https://github.com/dajobe/rasqal/commit/0182404ebf8196a0de3c32bba8c20284f97841af)
+* Sat May 5 19:56:30 2012 -0700
 
 Against SPARQL 1.1 tests:
 
@@ -56,7 +56,7 @@ aggregates/manifest#agg08b
     +result: [O12=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("9"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 
-bind: 2
+bind: 1
 -------
 
 bind/manifest#bind07
@@ -80,17 +80,6 @@ bind/manifest#bind07
     +result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
     +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
     +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-
-bind/manifest#bind10
-    ???? filter variable scoping
-
-    check-sparql: 'bind10 - BIND scoping - Variable in filter not in scope' FAILED (Expected 0 results, got 1)
-    roqet -d debug -W 0 -i sparql11 -D data.ttl bind10.rq
-    --- result.out	2012-03-24 21:06:19.000000000 -0700
-    +++ roqet.out	2012-03-24 21:06:19.000000000 -0700
-    @@ -0,0 +1 @@
-    +result: [s=uri<http://example.org/s4>, v=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-
 
 bindings: 7
 -----------
@@ -348,7 +337,7 @@ property-path/manifest#pp35
 
 * not implementing
 
-subquery: 3
+subquery: 2
 -----------
 
 subquery/manifest#subquery02
@@ -356,9 +345,6 @@ subquery/manifest#subquery02
 
 subquery/manifest#subquery10
     EXISTS not implemented
-
-subquery/manifest#subquery12
-    CRASH
 
 syntax-query: 9
 ---------------
