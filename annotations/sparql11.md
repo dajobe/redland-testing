@@ -3,19 +3,21 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 156
+Passes: 188
 
-Failures: 70
+Failures: 95
 
 Tested:
 
-* [GIT 0182404ebf8196a0de3c32bba8c20284f97841af](https://github.com/dajobe/rasqal/commit/0182404ebf8196a0de3c32bba8c20284f97841af)
-* Sat May 5 19:56:30 2012 -0700
+* [GIT f9e63044e575c6a89902ad5cb7027661dbc54e72](https://github.com/dajobe/rasqal/commit/f9e63044e575c6a89902ad5cb7027661dbc54e72)
+* Sun May 13 12:56:37 2012 -0700
+
 
 Against SPARQL 1.1 tests:
 
-* [GIT 64a8df99835781766698c63bf78b2a92942f0139](https://github.com/dajobe/sparql11-tests/commit/64a8df99835781766698c63bf78b2a92942f0139)
-* Updated Sat May 5 20:30:19 2012 -0700
+* [GIT c89f45bfae90e878be779f52cdf1dd5287876903](https://github.com/dajobe/sparql11-tests/commit/c89f45bfae90e878be779f52cdf1dd5287876903)
+* Updated Sun May 13 17:42:09 2012 -0700
+
 
 aggregates: 3
 -------------
@@ -143,11 +145,8 @@ exists/manifest#exists05
 
 * exists syntax not supported
 
-functions: 0 (was 28)
----------------------
-
-*No tests approved anymore?*
-
+functions: 25
+-------------
 
 functions/manifest#ceil01
 
@@ -340,12 +339,15 @@ syntax-query/manifest#test_26
 syntax-query/manifest#test_27
 syntax-query/manifest#test_28
 syntax-query/manifest#test_29
+
+* EXISTS failures
+
 syntax-query/manifest#test_32
 syntax-query/manifest#test_35
 syntax-query/manifest#test_36
 syntax-query/manifest#test_37
 
-* ???? Several EXISTS and BINDINGS failures
+* BINDINGS failures
 
 syntax-update-1: 8
 ------------------
