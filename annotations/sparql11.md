@@ -111,16 +111,20 @@ csv-tsv-res: 4
 --------------
 
 csv-tsv-res/manifest#csv01
-    plain literal / xsd:string equality issue
+
+* plain literal / xsd:string equality issue
 
 csv-tsv-res/manifest#csv02
-    plain literal / xsd:string equality issue
+
+* plain literal / xsd:string equality issue
 
 csv-tsv-res/manifest#csv03
-    more like a syntax comparison but blank nodes are need eliding
+
+* more like a syntax comparison but blank nodes are need eliding
 
 csv-tsv-res/manifest#tsv03
-    ???? rasqal outputs a double with 'e'
+
+* ???? rasqal outputs a double with 'e'
 
 exists: 5
 ---------
@@ -169,10 +173,6 @@ functions/manifest#if01
 
 * unicode????
 
-functions/manifest#if02
-
-* error propogation in IF????
-
 functions/manifest#iri01
 
 * base URIs?
@@ -184,10 +184,6 @@ functions/manifest#lcase01
 functions/manifest#length01
 
 * test runner: unicode compare
-
-functions/manifest#notin01
-
-* CRASH
 
 functions/manifest#plus-1
 
