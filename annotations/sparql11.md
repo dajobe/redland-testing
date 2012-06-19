@@ -3,19 +3,19 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 188
+Passes: 190
 
-Failures: 95
+Failures: 98
 
 Tested:
 
-* [GIT b91b6b6945a757833da34adff77417324e29d678](https://github.com/dajobe/rasqal/commit/b91b6b6945a757833da34adff77417324e29d678)
-* Sun May 13 19:37:30 2012 -0700
+* [GIT d66f1587b3fd483ec90dcba62be1e17b5db47302](https://github.com/dajobe/rasqal/commit/d66f1587b3fd483ec90dcba62be1e17b5db47302)
+* Sun Jun 17 13:20:51 2012 -0700
 
 Against SPARQL 1.1 tests:
 
-* [GIT c89f45bfae90e878be779f52cdf1dd5287876903](https://github.com/dajobe/sparql11-tests/commit/c89f45bfae90e878be779f52cdf1dd5287876903)
-* Updated Sun May 13 17:42:09 2012 -0700
+* [GIT 2cf8d5bf585db1acb6b491006ec12b7cef61c581](https://github.com/dajobe/sparql11-tests/commit/2cf8d5bf585db1acb6b491006ec12b7cef61c581)
+* Updated Mon Jun 18 16:11:05 2012 -0700
 
 
 aggregates: 3
@@ -148,7 +148,7 @@ exists/manifest#exists05
 
 * exists syntax not supported
 
-functions: 25
+functions: 20
 -------------
 
 functions/manifest#ceil01
@@ -207,26 +207,6 @@ functions/manifest#round01
 functions/manifest#seconds
 
 * decimal format differences
-
-functions/manifest#sha1-02
-
-* unicode distinct
-
-functions/manifest#sha256-02
-
-* unicode distinct
-
-functions/manifest#sha512-02
-
-* unicode distinct
-
-functions/manifest#strafter01
-
-* unicode????
-
-functions/manifest#strbefore01
-
-* unicode????
 
 functions/manifest#strdt03
 
@@ -293,7 +273,7 @@ Positive EXISTS 1
 Positive EXISTS 2
 
 
-property-path: 17
+property-path: 24
 -----------------
 
 property-path/manifest#pp01
@@ -305,7 +285,12 @@ property-path/manifest#pp08
 property-path/manifest#pp09
 property-path/manifest#pp10
 property-path/manifest#pp11
+property-path/manifest#pp12
 property-path/manifest#pp14
+property-path/manifest#pp16
+property-path/manifest#pp21
+property-path/manifest#pp23
+property-path/manifest#pp25
 property-path/manifest#pp28
 property-path/manifest#pp30
 property-path/manifest#pp31
@@ -313,6 +298,8 @@ property-path/manifest#pp32
 property-path/manifest#pp33
 property-path/manifest#pp34
 property-path/manifest#pp35
+property-path/manifest#pp36
+property-path/manifest#pp37
 
 * not implementing
 
@@ -325,8 +312,8 @@ subquery/manifest#subquery02
 subquery/manifest#subquery10
     EXISTS not implemented
 
-syntax-query: 9
----------------
+syntax-query: 10
+----------------
 
 syntax-query/manifest#test_24
 syntax-query/manifest#test_25
@@ -338,6 +325,9 @@ syntax-query/manifest#test_29
 * EXISTS failures
 
 syntax-query/manifest#test_32
+
+*  PrefixName with hex-encoded colons
+
 syntax-query/manifest#test_35
 syntax-query/manifest#test_36
 syntax-query/manifest#test_37
@@ -398,11 +388,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#round01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#seconds
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha1-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha256-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha512-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strdt03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strlang03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring01
@@ -432,7 +417,12 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp09
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp10
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp11
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp12
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp14
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp16
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp21
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp23
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp25
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp28
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp30
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp31
@@ -440,6 +430,8 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp33
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp34
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp35
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp36
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp37
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery10
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_24
@@ -451,6 +443,7 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_35
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_36
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_37
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_25
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_27
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_28
