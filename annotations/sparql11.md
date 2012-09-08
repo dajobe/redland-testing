@@ -18,6 +18,24 @@ Against SPARQL 1.1 tests:
 * [GIT b7f03dc583ee91fe91a0e9863ae20e584210966c](https://github.com/dajobe/sparql11-tests/commit/b7f03dc583ee91fe91a0e9863ae20e584210966c)
 * Updated Fri Aug 10 11:10:41 2012 -0700
 
+Failures by section summary
+---------------------------
+
+	aggregates            6
+	bind                  1
+	bindings             10
+	csv-tsv-res           4
+	exists                5
+	functions            24
+	json-res              4
+	negation             11
+	property-path        24
+	service-description   3
+	service               7
+	subquery              2
+	syntax-query          7
+	syntax-update-1       9
+
 
 aggregates: 6
 -------------
