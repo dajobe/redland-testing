@@ -162,6 +162,9 @@ check-dir: make-dirs clean-logs
 	tmp_dir="$(abs_top_builddir)/$(TMP_DIR)"; \
 	pass_urls_file="$$log_dir/pass-urls.lst"; \
 	failure_urls_file="$$log_dir/failure-urls.lst"; \
+	summary_log_file="$$tmp_dir/summary.log"; \
+	name_log_file="$$tmp_dir/name.log"; \
+	rm -f $$summary_log_file; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
 	  $(ECHO) "$$label checking in $$subdir"; \
@@ -171,14 +174,17 @@ check-dir: make-dirs clean-logs
 	  abs_log_file="$$log_dir/$$base_file.log"; \
 	  abs_earl_file="$$log_dir/$$base_file-earl.ttl"; \
 	  abs_junit_file="$$log_dir/$$base_file-junit.xml"; \
-	  rm -f $$abs_log_file $$abs_earl_file; \
+	  rm -f $$abs_log_file $$abs_earl_file $$name_log_file; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
 	    $(CHECK_SPARQL) -i $$language --approved --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
-              $(TEE) $$abs_log_file | $(FILTER_CHECK_SPARQL); \
+              $(TEE) $$name_log_file | $(TEE) $$abs_log_file | \
+	      $(FILTER_CHECK_SPARQL); \
           status=$$?; \
 	  if test $$status != 0; then \
             $(ECHO) "check-sparql for $$name returned status $$status"; \
 	  fi; \
+	  failure_count=`$(PERL) -n -e 'print "$$1\n" if /(\d+) tests failed$$/' $$name_log_file`; \
+	  echo "$$name $$failure_count" >> $$summary_log_file; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
 	    $(ROQET) -i sparql -r csv -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI)  >> $$failure_urls_file; \
@@ -187,6 +193,7 @@ check-dir: make-dirs clean-logs
 	  fi; \
 	  $(ECHO) " "; \
 	done; \
+	rm -f $$name_log_file; \
 	$(ECHO) " "; \
 	$(ECHO) "$$label Summary:"; \
 	tmp_file="$$tmp_dir/sort.tmp"; \
@@ -196,6 +203,9 @@ check-dir: make-dirs clean-logs
 	$(ECHO) "$$label   total passes:   $$count"; \
 	count=`$(WC) -l < $$failure_urls_file`; \
 	$(ECHO) "$$label   total failures: $$count"; \
+	$(ECHO) "Failures by section:"; \
+	$(PERL) -e 'while(<>) { ($$name, $$count) = split; printf "  %-20s %3d\n", $$name, $$count if $$count > 0; }' $$summary_log_file; \
+	rm -f $$summary_log_file; \
 	exit $$failed
 
 make-dirs:
