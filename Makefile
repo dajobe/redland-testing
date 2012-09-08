@@ -203,8 +203,9 @@ check-dir: make-dirs clean-logs
 	$(ECHO) "$$label   total passes:   $$count"; \
 	count=`$(WC) -l < $$failure_urls_file`; \
 	$(ECHO) "$$label   total failures: $$count"; \
-	$(ECHO) "Failures by section:"; \
-	$(PERL) -e 'while(<>) { ($$name, $$count) = split; printf "  %-20s %3d\n", $$name, $$count if $$count > 0; }' $$summary_log_file; \
+	$(ECHO) "Failures by section summary"; \
+	$(ECHO) "---------------------------"; \
+	$(PERL) -e 'while(<>) { ($$name, $$count) = split; printf "    %-20s %3d\n", $$name, $$count if $$count > 0; }' $$summary_log_file; \
 	rm -f $$summary_log_file; \
 	exit $$failed
 

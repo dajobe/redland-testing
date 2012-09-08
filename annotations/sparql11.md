@@ -3,9 +3,9 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 191
+Passes: 217
 
-Failures: 117
+Failures: 128
 
 Tested:
 
@@ -15,26 +15,26 @@ Tested:
 
 Against SPARQL 1.1 tests:
 
-* [GIT b7f03dc583ee91fe91a0e9863ae20e584210966c](https://github.com/dajobe/sparql11-tests/commit/b7f03dc583ee91fe91a0e9863ae20e584210966c)
-* Updated Fri Aug 10 11:10:41 2012 -0700
+* [GIT f2a12103564e898a6f455fdbd9f8132c7b04c9df](https://github.com/dajobe/sparql11-tests/commit/f2a12103564e898a6f455fdbd9f8132c7b04c9df)
+* Updated Sep 8 10:09:47 2012 -0700
 
 Failures by section summary
 ---------------------------
 
-	aggregates            6
-	bindings             10
-	bind                  1
-	csv-tsv-res           4
-	exists                5
-	functions            24
-	json-res              4
-	negation             11
-	property-path        24
-	service-description   3
-	service               7
-	subquery              2
-	syntax-query          7
-	syntax-update-1       9
+	aggregates             6
+	bindings              10
+	bind                   1
+	csv-tsv-res            4
+	exists                 5
+	functions             24
+	json-res               4
+	negation              11
+	property-path         24
+	service-description    3
+	service                7
+	subquery               2
+	syntax-query          18
+	syntax-update-1        9
 
 
 aggregates: 6
@@ -85,31 +85,6 @@ aggregates/manifest#agg-min-02
 aggregates/manifest#agg-sum-02
     ????
 
-bind: 1
--------
-
-bind/manifest#bind07
-    ????
-
-    check-sparql: 'bind07 - BIND' FAILED
-    roqet -d debug -W 0 -i sparql11 -D data.ttl bind07.rq
-    -result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    -result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-    +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-
 bindings: 10
 ------------
 
@@ -142,6 +117,31 @@ bindings/manifest#values7
 
 bindings/manifest#values8
     ????
+
+bind: 1
+-------
+
+bind/manifest#bind07
+    ????
+
+    check-sparql: 'bind07 - BIND' FAILED
+    roqet -d debug -W 0 -i sparql11 -D data.ttl bind07.rq
+    -result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    -result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s1>, p=uri<http://example.org/p>, o=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s2>, p=uri<http://example.org/p>, o=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s3>, p=uri<http://example.org/p>, o=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+    +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 csv-tsv-res: 4
 --------------
@@ -341,7 +341,7 @@ property-path/manifest#pp33
 property-path/manifest#pp34
 property-path/manifest#pp35
 
-* not implementing
+* Property Path: not implementing
 
 
 service-description: 3
@@ -375,8 +375,8 @@ subquery/manifest#subquery02
 subquery/manifest#subquery10
     EXISTS not implemented
 
-syntax-query: 7
----------------
+syntax-query: 18
+----------------
 
 syntax-query/manifest#test_24
 syntax-query/manifest#test_25
@@ -387,9 +387,26 @@ syntax-query/manifest#test_29
 
 * EXISTS failures
 
-syntax-query/manifest#test_32
+syntax-query/manifest#test_35a
+syntax-query/manifest#test_36a
+syntax-query/manifest#test_38a
 
-*  PrefixName with hex-encoded colons
+* VALUES failures
+
+syntax-query/manifest#test_53
+syntax-query/manifest#test_54
+syntax-query/manifest#test_pn_04
+syntax-query/manifest#test_pn_05
+syntax-query/manifest#test_pn_06
+syntax-query/manifest#test_pn_07
+syntax-query/manifest#test_pn_09
+syntax-query/manifest#test_pp_coll
+
+* Prefix name failures such as backslashes, hex, colons
+
+syntax-query/manifest#test_63
+
+* Property Path: not implementing
 
 syntax-update-1: 9
 ------------------
@@ -521,7 +538,18 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_27
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_28
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_35a
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_36a
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_38a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_04
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_05
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_06
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_07
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_09
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pp_coll
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_25
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_27
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_28
