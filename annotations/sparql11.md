@@ -22,8 +22,8 @@ Failures by section summary
 ---------------------------
 
 	aggregates            6
-	bind                  1
 	bindings             10
+	bind                  1
 	csv-tsv-res           4
 	exists                5
 	functions            24
