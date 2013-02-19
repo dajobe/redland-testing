@@ -75,6 +75,14 @@ TAR=tar
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
 CHECK_SPARQL=$(PERL) $(CHECK_SPARQL_SCRIPT)
 
+ifeq ($(V),1)
+CHECK_SPARQL_VERBOSE=--debug
+else
+CHECK_SPARQL_VERBOSE=
+endif
+
+CHECK_SPARQL_ARGS=$(CHECK_SPARQL_VERBOSE)
+
 # FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
 FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
 FILTER_RESULT_URI=$(GREP) -v '^testUri'
@@ -165,6 +173,7 @@ check-dir: make-dirs clean-logs
 	summary_log_file="$$tmp_dir/summary.log"; \
 	name_log_file="$$tmp_dir/name.log"; \
 	rm -f $$summary_log_file; \
+	total_skipped_count=0; \
 	for name in $$subdirs; do \
 	  subdir="$$dir/$$name"; \
 	  $(ECHO) "$$label checking in $$subdir"; \
@@ -175,16 +184,22 @@ check-dir: make-dirs clean-logs
 	  abs_earl_file="$$log_dir/$$base_file-earl.ttl"; \
 	  abs_junit_file="$$log_dir/$$base_file-junit.xml"; \
 	  rm -f $$abs_log_file $$abs_earl_file $$name_log_file; \
+	  if test "X$V" = "X1"; then \
+	    $(ECHO) "cd $$here/$$subdir"; \
+	    $(ECHO) "$(CHECK_SPARQL) $(CHECK_SPARQL_ARGS) -i $$language --approved --earl $$abs_earl_file --junit $$abs_junit_file --suite \"$$name\""; \
+	  fi; \
 	  RAPPER=$(RAPPER) ROQET=$(ROQET) \
-	    $(CHECK_SPARQL) -i $$language --approved --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
+	    $(CHECK_SPARQL) $(CHECK_SPARQL_ARGS) -i $$language --approved --earl $$abs_earl_file --junit $$abs_junit_file --suite "$$name" 2>&1 | \
               $(TEE) $$name_log_file | $(TEE) $$abs_log_file | \
 	      $(FILTER_CHECK_SPARQL); \
           status=$$?; \
 	  if test $$status != 0; then \
             $(ECHO) "check-sparql for $$name returned status $$status"; \
 	  fi; \
-	  failure_count=`$(PERL) -n -e 'print "$$1\n" if /(\d+) tests failed$$/' $$name_log_file`; \
+	  failure_count=`$(PERL) -n -e 'print "$$1\n" if /(\d+) tests failed/' $$name_log_file`; \
 	  echo "$$name $$failure_count" >> $$summary_log_file; \
+	  skipped_count=`$(PERL) -n -e 'print "$$1\n" if /(\d+) tests skipped/' $$name_log_file`; \
+	  total_skipped_count=`expr $$total_skipped_count + $$skipped_count`; \
 	  if test -r $$abs_earl_file; then \
 	    query_file="$(abs_top_srcdir)/$(QUERIES_DIR)/$(GET_EARL_FAILURES_QUERY)"; \
 	    $(ROQET) -i sparql -r csv -D $$abs_earl_file $$query_file 2>/dev/null | $(FILTER_RESULT_URI)  >> $$failure_urls_file; \
@@ -199,6 +214,7 @@ check-dir: make-dirs clean-logs
 	tmp_file="$$tmp_dir/sort.tmp"; \
 	$(SORT) -u $$pass_urls_file > $$tmp_file; mv $$tmp_file $$pass_urls_file; \
 	$(SORT) -u $$failure_urls_file > $$tmp_file; mv $$tmp_file $$failure_urls_file; \
+	$(ECHO) "$$label   total skipped: $$total_skipped_count"; \
 	count=`$(WC) -l < $$pass_urls_file`; \
 	$(ECHO) "$$label   total passes:   $$count"; \
 	count=`$(WC) -l < $$failure_urls_file`; \

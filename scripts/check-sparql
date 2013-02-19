@@ -63,6 +63,8 @@ my $mfx='http://jena.hpl.hp.com/2005/05/test-manifest-extra#';
 my $qt='http://www.w3.org/2001/sw/DataAccess/tests/test-query#';
 my $dawgt='http://www.w3.org/2001/sw/DataAccess/tests/test-dawg#';
 my $ut='http://www.w3.org/2009/sparql/tests/test-update#';
+my $sd='http://www.w3.org/ns/sparql-service-description#';
+my $ent='http://www.w3.org/ns/entailment/';
 
 my $program=basename $0;
 my $debug=0;
@@ -871,20 +873,22 @@ while($list_node) {
   my $test_type=$query_type; $test_type =~ s/^<(.+)>$/$1/ if defined $test_type;
 
   my $test_approval=$triples{$entry_node}->{"<${dawgt}approval>"}->[0];
+  my $is_approved = 0;
+  my $is_withdrawn = 0;
   if($test_approval) {
     warn "Test $name ($test_uri) state $test_approval\n"
       if $debug > 1;
     if($test_approval eq "<${dawgt}Withdrawn>") {
       warn "Test $name ($test_uri) was withdrawn\n"
 	if $debug;
-      goto next_list_node;
+      $is_withdrawn = 1;
+    }
+    if($test_approval eq "<${dawgt}Approved>") {
+      $is_approved = 1;
     }
   }
-  if($approved &&
-    (!$test_approval || $test_approval ne "<${dawgt}Approved>")) {
-    warn "$program: Test $name ($test_uri) was not approved by DAWG - skipping\n";
-    goto next_list_node;
-  }
+
+  my $has_entailment_regime = exists $triples{$action_node}->{"<${ent}entailmentRegime>"} || $triples{$action_node}->{"<${sd}entailmentRegime>"};;
 
   my $query_file=undef;
   if($query_node) {
@@ -912,7 +916,10 @@ while($list_node) {
 		  test_uri => $test_uri,
 		  execute => $execute,
 		  language => $lang,
-		  cardinality_mode => $cardinality_mode
+		  cardinality_mode => $cardinality_mode,
+		  is_withdrawn => $is_withdrawn,
+		  is_approved => $is_approved,
+		  has_entailment_regime => $has_entailment_regime
 	 } );
 
     last if $unique_test;
@@ -927,6 +934,7 @@ die "$program: Test $unique_test not found\n" if $unique_test && !@tests;
 
 my(@failed);
 my(@passed);
+my(@skipped);
 my(@test_results);
 my $result=0;
 my $start_time = time;
@@ -935,6 +943,28 @@ for my $test (@tests) {
 
   $config->{language} = $language;
   $config->{warning_level} = $warning_level;
+
+  my $test_uri = $config->{test_uri};
+  my $name = $config->{name} || $test_uri;
+
+  if($config->{is_withdrawn}) {
+    warn "$program: Test $name ($test_uri) was withdrawn - skipping\n"
+	if $debug;
+    push(@skipped, $test);
+    next;
+  }
+  if($approved && !$config->{is_approved}) {
+    warn "$program: Test $name ($test_uri) not approved - skipping\n"
+	if $debug;
+    push(@skipped, $test);
+    next;
+  }
+  if($config->{has_entailment_regime}) {
+    warn "$program: Test $name ($test_uri) has entailment - skipping\n"
+	if $debug > 1;
+    push(@skipped, $test);
+    next;
+  }
 
   my $test_result = run_test($config);
 
@@ -1118,7 +1148,7 @@ warn "$program: $failed_count FAILED tests:\n$program:   " .
      "\n"
   if $failed_count;
 }
-warn "$program: Summary: ".scalar(@passed)." tests passed  ".scalar(@failed)." tests failed\n";
+warn "$program: Summary: ".scalar(@passed)." tests passed  ".scalar(@failed)." tests failed ".scalar(@skipped)." tests skipped\n";
 
 exit $failed_count;
 
