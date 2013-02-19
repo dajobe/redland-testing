@@ -3,20 +3,22 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 217
+Passes: 220
 
 Failures: 128
 
+Skipped: 78
+
 Tested:
 
-* [GIT 7170af2f02766f07b1f90977ba0bfe14ed2b0fde](https://github.com/dajobe/rasqal/commit/7170af2f02766f07b1f90977ba0bfe14ed2b0fde)
-* Sat Sep  8 10:03:23 PDT 2012
+* [GIT 8d33deb22d9b683f016f856c7179563f867d063d](https://github.com/dajobe/rasqal/commit/8d33deb22d9b683f016f856c7179563f867d063d)
+* Mon Feb 18 20:43:09 PST 2013
 
 
 Against SPARQL 1.1 tests:
 
-* [GIT f2a12103564e898a6f455fdbd9f8132c7b04c9df](https://github.com/dajobe/sparql11-tests/commit/f2a12103564e898a6f455fdbd9f8132c7b04c9df)
-* Updated Sep 8 10:09:47 2012 -0700
+* [GIT 3e175940b02dd79a2816f833531a3f2082851ac5](https://github.com/dajobe/sparql11-tests/commit/3e175940b02dd79a2816f833531a3f2082851ac5)
+* Updated Tue Jan 22 14:27:00 2013 -0800
 
 Failures by section summary
 ---------------------------
@@ -35,6 +37,34 @@ Failures by section summary
 	subquery               2
 	syntax-query          18
 	syntax-update-1        9
+
+
+SPARQL 1.1 Query Language conformance
+=====================================
+
+Requires passing sections (* = failures above):
+
+    aggregates bind bindings construct exists functions grouping
+    negation project-expression property-path subquery syntax-query
+
+Currently pass:
+
+    construct grouping project-expression
+
+SPARQL 1.1 Update conformance
+=============================
+
+Requires passing sections (* = failures above):
+
+    add basic-update clear copy delete-data delete-insert
+    delete-where delete drop move syntax-update-1 syntax-update-2
+    update-silent
+
+Currently pass:
+(most tests such as those of type ut:UpdateEvaluationTest are skipped)
+
+    syntax-update-2
+
 
 
 aggregates: 6
