@@ -3,39 +3,39 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 220
+Passes: 228
 
-Failures: 128
+Failures: 117
 
-Skipped: 78
+Skipped: 81
 
 Tested:
 
-* [GIT 8d33deb22d9b683f016f856c7179563f867d063d](https://github.com/dajobe/rasqal/commit/8d33deb22d9b683f016f856c7179563f867d063d)
+* [GIT 5b035040b5c050c72b51363509d1fd00baae6546](https://github.com/dajobe/rasqal/commit/5b035040b5c050c72b51363509d1fd00baae6546)
 * Mon Feb 18 20:43:09 PST 2013
 
 
 Against SPARQL 1.1 tests:
 
-* [GIT 3e175940b02dd79a2816f833531a3f2082851ac5](https://github.com/dajobe/sparql11-tests/commit/3e175940b02dd79a2816f833531a3f2082851ac5)
-* Updated Tue Jan 22 14:27:00 2013 -0800
+* [GIT df9235609472bb73f640efc7765cc1a023e34877](https://github.com/dajobe/sparql11-tests/commit/df9235609472bb73f640efc7765cc1a023e34877)
+* Updated Mon Mar 11 21:57:37 2013 -0700
 
 Failures by section summary
 ---------------------------
 
 	aggregates             6
-	bindings              10
 	bind                   1
 	csv-tsv-res            4
 	exists                 5
 	functions             24
-	json-res               4
+    grouping               1
+    json-res               4
 	negation              11
 	property-path         24
 	service-description    3
-	service                7
+	service                6
 	subquery               2
-	syntax-query          18
+	syntax-query          17
 	syntax-update-1        9
 
 
@@ -49,7 +49,7 @@ Requires passing sections (* = failures above):
 
 Currently pass:
 
-    construct grouping project-expression
+    bindings construct project-expression
 
 SPARQL 1.1 Update conformance
 =============================
@@ -113,39 +113,6 @@ aggregates/manifest#agg-min-02
     +result: [s=uri<http://www.example.org/mixed2>, min=string("2E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
 
 aggregates/manifest#agg-sum-02
-    ????
-
-bindings: 10
-------------
-
-bindings/manifest#inline1
-    ????
-
-bindings/manifest#inline2
-    ????
-
-bindings/manifest#values1
-    ????
-
-bindings/manifest#values2
-    ????
-
-bindings/manifest#values3
-    ????
-
-bindings/manifest#values4
-    ????
-
-bindings/manifest#values5
-    ????
-
-bindings/manifest#values6
-    ????
-
-bindings/manifest#values7
-    ????
-
-bindings/manifest#values8
     ????
 
 bind: 1
@@ -315,6 +282,15 @@ functions/manifest#ucase01
 
 * test runner: unicode compare
 
+
+grouping: 1
+-----------
+
+grouping/manifest#group04
+
+* ???
+
+
 json-res: 4
 -----------
 
@@ -382,13 +358,12 @@ service-description/manifest#has-endpoint-triple
 service-description/manifest#returns-rdf
 
 
-service: 7
+service: 6
 -----------
 
 SERVICE test 1
 SERVICE test 2
 SERVICE test 3
-SERVICE test 4a with VALUES clause
 SERVICE test 5
 SERVICE test 6
 SERVICE test 7
@@ -405,7 +380,7 @@ subquery/manifest#subquery02
 subquery/manifest#subquery10
     EXISTS not implemented
 
-syntax-query: 18
+syntax-query: 17
 ----------------
 
 syntax-query/manifest#test_24
@@ -419,7 +394,6 @@ syntax-query/manifest#test_29
 
 syntax-query/manifest#test_35a
 syntax-query/manifest#test_36a
-syntax-query/manifest#test_38a
 
 * VALUES failures
 
