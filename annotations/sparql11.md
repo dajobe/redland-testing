@@ -20,6 +20,7 @@ Against SPARQL 1.1 tests:
 * [GIT df9235609472bb73f640efc7765cc1a023e34877](https://github.com/dajobe/sparql11-tests/commit/df9235609472bb73f640efc7765cc1a023e34877)
 * Updated Mon Mar 11 21:57:37 2013 -0700
 
+
 Failures by section summary
 ---------------------------
 
@@ -50,6 +51,7 @@ Requires passing sections (* = failures above):
 Currently pass:
 
     bindings construct project-expression
+
 
 SPARQL 1.1 Update conformance
 =============================
@@ -115,6 +117,7 @@ aggregates/manifest#agg-min-02
 aggregates/manifest#agg-sum-02
     ????
 
+
 bind: 1
 -------
 
@@ -140,6 +143,7 @@ bind/manifest#bind07
     +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("5"^^<http://www.w3.org/2001/XMLSchema#integer>)]
     +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
+
 csv-tsv-res: 4
 --------------
 
@@ -158,6 +162,7 @@ csv-tsv-res/manifest#csv03
 csv-tsv-res/manifest#tsv03
 
 * ???? rasqal outputs a double with 'e'
+
 
 exists: 5
 ---------
@@ -181,6 +186,7 @@ exists/manifest#exists04
 exists/manifest#exists05
 
 * exists syntax not supported
+
 
 functions: 24
 -------------
@@ -381,6 +387,7 @@ subquery/manifest#subquery02
 subquery/manifest#subquery10
     EXISTS not implemented
 
+
 syntax-query: 17
 ----------------
 
@@ -413,6 +420,7 @@ syntax-query/manifest#test_63
 
 * Property Path: not implementing
 
+
 syntax-update-1: 9
 ------------------
 
@@ -433,25 +441,16 @@ syntax-update-1/manifest#test_53
 
 * ????
 
+
 Failure URLs
 ------------
 
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-avg-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-empty-group
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-empty-group2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-sum-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#inline1
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#inline2
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values1
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values2
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values3
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values4
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values5
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values6
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values7
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bindings/manifest#values8
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
@@ -486,6 +485,7 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ucase01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
@@ -531,7 +531,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service4a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7
@@ -545,7 +544,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_35a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_36a
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_38a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
