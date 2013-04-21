@@ -288,7 +288,8 @@ grouping: 1
 
 grouping/manifest#group04
 
-* ???
+* Using ?X in SELECT and GROUP BY binding; will not work until scoped
+  binding is implementing
 
 
 json-res: 4
