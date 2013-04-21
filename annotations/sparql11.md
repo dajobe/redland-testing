@@ -3,11 +3,11 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 228
+Passes: 231
 
 Failures: 117
 
-Skipped: 81
+Skipped: 78
 
 Tested:
 
@@ -17,8 +17,8 @@ Tested:
 
 Against SPARQL 1.1 tests:
 
-* [GIT df9235609472bb73f640efc7765cc1a023e34877](https://github.com/dajobe/sparql11-tests/commit/df9235609472bb73f640efc7765cc1a023e34877)
-* Updated Mon Mar 11 21:57:37 2013 -0700
+* [GIT bdb23726e21499f4787a7308de379f159e28fe65](https://github.com/dajobe/sparql11-tests/commit/bdb23726e21499f4787a7308de379f159e28fe65)
+* Updated Sun Apr 21 16:44:20 2013 -0700
 
 
 Failures by section summary
@@ -29,12 +29,11 @@ Failures by section summary
 	csv-tsv-res            4
 	exists                 5
 	functions             24
-    grouping               1
     json-res               4
 	negation              11
 	property-path         24
 	service-description    3
-	service                6
+	service                7
 	subquery               2
 	syntax-query          17
 	syntax-update-1        9
@@ -50,7 +49,7 @@ Requires passing sections (* = failures above):
 
 Currently pass:
 
-    bindings construct project-expression
+    bindings construct grouping project-expression
 
 
 SPARQL 1.1 Update conformance
@@ -289,15 +288,6 @@ functions/manifest#ucase01
 * test runner: unicode compare
 
 
-grouping: 1
------------
-
-grouping/manifest#group04
-
-* Using ?X in SELECT and GROUP BY binding; will not work until scoped
-  binding is implementing
-
-
 json-res: 4
 -----------
 
@@ -365,12 +355,13 @@ service-description/manifest#has-endpoint-triple
 service-description/manifest#returns-rdf
 
 
-service: 6
+service: 7
 -----------
 
 SERVICE test 1
 SERVICE test 2
 SERVICE test 3
+SERVICE test 4a with VALUES clause
 SERVICE test 5
 SERVICE test 6
 SERVICE test 7
@@ -485,7 +476,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ucase01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
@@ -531,6 +521,7 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service4a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7

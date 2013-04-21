@@ -38,7 +38,6 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substr
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ucase01
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
@@ -84,6 +83,7 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manif
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
+http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service4a
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7
