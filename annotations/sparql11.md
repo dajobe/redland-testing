@@ -71,8 +71,9 @@ Currently pass:
 aggregates: 6
 -------------
 
-aggregates/manifest#agg08b
-    ????
+aggregates/manifest#agg08b "grouping by expression, done correctly"
+
+* Variable scoping of O12 defined in SELECT and GROUP BY
 
     check-sparql: 'COUNT 8b' FAILED (Expected 5 results, got 1)
     roqet -d debug -W 0 -i sparql11 -D agg08.ttl agg08b.rq
@@ -89,22 +90,46 @@ aggregates/manifest#agg08b
 
 
 aggregates/manifest#agg-avg-02
-    ????
+
+* Wrong double format
+
+    check-sparql: 'AVG with GROUP BY' FAILED
+	roqet -d debug -W 0 -i sparql11 -D agg-numeric2.ttl agg-avg-02.rq
+	Difference is:
+	--- result.out	2013-04-22 11:12:25.000000000 -0700
+	+++ roqet.out	2013-04-22 11:12:25.000000000 -0700
+	@@ -1,3 +1,3 @@
+	 row: [s=uri<http://www.example.org/ints>, avg=string("2.0"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
+	 row: [s=uri<http://www.example.org/mixed1>, avg=string("1.6"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
+	-row: [s=uri<http://www.example.org/mixed2>, avg=string("2.0E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
+	+row: [s=uri<http://www.example.org/mixed2>, avg=string("0.0E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
+
 
 aggregates/manifest#agg-empty-group
-    ????
+
+* Fails to return an empty group ????
+	
+    check-sparql: 'agg empty group' FAILED (Expected 1 result, got 0)
+    roqet -d debug -W 0 -i sparql11 -D empty.ttl agg-empty-group.rq
+	Difference is:
+	--- result.out	2013-04-22 11:12:26.000000000 -0700
+	+++ roqet.out	2013-04-22 11:12:26.000000000 -0700
+	@@ -1 +0,0 @@
+	-row: [x=NULL, max=NULL]
+
 
 aggregates/manifest#agg-groupconcat-02
-    ???? variable scope???
+
+* ???? variable scope???
 
     check-sparql: 'GROUP_CONCAT 2' FAILED (exited with status 1)
-    ...
     roqet -d debug -W 0 -i sparql11 -D agg-groupconcat-1.ttl agg-groupconcat-2.rq
     roqet: Error - URI file:///Users/dajobe/dev/redland/testing/sparql11/data-sparql11/aggregates/agg-groupconcat-2.rq:1 - Variable c was not bound and not used in the query (where is it from?)
     ...
 
 aggregates/manifest#agg-min-02
-    Wrong rasqal double canonical format
+
+* Wrong double format
 
     check-sparql: 'MIN with GROUP BY' FAILED
     roqet -d debug -W 0 -i sparql11 -D agg-numeric.ttl agg-min-02.rq
@@ -114,14 +139,29 @@ aggregates/manifest#agg-min-02
     +result: [s=uri<http://www.example.org/mixed2>, min=string("2E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
 
 aggregates/manifest#agg-sum-02
-    ????
+
+* Double parsing or math error. SUM(double 2E-1, double 0.2) should
+  be double 0.4 not 0
+
+	check-sparql: 'SUM with GROUP BY' FAILED
+	roqet -d debug -W 0 -i sparql11 -D agg-numeric2.ttl agg-sum-02.rq
+	Difference is:
+	--- result.out	2013-04-22 11:12:25.000000000 -0700
+	+++ roqet.out	2013-04-22 11:12:25.000000000 -0700
+	@@ -2,4 +2,4 @@
+	 row: [s=uri<http://www.example.org/doubles>, sum=string("3.21E4"^^<http://www.w3.org/2001/XMLSchema#double>)]
+	 row: [s=uri<http://www.example.org/ints>, sum=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
+	 row: [s=uri<http://www.example.org/mixed1>, sum=string("3.2"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
+	-row: [s=uri<http://www.example.org/mixed2>, sum=string("4.0E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
+	+row: [s=uri<http://www.example.org/mixed2>, sum=string("0.0E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
 
 
 bind: 1
 -------
 
 bind/manifest#bind07
-    ????
+
+* Variable scoping of binding ?z in two parts of a UNION ????
 
     check-sparql: 'bind07 - BIND' FAILED
     roqet -d debug -W 0 -i sparql11 -D data.ttl bind07.rq
@@ -366,17 +406,19 @@ SERVICE test 5
 SERVICE test 6
 SERVICE test 7
 
-* not implemented
+* Test framework cannot substitute manifest data (was not implemented)
 
 
 subquery: 2
 -----------
 
-subquery/manifest#subquery02
-    ????
+subquery/manifest#subquery02 "sq02 - Subquery within graph pattern, graph variable is bound"
 
-subquery/manifest#subquery10
-    EXISTS not implemented
+* GRAPH with variable from subquery
+
+subquery/manifest#subquery10 "sq10 - Subquery with exists"
+
+* EXISTS not implemented
 
 
 syntax-query: 17
@@ -394,7 +436,7 @@ syntax-query/manifest#test_29
 syntax-query/manifest#test_35a
 syntax-query/manifest#test_36a
 
-* VALUES failures
+* Empty VALUES syntax failures
 
 syntax-query/manifest#test_53
 syntax-query/manifest#test_54
@@ -416,21 +458,41 @@ syntax-update-1: 9
 ------------------
 
 syntax-update-1/manifest#test_25
+
+* GRAPH in INSERT DATA
+
 syntax-update-1/manifest#test_27
+
+* Empty INSERT DATA
+
 syntax-update-1/manifest#test_28
+
+* Empty INSERT DATA GRAPH
+
 syntax-update-1/manifest#test_31
+
+* GRAPH in DELETE DATA
+
 syntax-update-1/manifest#test_32
+
+* Complex DELETE INSERT USING
+
 syntax-update-1/manifest#test_38
+
+* Empty document
+
 syntax-update-1/manifest#test_39
+
+* BASE and empty
+
 syntax-update-1/manifest#test_40
 
-* ???? GRAPH in insert/delete data syntax.
-* ???? empty INSERT DATA {} syntax
-* ???? empty query syntax
+* PREFIX and empty
 
 syntax-update-1/manifest#test_53
 
-* ????
+* GRAPH in INSERT DATA syntax.
+
 
 
 Failure URLs
