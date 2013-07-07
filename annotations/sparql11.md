@@ -3,22 +3,22 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 231
+Passes: 224
 
-Failures: 117
+Failures: 121
 
-Skipped: 78
+Skipped: 81
 
 Tested:
 
-* [GIT 5b035040b5c050c72b51363509d1fd00baae6546](https://github.com/dajobe/rasqal/commit/5b035040b5c050c72b51363509d1fd00baae6546)
-* Mon Feb 18 20:43:09 PST 2013
+* [GIT 3e193d59615acb099e7ebdbfc720b15c7b4ac81e](https://github.com/dajobe/rasqal/commit/3e193d59615acb099e7ebdbfc720b15c7b4ac81e)
+* Sat Jul 6 22:31:43 2013 -0700
 
 
 Against SPARQL 1.1 tests:
 
-* [GIT bdb23726e21499f4787a7308de379f159e28fe65](https://github.com/dajobe/sparql11-tests/commit/bdb23726e21499f4787a7308de379f159e28fe65)
-* Updated Sun Apr 21 16:44:20 2013 -0700
+* [GIT 3e9efa0509cb6c016f35513b2f37bf33b0a32968](https://github.com/dajobe/sparql11-tests/commit/3e9efa0509cb6c016f35513b2f37bf33b0a32968)
+* Sat Jul 6 22:18:25 2013 -0700
 
 
 Failures by section summary
@@ -28,12 +28,13 @@ Failures by section summary
 	bind                   1
 	csv-tsv-res            4
 	exists                 5
-	functions             24
+	functions             28
+    grouping               1
     json-res               4
 	negation              11
 	property-path         24
 	service-description    3
-	service                7
+	service                6
 	subquery               2
 	syntax-query          17
 	syntax-update-1        9
@@ -227,7 +228,7 @@ exists/manifest#exists05
 * exists syntax not supported
 
 
-functions: 24
+functions: 28
 -------------
 
 functions/manifest#ceil01
@@ -287,6 +288,22 @@ functions/manifest#seconds
 
 * decimal format differences
 
+functions/manifest#sha256-01
+
+* ?
+
+functions/manifest#sha256-02
+
+* ?
+
+functions/manifest#sha512-01
+
+* ?
+
+functions/manifest#sha512-02
+
+* ?
+
 functions/manifest#strafter01a
 
 * ?
@@ -327,6 +344,13 @@ functions/manifest#ucase01
 
 * test runner: unicode compare
 
+
+grouping: 1
+-----------
+
+grouping/manifest#group04
+
+* ?
 
 json-res: 4
 -----------
@@ -395,13 +419,12 @@ service-description/manifest#has-endpoint-triple
 service-description/manifest#returns-rdf
 
 
-service: 7
------------
+service: 6
+----------
 
 SERVICE test 1
 SERVICE test 2
 SERVICE test 3
-SERVICE test 4a with VALUES clause
 SERVICE test 5
 SERVICE test 6
 SERVICE test 7
