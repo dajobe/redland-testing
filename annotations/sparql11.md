@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 224
+Passes: 226
 
-Failures: 121
+Failures: 119
 
 Skipped: 81
 
 Tested:
 
-* [GIT 3e193d59615acb099e7ebdbfc720b15c7b4ac81e](https://github.com/dajobe/rasqal/commit/3e193d59615acb099e7ebdbfc720b15c7b4ac81e)
-* Sat Jul 6 22:31:43 2013 -0700
+* [GIT ef6557eab287a166e89ab5020d96386103c8b5ca](https://github.com/dajobe/rasqal/commit/ef6557eab287a166e89ab5020d96386103c8b5ca)
+* Mon Jul  8 13:51:21 MST 2013
 
 
 Against SPARQL 1.1 tests:
@@ -36,7 +36,7 @@ Failures by section summary
 	service-description    3
 	service                6
 	subquery               2
-	syntax-query          17
+	syntax-query          15
 	syntax-update-1        9
 
 
@@ -455,11 +455,6 @@ syntax-query/manifest#test_28
 syntax-query/manifest#test_29
 
 * EXISTS failures
-
-syntax-query/manifest#test_35a
-syntax-query/manifest#test_36a
-
-* Empty VALUES syntax failures
 
 syntax-query/manifest#test_53
 syntax-query/manifest#test_54
