@@ -1,8 +1,6 @@
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-avg-02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-empty-group2
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-sum-02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
@@ -99,8 +97,6 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#tes
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_27
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_28
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_35a
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_36a
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
