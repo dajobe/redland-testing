@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 226
+Passes: 228
 
-Failures: 119
+Failures: 117
 
 Skipped: 81
 
 Tested:
 
-* [GIT ef6557eab287a166e89ab5020d96386103c8b5ca](https://github.com/dajobe/rasqal/commit/ef6557eab287a166e89ab5020d96386103c8b5ca)
-* Mon Jul  8 13:51:21 MST 2013
+* [GIT 976048c98c7f57ff2d5289dfd553fab5f2b450c6](https://github.com/dajobe/rasqal/commit/976048c98c7f57ff2d5289dfd553fab5f2b450c6)
+* Sun Jul 14 17:57:59 PDT 2013
 
 
 Against SPARQL 1.1 tests:
@@ -24,7 +24,7 @@ Against SPARQL 1.1 tests:
 Failures by section summary
 ---------------------------
 
-	aggregates             6
+	aggregates             4
 	bind                   1
 	csv-tsv-res            4
 	exists                 5
@@ -90,22 +90,6 @@ aggregates/manifest#agg08b "grouping by expression, done correctly"
     +result: [O12=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("9"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 
-aggregates/manifest#agg-avg-02
-
-* Wrong double format
-
-    check-sparql: 'AVG with GROUP BY' FAILED
-	roqet -d debug -W 0 -i sparql11 -D agg-numeric2.ttl agg-avg-02.rq
-	Difference is:
-	--- result.out	2013-04-22 11:12:25.000000000 -0700
-	+++ roqet.out	2013-04-22 11:12:25.000000000 -0700
-	@@ -1,3 +1,3 @@
-	 row: [s=uri<http://www.example.org/ints>, avg=string("2.0"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
-	 row: [s=uri<http://www.example.org/mixed1>, avg=string("1.6"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
-	-row: [s=uri<http://www.example.org/mixed2>, avg=string("2.0E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
-	+row: [s=uri<http://www.example.org/mixed2>, avg=string("0.0E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
-
-
 aggregates/manifest#agg-empty-group
 
 * Fails to return an empty group ????
@@ -138,23 +122,6 @@ aggregates/manifest#agg-min-02
     +++ roqet.out	2012-03-24 21:06:14.000000000 -0700
     -result: [s=uri<http://www.example.org/mixed2>, min=string("2.0E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
     +result: [s=uri<http://www.example.org/mixed2>, min=string("2E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
-
-aggregates/manifest#agg-sum-02
-
-* Double parsing or math error. SUM(double 2E-1, double 0.2) should
-  be double 0.4 not 0
-
-	check-sparql: 'SUM with GROUP BY' FAILED
-	roqet -d debug -W 0 -i sparql11 -D agg-numeric2.ttl agg-sum-02.rq
-	Difference is:
-	--- result.out	2013-04-22 11:12:25.000000000 -0700
-	+++ roqet.out	2013-04-22 11:12:25.000000000 -0700
-	@@ -2,4 +2,4 @@
-	 row: [s=uri<http://www.example.org/doubles>, sum=string("3.21E4"^^<http://www.w3.org/2001/XMLSchema#double>)]
-	 row: [s=uri<http://www.example.org/ints>, sum=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-	 row: [s=uri<http://www.example.org/mixed1>, sum=string("3.2"^^<http://www.w3.org/2001/XMLSchema#decimal>)]
-	-row: [s=uri<http://www.example.org/mixed2>, sum=string("4.0E-1"^^<http://www.w3.org/2001/XMLSchema#double>)]
-	+row: [s=uri<http://www.example.org/mixed2>, sum=string("0.0E0"^^<http://www.w3.org/2001/XMLSchema#double>)]
 
 
 bind: 1
@@ -519,12 +486,10 @@ syntax-update-1/manifest#test_53
 Failure URLs
 ------------
 
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-avg-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-empty-group2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-sum-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
@@ -549,6 +514,10 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#round01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#seconds
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha256-01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha256-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha512-01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha512-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter01a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01a
@@ -559,6 +528,7 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ucase01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
@@ -604,7 +574,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service4a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7
@@ -616,8 +585,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_27
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_28
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_35a
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_36a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
