@@ -350,7 +350,10 @@ grouping: 1
 
 grouping/manifest#group04
 
-* ?
+* Failure to implement SAMPLE(?v) correctly - no Sample() algebra
+  node.  Fails to ignore non-agg vars in SELECT when grouping
+  [Sample algebra](http://www.w3.org/TR/sparql11-query/#defn_aggSample)
+
 
 json-res: 4
 -----------
