@@ -3,22 +3,22 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 228
+Passes: 239
 
-Failures: 117
+Failures: 106
 
 Skipped: 81
 
 Tested:
 
-* [GIT 976048c98c7f57ff2d5289dfd553fab5f2b450c6](https://github.com/dajobe/rasqal/commit/976048c98c7f57ff2d5289dfd553fab5f2b450c6)
-* Sun Jul 14 17:57:59 PDT 2013
+* [GIT 9f88344cb42806bfd037adeb2ecb9c15ccbe68f9](https://github.com/dajobe/rasqal/commit/9f88344cb42806bfd037adeb2ecb9c15ccbe68f9)
+* Wed Nov 27 14:36:23 2013 -0800
 
 
 Against SPARQL 1.1 tests:
 
-* [GIT 3e9efa0509cb6c016f35513b2f37bf33b0a32968](https://github.com/dajobe/sparql11-tests/commit/3e9efa0509cb6c016f35513b2f37bf33b0a32968)
-* Sat Jul 6 22:18:25 2013 -0700
+* [GIT a39d47f7cdc0104b80c0049225356278dd9c3600](https://github.com/dajobe/sparql11-tests/commit/a39d47f7cdc0104b80c0049225356278dd9c3600)
+* Wed Nov 27 14:41:05 2013 -0800
 
 
 Failures by section summary
@@ -28,7 +28,7 @@ Failures by section summary
 	bind                   1
 	csv-tsv-res            4
 	exists                 5
-	functions             28
+	functions             17
     grouping               1
     json-res               4
 	negation              11
@@ -195,7 +195,7 @@ exists/manifest#exists05
 * exists syntax not supported
 
 
-functions: 28
+functions: 17
 -------------
 
 functions/manifest#ceil01
@@ -205,10 +205,6 @@ functions/manifest#ceil01
 functions/manifest#concat02
 
 * decimal format differences
-* test runner: unicode compare
-
-functions/manifest#encode01
-
 * test runner: unicode compare
 
 functions/manifest#floor01
@@ -222,14 +218,6 @@ functions/manifest#if01
 functions/manifest#iri01
 
 * base URIs?
-
-functions/manifest#lcase01
-
-* test runner: unicode compare
-
-functions/manifest#length01
-
-* test runner: unicode compare
 
 functions/manifest#plus-1
 
@@ -255,22 +243,6 @@ functions/manifest#seconds
 
 * decimal format differences
 
-functions/manifest#sha256-01
-
-* ?
-
-functions/manifest#sha256-02
-
-* ?
-
-functions/manifest#sha512-01
-
-* ?
-
-functions/manifest#sha512-02
-
-* ?
-
 functions/manifest#strafter01a
 
 * ?
@@ -287,29 +259,13 @@ functions/manifest#strbefore02
 
 * ?
 
-functions/manifest#strdt03
-
-* test runner: unicode compare
-
 functions/manifest#strlang03
 
 * lang and unicode compare
 
-functions/manifest#substring01
-
-* test runner: unicode compare
-
-functions/manifest#substring02
-
-* test runner: unicode compare
-
 functions/manifest#timezone
 
 * ???? duration negation
-
-functions/manifest#ucase01
-
-* test runner: unicode compare
 
 
 grouping: 1
