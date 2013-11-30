@@ -174,7 +174,7 @@ sub read_rdf_graph_file($$) {
   }
   close(PIPE);
 
-  open(ERR, "<$rapper_err") or die "$program: Cannot open $rapper_err - $!\n";
+  open(ERR, "<", $rapper_err) or die "$program: Cannot open $rapper_err - $!\n";
   my(@errs)=();
   while(<ERR>) {
     chomp;
@@ -418,14 +418,14 @@ sub run_test {
   }
 
   if($first_result) {
-    open(OUT, ">$roqet_out") or die "$program: Cannot create pipe to $roqet_out - $!\n";
+    open(OUT, ">", $roqet_out) or die "$program: Cannot create pipe to $roqet_out - $!\n";
   }
   close(OUT);
 
   $test_result->{'result-type'} = $result_type;
 
 
-  open(ERR, "<$roqet_err") or die "$program: Cannot open $roqet_err - $!\n";
+  open(ERR, "<", $roqet_err) or die "$program: Cannot open $roqet_err - $!\n";
   my(@errs)=();
   while(<ERR>) {
     chomp;
@@ -856,7 +856,7 @@ if($earl_report_file) {
 
   my $rasqal_name="Rasqal $rasqal_version";
 
-  open(OUT, ">>$earl_report_file") 
+  open(OUT, ">>", $earl_report_file) 
     or die "Cannot write to $earl_report_file - $!\n";
   print OUT <<"EOT"
 \@prefix doap: <http://usefulinc.com/ns/doap\#> .
@@ -923,7 +923,7 @@ if($junit_report_file) {
   my $runtime = $elapsed_time;
   my $id = 0; # this <testsuites> has only 1 testsuite
 
-  open(OUT, ">$junit_report_file") 
+  open(OUT, ">", $junit_report_file) 
     or die "Cannot write to $junit_report_file - $!\n";
   print OUT <<"EOT";
 <?xml version="1.0" encoding="UTF-8" ?>
