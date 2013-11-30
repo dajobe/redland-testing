@@ -231,6 +231,15 @@ sub defined_or_NULL($) {
 }
 
 
+sub slurp_file($) {
+  my $file=shift;
+  return do {
+    local $/ = undef;
+    open my $fh, "<", $file or die "$program: Could not read $file - $!\n";
+    <$fh>;
+  }
+}
+
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
@@ -284,8 +293,8 @@ sub run_test {
   my $core_dumped = WCOREDUMP($rc);
   $test_result->{'elapsed-time'}= $end_time - $start_time;
   $test_result->{'roqet-status-code'}= WIFEXITED($rc) ? WEXITSTATUS($rc) : undef;
-  $test_result->{'stdout'}=`cat $roqet_tmp`; 
-  $test_result->{'stderr'}=`cat $roqet_err`;
+  $test_result->{'stdout'} = slurp_file($roqet_tmp); 
+  $test_result->{'stderr'} = slurp_file($roqet_err);
 
   $test_result->{'query'}=$roqet_cmd;
   my $curdir = getcwd;
