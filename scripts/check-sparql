@@ -240,6 +240,13 @@ sub slurp_file($) {
   }
 }
 
+sub cat_file($) {
+  my $file=shift;
+  my $fh;
+  open $fh, "<", $file or die "$program: Could not read $file - $!\n";
+  print <$fh>;
+}
+
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
@@ -345,7 +352,7 @@ sub run_test {
       my $tidy_query = $test_result->{'tidy-query'};
       print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
       warn "Difference is:\n";
-      system("cat $diff_out");
+      cat_file($diff_out);
       $test_result->{'result'}='failure';
       return $test_result;
     }
@@ -546,7 +553,7 @@ sub run_test {
     my $tidy_query = $test_result->{'tidy-query'};
     print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
     warn "Difference is:\n";
-    system("cat $diff_out");
+    cat_file($diff_out);
     $test_result->{'result'}='failure';
     return $test_result;
   }
