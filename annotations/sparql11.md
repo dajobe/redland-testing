@@ -151,24 +151,20 @@ bind/manifest#bind07
     +result: [s=uri<http://example.org/s4>, p=uri<http://example.org/p>, o=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), z=string("6"^^<http://www.w3.org/2001/XMLSchema#integer>)]
 
 
-csv-tsv-res: 4
+csv-tsv-res: 3
 --------------
 
 csv-tsv-res/manifest#csv01
 
-* plain literal / xsd:string equality issue
+* blank node comparison
 
 csv-tsv-res/manifest#csv02
 
-* plain literal / xsd:string equality issue
-
-csv-tsv-res/manifest#csv03
-
-* more like a syntax comparison but blank nodes are need eliding
+* blank node comparison
 
 csv-tsv-res/manifest#tsv03
 
-* ???? rasqal outputs a double with 'e'
+* double 'e' vs double 'E'
 
 
 exists: 5
