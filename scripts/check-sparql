@@ -281,14 +281,23 @@ sub run_test {
     push(@args, "-d", "debug");
   }
   push(@args, "-W", $warning_level);
-  push(@args, (map "-D $_", @data_files)) if @data_files;
-  push(@args, (map "-G $_", @named_data_files)) if @named_data_files;
 
+  my $curdir = getcwd;
+  for my $df (@data_files) {
+    $df =~ s,^file://$curdir/,,;
+    push(@args, "-D", $df);
+  }
+  for my $ndf (@named_data_files) {
+    $ndf =~ s,^file://$curdir/,,;
+    push(@args, "-G", $ndf);
+  }
   push(@args, "-n")
     unless $config->{execute};
 
+  my $tf = $test_file; $tf =~ s,^$curdir/,,;
+
   my $args_s = join(" ",@args);
-  my $roqet_cmd="$roqet $args_s '$test_file' 2>'$roqet_err' >'$roqet_tmp'";
+  my $roqet_cmd="$roqet $args_s '$tf' 2>'$roqet_err' >'$roqet_tmp'";
   my $sort="sort";
 
   warn "$program: Running '$roqet_cmd'\n"
@@ -305,10 +314,6 @@ sub run_test {
   $test_result->{'stderr'} = slurp_file($roqet_err);
 
   $test_result->{'query'}=$roqet_cmd;
-  my $curdir = getcwd;
-  my $r=$roqet_cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$curdir/,,g;
-  $test_result->{'tidy-query'} = $r;
-
 
   if(WIFSIGNALED($rc)) {
     # exec()ed but died on a signal
@@ -335,8 +340,7 @@ sub run_test {
     } else {
       warn "$program: '$name' FAILED ($rc)\n";
       print STDERR "Failing program was:\n";
-      my $tidy_query = $test_result->{'tidy-query'};
-      print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+      print STDERR "  $roqet_cmd\n";
       print STDERR $test_result->{'stderr'};
     }
 
@@ -350,8 +354,7 @@ sub run_test {
     if($rc) {
       warn "$program: '$name' FAILED\n";
       print STDERR "Failing program was:\n";
-      my $tidy_query = $test_result->{'tidy-query'};
-      print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+      print STDERR "  $roqet_cmd\n";
       warn "Difference is:\n";
       cat_file($diff_out);
       $test_result->{'result'}='failure';
@@ -445,8 +448,7 @@ sub run_test {
 
     $test_result->{'errors'} = join("\n", @errs);
     print STDERR "Failing program was:\n";
-    my $tidy_query = $test_result->{'tidy-query'};
-    print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+    print STDERR "  $roqet_cmd\n";
     print STDERR $test_result->{'stderr'};
     $test_result->{'result'}='failure';
     
@@ -551,8 +553,7 @@ sub run_test {
       warn "$program: '$name' FAILED\n";
     }
     print STDERR "Failing program was:\n";
-    my $tidy_query = $test_result->{'tidy-query'};
-    print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+    print STDERR "  $roqet_cmd\n";
     warn "Difference is:\n";
     cat_file($diff_out);
     $test_result->{'result'}='failure';
