@@ -116,11 +116,11 @@ sub read_query_results_file($$) {
 
   my(%results)=(rows => []);
 
-  my $cmd="$roqet -q -R $results_input_format -r simple -t $result_file";
+  my $cmd="$roqet -q -R $results_input_format -r simple -t '$result_file'";
 
   warn "$program: Opening pipe from '$cmd'\n"
     if $debug;
-  open(PIPE, "$cmd 2>$roqet_err |");
+  open(PIPE, "$cmd 2>'$roqet_err' |");
   my(@vars)=();
   while(<PIPE>) {
     chomp;
@@ -162,13 +162,13 @@ sub read_query_results_file($$) {
 sub read_rdf_graph_file($$) {
   my($result_file, $base_uri)=@_;
 
-  my $cmd="$rapper -q -g -o ntriples $result_file $base_uri";
+  my $cmd="$rapper -q -g -o ntriples '$result_file' $base_uri";
 
   warn "$program: (read_rdf_graph_file): Opening pipe from '$cmd'\n"
     if $debug;
 
   my $result_string='';
-  open(PIPE, "$cmd 2> $rapper_err |");
+  open(PIPE, "$cmd 2>'$rapper_err' |");
   while(<PIPE>) {
     $result_string .= $_;
   }
@@ -206,19 +206,19 @@ sub compare_rdf_graphs($$$) {
   my $errors;
   if(defined $ENV{NTC}) {
     my $ntc = $ENV{NTC};
-    $cmd="$ntc $file1 $file2 > $out 2>&1";
+    $cmd="$ntc '$file1' '$file2' >'$out' 2>&1";
     $rc = system($cmd);
   } elsif(defined $ENV{JENAROOT}) {
     my $j = $ENV{JENAROOT};
     my $classpath=join(':',glob("$j/lib/*jar"));
-    $cmd = qq{java -cp $classpath jena.rdfcompare $file1 $file2 N-TRIPLE N-TRIPLE > $out};
+    $cmd = qq{java -cp $classpath jena.rdfcompare '$file1' '$file2' N-TRIPLE N-TRIPLE > $out};
     $rc = system($cmd);
     if($rc) {
-      $cmd = "$diff_cmd -u $file1 $file2 > $out";
+      $cmd = "$diff_cmd -u '$file1' '$file2' >'$out'";
       system($cmd);
     }
   } else {
-    $cmd = "$diff_cmd -u $file1 $file2 > $out";
+    $cmd = "$diff_cmd -u '$file1' '$file2' >'$out'";
     $rc = system($cmd);
   }
 
@@ -271,7 +271,7 @@ sub run_test {
   }
 
   my $args_s=join(" ",@args);
-  my $roqet_cmd="$roqet $debug_args -W $warning_level -i $language $args_s $test_file 2>$roqet_err > $roqet_tmp";
+  my $roqet_cmd="$roqet $debug_args -W $warning_level -i $language $args_s '$test_file' 2>'$roqet_err' >'$roqet_tmp'";
   my $sort="sort";
 
   warn "$program: Running '$roqet_cmd'\n"
@@ -514,9 +514,9 @@ sub run_test {
   }   
 
   if($result_type eq 'graph') {
-    $rc = compare_rdf_graphs('$result_out', '$roqet_out', '$diff_out');
+    $rc = compare_rdf_graphs($result_out, $roqet_out, $diff_out);
   } else {
-    $cmd = "$diff_cmd -u $result_out $roqet_out > $diff_out";
+    $cmd = "$diff_cmd -u '$result_out' '$roqet_out' >'$diff_out'";
     $rc = system($cmd);
   }
 
@@ -603,7 +603,7 @@ die "$program: No manifest file found in $srcdir\n"
 
 my(%triples);
 my $entries_node;
-my $cmd="$rapper -q -i turtle -o ntriples $srcdir$manifest_file";
+my $cmd="$rapper -q -i turtle -o ntriples '$srcdir$manifest_file'";
 open(MF, "$cmd |") 
   or die "Cannot open pipe from '$cmd' - $!\n";
 while(<MF>) {
