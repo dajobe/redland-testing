@@ -273,21 +273,22 @@ sub run_test {
     if $debug;
 
   my(@args)=();
+  push(@args, "-i", $language);
+  # http://www.w3.org/2009/sparql/docs/tests/README.html#csvtests
+  if($test_type eq "${mf}CSVResultFormatTest") {
+    push(@args, "-r", "csv");
+  } else {
+    push(@args, "-d", "debug");
+  }
+  push(@args, "-W", $warning_level);
   push(@args, (map "-D $_", @data_files)) if @data_files;
   push(@args, (map "-G $_", @named_data_files)) if @named_data_files;
 
   push(@args, "-n")
     unless $config->{execute};
 
-  my $debug_args = "-d debug";
-  # http://www.w3.org/2009/sparql/docs/tests/README.html#csvtests
-  if($test_type eq "${mf}CSVResultFormatTest") {
-    $debug_args = "";
-    push(@args, "-r csv");
-  }
-
-  my $args_s=join(" ",@args);
-  my $roqet_cmd="$roqet $debug_args -W $warning_level -i $language $args_s '$test_file' 2>'$roqet_err' >'$roqet_tmp'";
+  my $args_s = join(" ",@args);
+  my $roqet_cmd="$roqet $args_s '$test_file' 2>'$roqet_err' >'$roqet_tmp'";
   my $sort="sort";
 
   warn "$program: Running '$roqet_cmd'\n"
