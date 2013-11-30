@@ -71,6 +71,15 @@ my $srcdir='.';
 
 $debug=1 if defined $ENV{'RASQAL_DEBUG'};
 
+# Temporary file names
+our $roqet_out  = "roqet.out";
+our $result_out = "result.out";
+our $roqet_tmp  = 'roqet.tmp';
+our $roqet_err  = 'roqet.err';
+our $diff_out   = 'diff.out';
+our $rapper_err = 'rapper.err';
+
+
 # plural('result', 's', 2);
 sub plural($$$) {
   my($word,$multiple,$count)=@_;
@@ -111,7 +120,7 @@ sub read_query_results_file($$) {
 
   warn "$program: Opening pipe from '$cmd'\n"
     if $debug;
-  open(PIPE, "$cmd 2>roqet.err |");
+  open(PIPE, "$cmd 2>$roqet_err |");
   my(@vars)=();
   while(<PIPE>) {
     chomp;
@@ -159,13 +168,13 @@ sub read_rdf_graph_file($$) {
     if $debug;
 
   my $result_string='';
-  open(PIPE, "$cmd 2>rapper.err |");
+  open(PIPE, "$cmd 2> $rapper_err |");
   while(<PIPE>) {
     $result_string .= $_;
   }
   close(PIPE);
 
-  open(ERR, "<rapper.err") or die "$program: Cannot open rapper.err - $!\n";
+  open(ERR, "<$rapper_err") or die "$program: Cannot open $rapper_err - $!\n";
   my(@errs)=();
   while(<ERR>) {
     chomp;
@@ -182,7 +191,7 @@ sub read_rdf_graph_file($$) {
     return undef;
   }
 
-  unlink "rapper.err";
+  unlink $rapper_err;
 
   my(%results)=(graph_ntriples => $result_string);
 
@@ -233,6 +242,7 @@ sub run_test {
   my($test_uri)=$config->{test_uri};
   my(@data_files)=@{$config->{data_files}};
   my(@named_data_files)=@{$config->{named_data_files}};
+  my $test_type = $config->{test_type};
 
   $language ||= 'sparql';
 
@@ -253,10 +263,15 @@ sub run_test {
   push(@args, "-n")
     unless $config->{execute};
 
+  my $debug_args = "-d debug";
+  # http://www.w3.org/2009/sparql/docs/tests/README.html#csvtests
+  if($test_type eq "${mf}CSVResultFormatTest") {
+    $debug_args = "";
+    push(@args, "-r csv");
+  }
+
   my $args_s=join(" ",@args);
-  my $roqet_tmp='roqet.tmp';
-  my $roqet_err='roqet.err';
-  my $roqet_cmd="$roqet -d debug -W $warning_level -i $language $args_s $test_file 2>$roqet_err > $roqet_tmp";
+  my $roqet_cmd="$roqet $debug_args -W $warning_level -i $language $args_s $test_file 2>$roqet_err > $roqet_tmp";
   my $sort="sort";
 
   warn "$program: Running '$roqet_cmd'\n"
@@ -271,8 +286,6 @@ sub run_test {
   $test_result->{'roqet-status-code'}= WIFEXITED($rc) ? WEXITSTATUS($rc) : undef;
   $test_result->{'stdout'}=`cat $roqet_tmp`; 
   $test_result->{'stderr'}=`cat $roqet_err`;
-
-  unlink $roqet_tmp;
 
   $test_result->{'query'}=$roqet_cmd;
   my $curdir = getcwd;
@@ -313,6 +326,28 @@ sub run_test {
     return $test_result;
   }
 
+  if($test_type eq "${mf}CSVResultFormatTest") {
+    my $file = $result_file; $file =~ s%^file://%%;
+    my $cmd = "$diff_cmd -u '$roqet_tmp' '$file' > $diff_out";
+    $rc = system($cmd);
+    if($rc) {
+      warn "$program: '$name' FAILED\n";
+      print STDERR "Failing program was:\n";
+      my $tidy_query = $test_result->{'tidy-query'};
+      print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
+      warn "Difference is:\n";
+      system("cat $diff_out");
+      $test_result->{'result'}='failure';
+      return $test_result;
+    }
+    warn "$program: '$name' ok\n";
+    $test_result->{'result'}='success';
+    return $test_result;
+  }
+
+
+  unlink $roqet_tmp;
+
   my $sorted=0;
   my $first_result=1;
   my $roqet_results_count=0;
@@ -352,7 +387,7 @@ sub run_test {
       my $line=$_;
 
       if($first_result) {
-        open(OUT, "|$sort >roqet.out") or die "$program: Cannot create pipe to roqet.out - $!\n";
+        open(OUT, "|$sort >$roqet_out") or die "$program: Cannot create pipe to $roqet_out - $!\n";
 	$first_result=0;
       }
 
@@ -364,7 +399,7 @@ sub run_test {
     if(m/^[_<]/) {
       my $line = $_;
       if($first_result) {
-        open(OUT, "|$sort -u >roqet.out") or die "$program: Cannot create pipe to roqet.out - $!\n";
+        open(OUT, "|$sort -u >$roqet_out") or die "$program: Cannot create pipe to $roqet_out - $!\n";
         $first_result=0;
       }
 
@@ -374,14 +409,14 @@ sub run_test {
   }
 
   if($first_result) {
-    open(OUT, ">roqet.out") or die "$program: Cannot create pipe to roqet.out - $!\n";
+    open(OUT, ">$roqet_out") or die "$program: Cannot create pipe to $roqet_out - $!\n";
   }
   close(OUT);
 
   $test_result->{'result-type'} = $result_type;
 
 
-  open(ERR, "<roqet.err") or die "$program: Cannot open roqet.err - $!\n";
+  open(ERR, "<$roqet_err") or die "$program: Cannot open $roqet_err - $!\n";
   my(@errs)=();
   while(<ERR>) {
     chomp;
@@ -456,8 +491,8 @@ sub run_test {
 
   my $count;
   if($result_type eq 'bindings') {
-    open(OUT, "|$sort >result.out")
-      or die "$program: Cannot create pipe to result.out - $!\n";
+    open(OUT, "|$sort >$result_out")
+      or die "$program: Cannot create pipe to $result_out - $!\n";
 
     $count=0;
     for my $row (@{$results->{rows}}) {
@@ -471,17 +506,17 @@ sub run_test {
     $test_result->{'actual-results-count'} = $roqet_results_count;
   } else {
     # graph: sort N-Triples in attempt to get canonical graph
-    open(OUT, "| sort -u >result.out")
-      or die "$program: Cannot create pipe to result.out - $!\n";
+    open(OUT, "| sort -u >$result_out")
+      or die "$program: Cannot create pipe to $result_out - $!\n";
     print OUT $results->{graph_ntriples}
       if exists $results->{graph_ntriples};
     close(OUT);
   }   
 
   if($result_type eq 'graph') {
-    $rc = compare_rdf_graphs('result.out', 'roqet.out', 'diff.out');
+    $rc = compare_rdf_graphs('$result_out', '$roqet_out', '$diff_out');
   } else {
-    $cmd = "$diff_cmd -u result.out roqet.out > diff.out";
+    $cmd = "$diff_cmd -u $result_out $roqet_out > $diff_out";
     $rc = system($cmd);
   }
 
@@ -502,7 +537,7 @@ sub run_test {
     my $tidy_query = $test_result->{'tidy-query'};
     print STDERR "  $roqet_cmd\n  OR $tidy_query\n";
     warn "Difference is:\n";
-    system("cat diff.out");
+    system("cat $diff_out");
     $test_result->{'result'}='failure';
     return $test_result;
   }
@@ -799,7 +834,7 @@ for my $test (@tests) {
 my $end_time = time;
 my $elapsed_time = ($end_time - $start_time);
 
-unlink "roqet.out", "result.out", "diff.out", "roqet.err", "roqet.tmp"
+unlink $roqet_out, $result_out, $roqet_tmp, $roqet_err, $diff_out, $rapper_err
   unless $unique_test;
 
 if($earl_report_file) {
