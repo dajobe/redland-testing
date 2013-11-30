@@ -837,11 +837,11 @@ my $elapsed_time = ($end_time - $start_time);
 unlink $roqet_out, $result_out, $roqet_tmp, $roqet_err, $diff_out, $rapper_err
   unless $unique_test;
 
+my $rasqal_version=`$roqet -v`;
+chomp $rasqal_version;
+
 if($earl_report_file) {
   my $is_new=(!-r $earl_report_file);
-  my $rasqal_version=`$roqet -v`;
-  chomp $rasqal_version;
-
   my(@t)=gmtime;
   my $rasqal_date=sprintf("%04d-%02d-%02d", 1900+$t[5], 1+$t[4], $t[3]);
 
@@ -900,9 +900,6 @@ EOT
 
 
 if($junit_report_file) {
-  my $rasqal_version=`$roqet -v`;
-  chomp $rasqal_version;
-
   my(@t)=gmtime;
   my $timestamp=sprintf("%04d-%02d-%02dT%02d:%02d:%02d",
 			1900+$t[5], 1+$t[4], $t[3], $t[2], $t[1], $t[0]);
