@@ -5,7 +5,6 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-m
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv03
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#tsv03
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists02
