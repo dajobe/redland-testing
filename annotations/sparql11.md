@@ -69,7 +69,7 @@ Currently pass:
 
 
 
-aggregates: 6
+aggregates: 3
 -------------
 
 aggregates/manifest#agg08b "grouping by expression, done correctly"
@@ -353,7 +353,7 @@ subquery/manifest#subquery10 "sq10 - Subquery with exists"
 * EXISTS not implemented
 
 
-syntax-query: 17
+syntax-query: 15
 ----------------
 
 syntax-query/manifest#test_24
@@ -425,14 +425,12 @@ syntax-update-1/manifest#test_53
 Failure URLs
 ------------
 
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-empty-group2
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#tsv03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists02
@@ -441,32 +439,21 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists05
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ceil01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#concat02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#encode01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#floor01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#if01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#iri01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#lcase01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#length01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-1
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-2
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#round01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#seconds
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha256-01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha256-02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha512-01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#sha512-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter01a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strdt03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strlang03
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring01
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#substring02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ucase01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
