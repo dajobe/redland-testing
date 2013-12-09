@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 240
+Passes: 241
 
-Failures: 105
+Failures: 104
 
 Skipped: 81
 
 Tested:
 
-* [GIT 63b7e849f6582187bf20b78a6223fc1e0e48088f](https://github.com/dajobe/rasqal/commit/63b7e849f6582187bf20b78a6223fc1e0e48088f)
-* Wed Nov 27 14:36:23 2013 -0800
+* [GIT b927347c0a0cd058620c2de57ab3c122738608a7](https://github.com/dajobe/rasqal/commit/b927347c0a0cd058620c2de57ab3c122738608a7)
+* Sun Dec 8 18:35:12 2013 -0800
 
 
 Against SPARQL 1.1 tests:
@@ -24,7 +24,7 @@ Against SPARQL 1.1 tests:
 Failures by section summary
 ---------------------------
 
-	aggregates             4
+	aggregates             3
 	bind                   1
 	csv-tsv-res            3
 	exists                 5
@@ -88,19 +88,6 @@ aggregates/manifest#agg08b "grouping by expression, done correctly"
     -result: [O12=string("3"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("2"^^<http://www.w3.org/2001/XMLSchema#integer>)]
     -result: [O12=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("1"^^<http://www.w3.org/2001/XMLSchema#integer>)]
     +result: [O12=string("4"^^<http://www.w3.org/2001/XMLSchema#integer>), C=string("9"^^<http://www.w3.org/2001/XMLSchema#integer>)]
-
-
-aggregates/manifest#agg-empty-group
-
-* Fails to return an empty group ????
-	
-    check-sparql: 'agg empty group' FAILED (Expected 1 result, got 0)
-    roqet -d debug -W 0 -i sparql11 -D empty.ttl agg-empty-group.rq
-	Difference is:
-	--- result.out	2013-04-22 11:12:26.000000000 -0700
-	+++ roqet.out	2013-04-22 11:12:26.000000000 -0700
-	@@ -1 +0,0 @@
-	-row: [x=NULL, max=NULL]
 
 
 aggregates/manifest#agg-groupconcat-02
