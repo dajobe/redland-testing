@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 241
+Passes: 242
 
-Failures: 104
+Failures: 103
 
 Skipped: 81
 
 Tested:
 
-* [GIT b927347c0a0cd058620c2de57ab3c122738608a7](https://github.com/dajobe/rasqal/commit/b927347c0a0cd058620c2de57ab3c122738608a7)
-* Sun Dec 8 18:35:12 2013 -0800
+* [GIT b1704637a27b0e9c6e0db1ddb4fbec17c36a0c7d](https://github.com/dajobe/rasqal/commit/b1704637a27b0e9c6e0db1ddb4fbec17c36a0c7d)
+* Wed Jan 22 21:27:50 2014 -0800
 
 
 Against SPARQL 1.1 tests:
@@ -28,7 +28,7 @@ Failures by section summary
 	bind                   1
 	csv-tsv-res            3
 	exists                 5
-	functions             17
+	functions             16
     grouping               1
     json-res               4
 	negation              11
@@ -178,7 +178,7 @@ exists/manifest#exists05
 * exists syntax not supported
 
 
-functions: 17
+functions: 16
 -------------
 
 functions/manifest#ceil01
@@ -241,10 +241,6 @@ functions/manifest#strbefore01a
 functions/manifest#strbefore02
 
 * ?
-
-functions/manifest#strlang03
-
-* lang and unicode compare
 
 functions/manifest#timezone
 
@@ -425,9 +421,9 @@ syntax-update-1/manifest#test_53
 Failure URLs
 ------------
 
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
@@ -452,7 +448,6 @@ Failure URLs
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01a
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore02
-	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strlang03
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
