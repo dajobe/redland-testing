@@ -247,8 +247,9 @@ sub cat_file($) {
   print <$fh>;
 }
 
+
 sub yesno($) {
-  @_[0] ? "yes" : "no";
+  $_[0] ? "yes" : "no";
 }
 
 sub run_test {
