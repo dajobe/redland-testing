@@ -4,7 +4,7 @@
 #
 # USAGE: check-sparql [options] [TEST]
 # 
-# Copyright (C) 2004-2012, David Beckett http://www.dajobe.org/
+# Copyright (C) 2004-2014, David Beckett http://www.dajobe.org/
 # Copyright (C) 2004-2005, University of Bristol, UK http://www.bristol.ac.uk/
 # 
 # This package is Free Software and part of Redland http://librdf.org/
@@ -247,6 +247,10 @@ sub cat_file($) {
   print <$fh>;
 }
 
+sub yesno($) {
+  @_[0] ? "yes" : "no";
+}
+
 sub run_test {
   my($config)=@_;
   my($name,$dir,$test_file,$result_file,$expect_fail,$language,
@@ -259,6 +263,10 @@ sub run_test {
   my(@data_files)=@{$config->{data_files}};
   my(@named_data_files)=@{$config->{named_data_files}};
   my $test_type = $config->{test_type};
+  my $execute = $config->{execute};
+
+  # Make sure we don't use any more config
+  $config = undef;
 
   $language ||= 'sparql';
 
@@ -269,7 +277,7 @@ sub run_test {
 
   $name ||= $test_uri;
 
-  warn "run_test(\n  name       : $name\n  dir        : $dir\n  language   : $language\n  query      : $test_file\n  data       : ",join("; ",@data_files),"\n  named data : ",join("; ",@named_data_files),"\n  result     : ",($result_file||"none"),"\n  expect     : ",($expect_fail ? "failure":"success"),"\n  card mode  : $cardinality_mode\n)\n"
+  warn "run_test(\n  name       : $name\n  dir        : $dir\n  language   : $language\n  query      : $test_file\n  data       : ",join("; ",@data_files),"\n  named data : ",join("; ",@named_data_files),"\n  result     : ",($result_file||"none"),"\n  expect     : ",($expect_fail ? "failure":"success"),"\n  card mode  : $cardinality_mode\n  execute    : ".yesno($execute).")\n"
     if $debug;
 
   my(@args)=();
@@ -292,7 +300,7 @@ sub run_test {
     push(@args, "-G", $ndf);
   }
   push(@args, "-n")
-    unless $config->{execute};
+    unless $execute;
 
   my $tf = $test_file; $tf =~ s,^$curdir/,,;
 
