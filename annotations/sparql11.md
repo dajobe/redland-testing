@@ -29,8 +29,8 @@ Failures by section summary
 	csv-tsv-res            3
 	exists                 5
 	functions             16
-    grouping               1
-    json-res               4
+	grouping               1
+	json-res               4
 	negation              11
 	property-path         24
 	service-description    3
