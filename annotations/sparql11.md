@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 242
+Passes: 243
 
-Failures: 103
+Failures: 104
 
 Skipped: 81
 
 Tested:
 
-* [GIT b1704637a27b0e9c6e0db1ddb4fbec17c36a0c7d](https://github.com/dajobe/rasqal/commit/b1704637a27b0e9c6e0db1ddb4fbec17c36a0c7d)
-* Wed Jan 22 21:27:50 2014 -0800
+* [GIT c25daf661b6d2dcec80947d1d3df4a5f84501c37](https://github.com/dajobe/rasqal/commit/c25daf661b6d2dcec80947d1d3df4a5f84501c37)
+* Mon May 26 13:47:52 2014 -0700
 
 
 Against SPARQL 1.1 tests:
