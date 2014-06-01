@@ -24,7 +24,7 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#straft
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01a
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore02
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
+http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#tz
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
