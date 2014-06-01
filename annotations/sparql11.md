@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 244
+Passes: 245
 
-Failures: 103
+Failures: 102
 
 Skipped: 81
 
 Tested:
 
-* [GIT 6028d3b6e2ca888c650eea83a2ad491ac817a790](https://github.com/dajobe/rasqal/commit/6028d3b6e2ca888c650eea83a2ad491ac817a790)
-* Tue May 27 09:43:36 2014 -0700
+* [GIT 114595e7fb6ca040e64325f8af4006f34f0481ff](https://github.com/dajobe/rasqal/commit/114595e7fb6ca040e64325f8af4006f34f0481ff)
+* Sun Jun 1 13:23:38 2014 -0700
 
 
 Against SPARQL 1.1 tests:
@@ -28,7 +28,7 @@ Failures by section summary
 	bind                   1
 	csv-tsv-res            3
 	exists                 5
-	functions             15
+	functions             14
 	grouping               1
 	json-res               4
 	negation              11
