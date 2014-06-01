@@ -70,6 +70,7 @@ WC=wc
 SORT=sort
 CURL=curl
 TAR=tar
+TR=tr
 
 # scripts here
 CHECK_SPARQL_SCRIPT="$(abs_top_srcdir)/$(SCRIPTS_DIR)/check-sparql"
@@ -85,7 +86,7 @@ CHECK_SPARQL_ARGS=$(CHECK_SPARQL_VERBOSE)
 
 # FILTER_CHECK_SPARQL=$(PERL) -n -e '$$end=1 if /FAILED tests/; print if /^check-sparql/ or $$end;'
 FILTER_CHECK_SPARQL=$(GREP) '^check-sparql'
-FILTER_RESULT_URI=$(GREP) -v '^testUri'
+FILTER_RESULT_URI=$(GREP) -v '^testUri' | $(TR) -d '\r'
 # queries
 GET_EARL_FAILURES_QUERY=get-earl-failures.rq
 GET_EARL_PASSES_QUERY=get-earl-passes.rq
