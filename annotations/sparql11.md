@@ -178,7 +178,7 @@ exists/manifest#exists05
 * exists syntax not supported
 
 
-functions: 16
+functions: 14
 -------------
 
 functions/manifest#ceil01
@@ -237,10 +237,6 @@ functions/manifest#strbefore01a
 functions/manifest#strbefore02
 
 * ?
-
-functions/manifest#timezone
-
-* ???? duration negation
 
 
 grouping: 1
