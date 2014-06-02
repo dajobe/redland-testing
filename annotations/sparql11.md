@@ -3,16 +3,17 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 245
+Passes: 246
 
-Failures: 102
+Failures: 101
 
 Skipped: 81
 
 Tested:
 
-* [GIT 114595e7fb6ca040e64325f8af4006f34f0481ff](https://github.com/dajobe/rasqal/commit/114595e7fb6ca040e64325f8af4006f34f0481ff)
-* Sun Jun 1 13:23:38 2014 -0700
+* [GIT 8df331d4e2c2a999499dd47a04298898c6221d8e](https://github.com/dajobe/rasqal/commit/8df331d4e2c2a999499dd47a04298898c6221d8e)
+* Sun Jun 1 19:37:38 2014 -0700
+
 
 
 Against SPARQL 1.1 tests:
@@ -28,7 +29,7 @@ Failures by section summary
     bind                   1
     csv-tsv-res            3
     exists                 5
-    functions             14
+    functions             13
     grouping               1
     json-res               4
     negation              11
@@ -38,7 +39,6 @@ Failures by section summary
     subquery               2
     syntax-query          15
     syntax-update-1        9
-
 
 SPARQL 1.1 Query Language conformance
 =====================================
@@ -230,10 +230,6 @@ functions/manifest#strafter02
 
 * ?
 
-functions/manifest#strbefore01a
-
-* ?
-
 functions/manifest#strbefore02
 
 * ?
@@ -413,105 +409,103 @@ syntax-update-1/manifest#test_53
 Failure URLs
 ------------
 
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#tsv03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists04
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists05
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ceil01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#concat02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#floor01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#iri01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-2
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#round01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#seconds
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter01a
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore01a
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#timezone
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres04
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#exists-01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#exists-02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#full-minuend
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#partial-minuend
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#set-equals-1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-by-exclusion-minus-1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-by-exclusion-nex-1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#temporal-proximity-by-exclusion-nex-1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp01
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp03
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp06
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp07
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp08
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp09
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp10
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp11
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp12
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp14
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp16
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp21
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp23
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp25
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp28a
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp30
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp31
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp32
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp33
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp34
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp35
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp36
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp37
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#conforms-to-schema
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#has-endpoint-triple
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#returns-rdf
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery02
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery10
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_24
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_25
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_26
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_27
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_28
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_04
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_05
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_06
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_07
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_09
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pp_coll
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_25
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_27
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_28
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_31
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_32
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_38
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_39
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_40
-    http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_53
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-groupconcat-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg-min-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/aggregates/manifest#agg08b
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/bind/manifest#bind07
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#csv02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/csv-tsv-res/manifest#tsv03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists04
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists05
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ceil01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#concat02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#floor01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#iri01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-2
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#round01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#seconds
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter01a
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strafter02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#strbefore02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/grouping/manifest#group04
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/json-res/manifest#jsonres04
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#exists-01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#exists-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#full-minuend
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#partial-minuend
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#set-equals-1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-by-exclusion-minus-1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#subset-by-exclusion-nex-1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/negation/manifest#temporal-proximity-by-exclusion-nex-1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp01
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp03
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp06
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp07
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp08
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp09
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp10
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp11
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp12
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp14
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp16
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp21
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp23
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp25
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp28a
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp30
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp31
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp32
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp33
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp34
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp35
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp36
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/property-path/manifest#pp37
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#conforms-to-schema
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#has-endpoint-triple
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service-description/manifest#returns-rdf
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service1
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service2
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service3
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service5
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service6
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/service/manifest#service7
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery02
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/subquery/manifest#subquery10
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_24
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_25
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_26
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_27
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_28
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_29
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_53
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_54
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_63
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_04
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_05
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_06
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_07
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pn_09
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-query/manifest#test_pp_coll
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_25
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_27
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_28
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_31
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_32
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_38
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_39
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_40
+	http://www.w3.org/2009/sparql/docs/tests/data-sparql11/syntax-update-1/manifest#test_53
