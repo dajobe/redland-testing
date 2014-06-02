@@ -24,20 +24,20 @@ Against SPARQL 1.1 tests:
 Failures by section summary
 ---------------------------
 
-	aggregates             3
-	bind                   1
-	csv-tsv-res            3
-	exists                 5
-	functions             14
-	grouping               1
-	json-res               4
-	negation              11
-	property-path         24
-	service-description    3
-	service                6
-	subquery               2
-	syntax-query          15
-	syntax-update-1        9
+    aggregates             3
+    bind                   1
+    csv-tsv-res            3
+    exists                 5
+    functions             14
+    grouping               1
+    json-res               4
+    negation              11
+    property-path         24
+    service-description    3
+    service                6
+    subquery               2
+    syntax-query          15
+    syntax-update-1        9
 
 
 SPARQL 1.1 Query Language conformance
