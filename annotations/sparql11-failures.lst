@@ -13,7 +13,6 @@ http://www.w3.org/2009/sparql/docs/tests/data-sparql11/exists/manifest#exists05
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#ceil01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#concat02
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#floor01
-http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#iri01
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-1
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#plus-2
 http://www.w3.org/2009/sparql/docs/tests/data-sparql11/functions/manifest#replace01
