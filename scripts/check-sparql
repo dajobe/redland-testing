@@ -24,6 +24,7 @@
 #
 # Requires:
 #   roqet (from rasqal) compiled in the parent directory
+#   rapper (from raptor) in the PATH
 #
 # Depends on a variety of rasqal internal debug print formats
 # 
@@ -43,21 +44,8 @@ sub WCOREDUMP($) {
 
 my $CURDIR = getcwd;
 
-
-sub get_utils_dir() {
-  my $dir = $CURDIR;
-  while($dir ne '' && ! -d "$dir/utils") {
-    $dir =~ s{/[^/]+$}{};
-  }
-  if($dir eq '') {
-    die "$0: Could not find 'utils' dir in parent directories\n";
-  }
-  $dir . "/utils";
-}
-
-our $UTILS_DIR = get_utils_dir();
-our $TO_NTRIPLES = $ENV{TO_NTRIPLES} || $UTILS_DIR. '/to-ntriples';
-our $ROQET = $ENV{ROQET} || $UTILS_DIR . '/roqet';
+our $RAPPER = $ENV{RAPPER} || 'rapper';
+our $ROQET = $ENV{ROQET} || 'roqet';
 
 my $rasqal_url="http://librdf.org/rasqal/";
 my $diff_cmd=$ENV{DIFF} || "diff";
@@ -92,7 +80,7 @@ our $result_out = "result.out";
 our $roqet_tmp  = 'roqet.tmp';
 our $roqet_err  = 'roqet.err';
 our $diff_out   = 'diff.out';
-our $to_ntriples_err = 'to_ntriples.err';
+our $rapper_err = 'rapper.err';
 
 
 # plural('result', 's', 2);
@@ -177,27 +165,27 @@ sub read_query_results_file($$) {
 sub read_rdf_graph_file($$) {
   my($result_file, $base_uri)=@_;
 
-  my $cmd="$TO_NTRIPLES '$result_file' '$base_uri'";
+  my $cmd="$RAPPER -q -g -o ntriples '$result_file' $base_uri";
 
   warn "$program: (read_rdf_graph_file): Running $cmd\n"
     if $debug;
 
   my $result_string='';
-  open(PIPE, "$cmd 2>'$to_ntriples_err' |");
+  open(PIPE, "$cmd 2>'$rapper_err' |");
   while(<PIPE>) {
     $result_string .= $_;
   }
   close(PIPE);
 
-  open(ERR, "<", $to_ntriples_err) or die "$program: Cannot open $to_ntriples_err - $!\n";
+  open(ERR, "<", $rapper_err) or die "$program: Cannot open $rapper_err - $!\n";
   my(@errs)=();
   while(<ERR>) {
     chomp;
-    push(@errs, "$result_file: $1") if m{to-ntriples: Error - (.*)$};
+    push(@errs, "$result_file: $1") if m{rapper: Error - (.*)$};
   }
   close(ERR);
   if(@errs) {
-    warn "$program: parsing RDF graph result file '$result_file' FAILED - to_ntriples returned errors:\n  ".join("\n  ",@errs)."\n";
+    warn "$program: parsing RDF graph result file '$result_file' FAILED - rapper returned errors:\n  ".join("\n  ",@errs)."\n";
     warn "Failing program was:\n";
     warn "  $cmd\n";
     my $r=$cmd; $r =~ s,file:[^ ]+/,,g; $r =~ s,$CURDIR/,,g;
@@ -205,7 +193,7 @@ sub read_rdf_graph_file($$) {
     return undef;
   }
 
-  unlink $to_ntriples_err;
+  unlink $rapper_err;
 
   my(%results)=(graph_ntriples => $result_string);
 
@@ -646,7 +634,7 @@ die "$program: No manifest file found in $srcdir\n"
 
 my(%triples);
 my $entries_node;
-my $cmd="$TO_NTRIPLES '$srcdir$manifest_file'";
+my $cmd="$RAPPER -q -i turtle -o ntriples '$srcdir$manifest_file'";
 open(MF, "$cmd |") 
   or die "Cannot open pipe from '$cmd' - $!\n";
 while(<MF>) {
@@ -877,7 +865,7 @@ for my $test (@tests) {
 my $end_time = time;
 my $elapsed_time = ($end_time - $start_time);
 
-unlink $roqet_out, $result_out, $roqet_tmp, $roqet_err, $diff_out, $to_ntriples_err
+unlink $roqet_out, $result_out, $roqet_tmp, $roqet_err, $diff_out, $rapper_err
   unless $unique_test;
 
 my $rasqal_version=`$ROQET -v`;
