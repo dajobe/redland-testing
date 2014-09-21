@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """earlsum.py -- summarize earl results
 
 LICENSE: Open Source: Share and Enjoy.
@@ -15,27 +16,30 @@ A PARTICULAR PURPOSE.
 
 """
 
+import sys
+
 try:
     import rdflib
 except ImportError:
-    import sys
     print >>sys.stderr, """
     **OOPS**: earlsum.py requires rdflib, which doesn't seem to be installed.
     Try http://rdflib.net/ .
     """
     raise SystemExit
 
-print "rdflib version {0}".format(rdflib.__version__)
+print >>sys.stderr, "rdflib version {0}".format(rdflib.__version__)
 
-try:   
-    from rdflib import Namespace
-    from rdflib.syntax.NamespaceManager import NamespaceManager
+try:
+    # rdflib 4
+    from rdflib import Graph,URIRef,BNode,Literal,Namespace
+    from rdflib.namespace import NamespaceManager
+    from rdflib import RDF,RDFS
 except ImportError:
-    from rdflib.namespace import Namespace, NamespaceManager
-
-from rdflib import plugin,RDF,RDFS,URIRef,URIRef,Literal,Variable,BNode
-from rdflib.store import Store
-from rdflib.Graph import Graph,ReadOnlyGraphAggregate,ConjunctiveGraph
+    # rdflib 2
+    from rdflib.Namespace import Namespace
+    from rdflib.syntax.NamespaceManager import NamespaceManager
+    from rdflib import RDF,RDFS,URIRef,Literal,BNode
+    from rdflib.Graph import Graph
 
 EARL = Namespace('http://www.w3.org/ns/earl#')
 DOAP = Namespace('http://usefulinc.com/ns/doap#')
@@ -201,6 +205,5 @@ def readfiles(filenames):
 
 
 if __name__ == '__main__':
-    import sys
     main(sys.argv)
     
