@@ -25,7 +25,7 @@ except ImportError:
     """
     raise SystemExit
    
-from rdflib.Namespace import Namespace
+from rdflib import Namespace
 from rdflib.syntax.NamespaceManager import NamespaceManager
 from rdflib import plugin,RDF,RDFS,URIRef,URIRef,Literal,Variable,BNode
 from rdflib.store import Store
