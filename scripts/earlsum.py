@@ -24,9 +24,15 @@ except ImportError:
     Try http://rdflib.net/ .
     """
     raise SystemExit
-   
-from rdflib import Namespace
-from rdflib.syntax.NamespaceManager import NamespaceManager
+
+print "rdflib version {0}".format(rdflib.__version__)
+
+try:   
+    from rdflib import Namespace
+    from rdflib.syntax.NamespaceManager import NamespaceManager
+except ImportError:
+    from rdflib.namespace import Namespace, NamespaceManager
+
 from rdflib import plugin,RDF,RDFS,URIRef,URIRef,Literal,Variable,BNode
 from rdflib.store import Store
 from rdflib.Graph import Graph,ReadOnlyGraphAggregate,ConjunctiveGraph
