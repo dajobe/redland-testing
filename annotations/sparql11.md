@@ -3,16 +3,16 @@ Rasqal SPARQL 1.1 testing
 
 Approved tests only.
 
-Passes: 249
+Passes: 248
 
-Failures: 98
+Failures: 99
 
 Skipped: 81
 
 Tested:
 
-* [GIT 984dd12d12f6bc4ba84097e1a6b866e5aaa316dc](https://github.com/dajobe/rasqal/commit/984dd12d12f6bc4ba84097e1a6b866e5aaa316dc)
-* Sun Jun 8 15:06:03 2014 -0700
+* [GIT f6dc577f44caaf47da739354595153d2b6553824](https://github.com/dajobe/rasqal/commit/f6dc577f44caaf47da739354595153d2b6553824)
+* Thu Nov 27 10:22:33 2014 -0800
 * with PCRE regex library for Unicode
 
 
@@ -30,7 +30,7 @@ Failures by section summary
     bind                   1
     csv-tsv-res            3
     exists                 5
-    functions             10
+    functions             11
     grouping               1
     json-res               4
     negation              11
@@ -180,12 +180,16 @@ exists/manifest#exists05
 * exists syntax not supported
 
 
-functions: 10
+functions: 11
 -------------
 
 functions/manifest#ceil01
 
 * decimal format differences
+
+functions/manifest#concat01
+
+* plain literal != ""xsd:string
 
 functions/manifest#concat02
 
